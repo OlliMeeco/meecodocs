@@ -21,8 +21,6 @@
   * password
 * **Card Template** — is a predefined list of empty slots with a label and a name. Each card is created by cloning such a template and filling in the slots.
 
-## User must sign in first
-
 ## Browsing Card Templates
 
 Because creating a card begins with a card template, we can begin with listing all available card templates:
