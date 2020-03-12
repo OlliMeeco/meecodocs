@@ -34,11 +34,11 @@ Because creating a card begins with a card template, we can begin with listing a
   -H 'Meeco-Subscription-Key: DEV_PORTAL_SUBSCRIPTION_KEY'
 ```
 
-The response is pretty large, and it lists all available stories and their slots. Slots are given in a separate list and can be matched by their IDs:
+The response is pretty large, and it lists all available items and their slots. Slots are given in a separate list and can be matched by their IDs:
 
 ```javascript
 {
-    "story_templates": [],
+    "item_templates": [],
     "slots": [],
     ...
 }
