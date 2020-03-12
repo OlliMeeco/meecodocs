@@ -140,11 +140,11 @@ curl --request GET \
     -H 'Meeco-Subscription-Key: DEV_PORTAL_SUBSCRIPTION_KEY'
 ```
 
-or `story_template` `id` \(`$['story_template']['id']`\):
+or `item_templates` `id` \(`$['item_templates']['id']`\):
 
 ```bash
 curl --request GET \
-  --url https://meeco-api-dev.azure-api.net/vault/item_templates/STORY-TEMPLATE-ID \
+  --url https://sandbox.meeco.me/vault/item_templates/ITEM-TEMPLATE-ID \
   -H 'authorization: Bearer VAULT_ACCESS_TOKEN_FROM_CLI_GENERATED_USER' \
   -H 'Meeco-Subscription-Key: DEV_PORTAL_SUBSCRIPTION_KEY'
 ```
