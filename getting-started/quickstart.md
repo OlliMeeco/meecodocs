@@ -2,7 +2,7 @@
 
 This guide aims to get you up and running and familiar with the API in about 15 minutes. We'll teach you how to setup your first user and how to create your first item.
 
-### Get the Meeco CLI
+## Get the Meeco CLI
 
 Download the Meeco CLI and follow the installation instructions.
 
@@ -22,7 +22,7 @@ passphrase:
 ```
 {% endcode %}
 
-### Create a User
+## Create a User
 
 Create your first user.
 
@@ -34,7 +34,7 @@ The command above does a lot, if you want to learn what happens behind the scene
 
 In next calls, you'll see an argument added `-a .user.yaml`
 
-### Creating an Item
+## Creating an Item
 
 Items in the Meeco API require you to specify a template. This template can be seen as a contract with a number of predefined fields \(which we call slots\). To get all available templates execute the following command
 
@@ -58,7 +58,7 @@ spec:
   - custom
 ```
 
-Let's create a `vehicle` item. To prepare this we can run the create config command 
+Let's create a `vehicle` item. To prepare this we can run the create config command
 
 ```bash
 $ meeco items:create-config vehicle -a .user.yaml > vehicle.yaml
@@ -96,6 +96,4 @@ $ meeco items:create -i vehicle.yaml -a .user.yaml
 ```
 
 Congratulations, you have now created your first item in the vault.
-
-
 

@@ -27,7 +27,7 @@
 
 Because creating a card begins with a card template, we can begin with listing all available card templates:
 
-```sh
+```bash
     curl --request GET \
   --url https://sandbox.meeco.me/vault/item_templates \
   -H 'authorization: Bearer VAULT_ACCESS_TOKEN_FROM_CLI_GENERATED_USER' \
@@ -36,7 +36,7 @@ Because creating a card begins with a card template, we can begin with listing a
 
 The response is pretty large, and it lists all available stories and their slots. Slots are given in a separate list and can be matched by their IDs:
 
-```json
+```javascript
 {
     "story_templates": [],
     "slots": [],
@@ -48,7 +48,7 @@ Besides these 2 lists there are a few other lists which we will ignore for the t
 
 Here is a truncated sample response:
 
-```json
+```javascript
 {
     "item_templates": [
       {
@@ -173,7 +173,7 @@ curl --request POST \
 
 Here is a response with a created card:
 
-```json
+```javascript
 {
     "item": {
         "id": "e053853d-6a7e-476b-8e3b-d78b4e6d2802",
@@ -518,7 +518,7 @@ curl -i -X PUT \
 
 Response:
 
-```json
+```javascript
     {
       "item": {
         ...

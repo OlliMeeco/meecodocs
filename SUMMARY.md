@@ -12,4 +12,5 @@
 * [Terminology](guides/terminology.md)
 * [Setting up Access](guides/setting-up-access.md)
 * [Card and Slots](guides/card-and-slots.md)
+* [Connections and Sharing](guides/connections-and-sharing.md)
 

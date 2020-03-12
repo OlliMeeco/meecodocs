@@ -5,3 +5,4 @@ We have created the [Meeco CLI](https://github.com/Meeco/cli) tool that allows y
 [https://github.com/Meeco/cli](https://github.com/Meeco/cli)
 
 After you create a user, you can use the Dev Portal to make requests using your `vault_access_token` as the `Authorization: Bearer` header.
+
