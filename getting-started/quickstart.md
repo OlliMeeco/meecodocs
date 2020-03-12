@@ -14,7 +14,7 @@ vault:
   url: https://api-sandbox.meeco.me
 keystore:
   url: https://keystore-sandbox.meeco.me
-  provider_api_key: 6af875150b33adce468620324c0c8852
+  provider_api_key:
 downloader:
   url: https://downloader-sandbox.meeco.me
 passphrase:

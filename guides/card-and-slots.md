@@ -27,16 +27,16 @@
 
 Because creating a card begins with a card template, we can begin with listing all available card templates:
 
-```bash
+```sh
     curl --request GET \
-  --url https://meeco-api-dev.azure-api.net/vault/item_templates \
-  -H 'authorization: Bearer DECRYPTED_VAULT_ADMISSION_TOKEN_FROM_DOCUMENT_2_STEP_11' \
-  -H 'Meeco-Subscription-Key: DEVELOPER_PORTAL_SUBSCRIPTION KEY'
+  --url https://sandbox.meeco.me/vault/item_templates \
+  -H 'authorization: Bearer VAULT_ACCESS_TOKEN_FROM_CLI_GENERATED_USER' \
+  -H 'Meeco-Subscription-Key: DEV_PORTAL_SUBSCRIPTION_KEY'
 ```
 
 The response is pretty large, and it lists all available stories and their slots. Slots are given in a separate list and can be matched by their IDs:
 
-```javascript
+```json
 {
     "story_templates": [],
     "slots": [],
@@ -48,60 +48,56 @@ Besides these 2 lists there are a few other lists which we will ignore for the t
 
 Here is a truncated sample response:
 
-```javascript
+```json
 {
-    "story_templates": [
+    "item_templates": [
       {
-        "id": "ccfaadf6-e040-433f-ad34-904e988a2187",
-        "name": "travel",
-        "description": null,
-        "ordinal": 10,
-        "visible": true,
-        "user_id": null,
-        "updated_at": "2020-01-02T20:32:49.991Z",
-        "template_type": "StoryTemplate",
-        "classification_node_ids": [
-          "29bc3762-802b-42d7-a129-c10fa1e43227",
-          "7f7b94f6-5a25-4de1-a2d9-2c0822aa69aa"
-        ],
-        "label": "Travel",
-        "image": "https://meeco-api-dev.azure-api.net/vault/global/images/7308dc39-d2b1-4039-9960-34f69dd06cd7",
-        "association_ids": [],
-        "associations_to_ids": [],
-        "slot_ids": [
-          "f1668277-0db5-4cff-9210-08a2f245c4aa",
-          "0cf77509-6eaf-49ff-a036-c3c7e2fee106",
-          "23eea243-1d09-4000-9215-7c1bc534c141",
-          "b57a5d9a-f124-4ddd-954f-18681b2360f1",
-          "929ea8b9-9815-4389-99a9-163f9e0c8b15"
-        ],
-        "background_color": null
-      },
+            "id": "ccfaadf6-e040-433f-ad34-904e988a2187",
+            "name": "travel",
+            "description": null,
+            "ordinal": 10,
+            "visible": true,
+            "user_id": null,
+            "updated_at": "2020-01-02T20:32:49.991Z",
+            "template_type": "ItemTemplate",
+            "classification_node_ids": [],
+            "label": "Travel",
+            "background_color": null,
+            "image": "https://api-sandbox.meeco.me/images/7308dc39-d2b1-4039-9960-34f69dd06cd7",
+            "association_ids": [],
+            "associations_to_ids": [],
+            "slot_ids": [
+                "0cf77509-6eaf-49ff-a036-c3c7e2fee106",
+                "f1668277-0db5-4cff-9210-08a2f245c4aa",
+                "23eea243-1d09-4000-9215-7c1bc534c141",
+                "b57a5d9a-f124-4ddd-954f-18681b2360f1",
+                "929ea8b9-9815-4389-99a9-163f9e0c8b15"
+            ]
+        },
         ....
     ],
     "slots": [
-      {
-        "id": "f1668277-0db5-4cff-9210-08a2f245c4aa",
-        "name": "return_date",
-        "description": null,
-        "encrypted": false,
-        "ordinal": 2,
-        "visible": true,
-        "classification_node_ids": [],
-        "slotable_id": "ccfaadf6-e040-433f-ad34-904e988a2187",
-        "slotable_type": "TileTemplate",
-        "required": false,
-        "updated_at": "2020-01-02T20:32:49.761Z",
-        "created_at": "2020-01-02T20:32:49.761Z",
-        "config": null,
-        "slot_type_name": "date",
-        "creator_type_name": "system",
-        "binary_ids": [],
-        "value": "",
-        "label": "Return date",
-        "image": null,
-        "encrypted_value": null
-      },
+        {
+            "id": "f1668277-0db5-4cff-9210-08a2f245c4aa",
+            "name": "return_date",
+            "description": null,
+            "encrypted": false,
+            "ordinal": 2,
+            "visible": true,
+            "classification_node_ids": [],
+            "slotable_id": "ccfaadf6-e040-433f-ad34-904e988a2187",
+            "slotable_type": "ItemTemplate",
+            "required": false,
+            "updated_at": "2020-01-02T20:32:49.761Z",
+            "created_at": "2020-01-02T20:32:49.761Z",
+            "config": null,
+            "slot_type_name": "date",
+            "creator": "system",
+            "binary_ids": [],
+            "label": "Return date",
+            "image": null,
+            "encrypted_value": null
+        },
         ...
     ],
     "shares": [],
@@ -138,10 +134,10 @@ We can also search a certain card template by its `name`:
 
 ```bash
 curl --request GET \
-    --url 'https://meeco-api-dev.azure-api.net/vault/item_templates?by_exact_name=vehicle' \
+    --url 'https://sandbox.meeco.me/vault/item_templates?by_exact_name=vehicle' \
     -H 'accept: application/json' \
-    -H 'authorization: Bearer DECRYPTED_VAULT_ADMISSION_TOKEN_FROM_DOCUMENT_2_STEP_11' \
-    -H 'Meeco-Subscription-Key: DEVELOPER_PORTAL_SUBSCRIPTION KEY'
+    -H 'authorization: Bearer VAULT_ACCESS_TOKEN_FROM_CLI_GENERATED_USER' \
+    -H 'Meeco-Subscription-Key: DEV_PORTAL_SUBSCRIPTION_KEY'
 ```
 
 or `story_template` `id` \(`$['story_template']['id']`\):
@@ -149,8 +145,8 @@ or `story_template` `id` \(`$['story_template']['id']`\):
 ```bash
 curl --request GET \
   --url https://meeco-api-dev.azure-api.net/vault/item_templates/STORY-TEMPLATE-ID \
-  -H 'authorization: Bearer DECRYPTED_VAULT_ADMISSION_TOKEN_FROM_DOCUMENT_2_STEP_11' \
-  -H 'Meeco-Subscription-Key: DEVELOPER_PORTAL_SUBSCRIPTION KEY'
+  -H 'authorization: Bearer VAULT_ACCESS_TOKEN_FROM_CLI_GENERATED_USER' \
+  -H 'Meeco-Subscription-Key: DEV_PORTAL_SUBSCRIPTION_KEY'
 ```
 
 Here is a sample list of slots and their types for template "Vehicle":
@@ -167,275 +163,242 @@ Now it is about time to create an actual card based on a card template. In this 
 
 ```bash
 curl --request POST \
-  --url https://meeco-api-dev.azure-api.net/vault/items \
+  --url https://sandbox.meeco.me/vault/items \
   -H 'accept: application/json' \
-  -H 'authorization: Bearer DECRYPTED_VAULT_ADMISSION_TOKEN_FROM_DOCUMENT_2_STEP_11' \
+  -H 'authorization: Bearer VAULT_ACCESS_TOKEN_FROM_CLI_GENERATED_USER' \
   -H 'content-type: application/json' \
-  -H 'Meeco-Subscription-Key: DEVELOPER_PORTAL_SUBSCRIPTION KEY' \
+  -H 'Meeco-Subscription-Key: DEV_PORTAL_SUBSCRIPTION_KEY' \
   --data '{"template_name": "vehicle"}'
 ```
 
 Here is a response with a created card:
 
-```javascript
+```json
 {
-  "item": {
-    "id": "9d2c2a14-feec-4320-bb71-5b5761b9f085",
-    "name": "vehicle",
-    "label": "Vehicle",
-    "description": null,
-    "created_at": "2020-02-03T08:33:41.713Z",
-    "tile_template_id": "61516c6f-81df-4c86-96df-8af915f0aec0",
-    "ordinal": 1,
-    "visible": true,
-    "updated_at": "2020-02-03T08:33:42.297Z",
-    "tile_template_label": "Vehicle",
-    "shareable": false,
-    "image": "https://meeco-api-dev.azure-api.net/vault/global/images/ef8ef92e-e4be-4f50-bfce-774a608098ca",
-    "image_background_colour": null,
-    "tile_image": null,
-    "tile_image_background_colour": null,
-    "slot_image": null,
-    "slot_image_background_colour": null,
-    "activity_image": null,
-    "activity_image_background_colour": null,
-    "category_image": null,
-    "category_image_background_colour": null,
-    "classification_node_ids": [
-      "7f7b94f6-5a25-4de1-a2d9-2c0822aa69aa",
-      "54ce2d77-764a-41e5-9f79-d313e07554b6"
+    "item": {
+        "id": "e053853d-6a7e-476b-8e3b-d78b4e6d2802",
+        "name": "vehicle",
+        "label": "Vehicle",
+        "description": null,
+        "created_at": "2020-03-12T04:38:24.110Z",
+        "item_template_id": "61516c6f-81df-4c86-96df-8af915f0aec0",
+        "ordinal": 1,
+        "visible": true,
+        "updated_at": "2020-03-12T04:38:24.556Z",
+        "item_template_label": "Vehicle",
+        "shareable": false,
+        "me": false,
+        "background_color": null,
+        "image": "https://api-sandbox.meeco.me/images/ef8ef92e-e4be-4f50-bfce-774a608098ca",
+        "image_background_colour": null,
+        "item_image": "https://api-sandbox.meeco.me/images/ef8ef92e-e4be-4f50-bfce-774a608098ca",
+        "item_image_background_colour": null,
+        "slot_image": null,
+        "slot_image_background_colour": null,
+        "activity_image": "https://api-sandbox.meeco.me/images/ef8ef92e-e4be-4f50-bfce-774a608098ca",
+        "activity_image_background_colour": null,
+        "category_image": null,
+        "category_image_background_colour": null,
+        "classification_node_ids": [],
+        "category_label": null,
+        "association_ids": [],
+        "associations_to_ids": [],
+        "slot_ids": [
+            "f84d82be-7d82-4ccb-b7ae-e30be5b036c9",
+            "6e1e4ecc-0b8b-45c1-919f-01e69f05bbf8",
+            "f09975cc-ec8e-4744-b883-73c115d32434",
+            "32d1f51b-d26e-4c85-8589-133a4f8e4579",
+            "5addd943-948d-4f80-b1e8-771ff5fee2c1",
+            "1fdd1473-a178-43dc-8862-c1aa242cf861",
+            "e4d7f7ed-de2c-4819-9369-478f2357b6aa",
+            "4cd09df4-9b69-4579-9e76-9a6d7c314b02"
+        ]
+    },
+    "classification_nodes": [],
+    "shares": [],
+    "connections": [],
+    "attachments": [],
+    "thumbnails": [],
+    "slots": [
+        {
+            "id": "f84d82be-7d82-4ccb-b7ae-e30be5b036c9",
+            "name": "image",
+            "description": null,
+            "encrypted": false,
+            "ordinal": 6,
+            "visible": true,
+            "classification_node_ids": [],
+            "slotable_id": "e053853d-6a7e-476b-8e3b-d78b4e6d2802",
+            "slotable_type": "Item",
+            "required": false,
+            "updated_at": "2020-03-12T04:38:24.531Z",
+            "created_at": "2020-03-12T04:38:24.531Z",
+            "config": null,
+            "slot_type_name": "image",
+            "creator": "system",
+            "binary_ids": [],
+            "label": "Image",
+            "image": null,
+            "encrypted_value": null
+        },
+        {
+            "id": "6e1e4ecc-0b8b-45c1-919f-01e69f05bbf8",
+            "name": "tags",
+            "description": null,
+            "encrypted": false,
+            "ordinal": 4,
+            "visible": true,
+            "classification_node_ids": [],
+            "slotable_id": "e053853d-6a7e-476b-8e3b-d78b4e6d2802",
+            "slotable_type": "Item",
+            "required": false,
+            "updated_at": "2020-03-12T04:38:24.494Z",
+            "created_at": "2020-03-12T04:38:24.494Z",
+            "config": {
+                "classification_scheme_name": "tag",
+                "selection_type": "multiple",
+                "can_create": true
+            },
+            "slot_type_name": "classification_node",
+            "creator": "system",
+            "binary_ids": [],
+            "label": "Tags",
+            "image": null,
+            "encrypted_value": null
+        },
+        {
+            "id": "f09975cc-ec8e-4744-b883-73c115d32434",
+            "name": "story_category",
+            "description": null,
+            "encrypted": false,
+            "ordinal": 3,
+            "visible": true,
+            "classification_node_ids": [],
+            "slotable_id": "e053853d-6a7e-476b-8e3b-d78b4e6d2802",
+            "slotable_type": "Item",
+            "required": false,
+            "updated_at": "2020-03-12T04:38:24.441Z",
+            "created_at": "2020-03-12T04:38:24.441Z",
+            "config": {
+                "classification_scheme_name": "story_category",
+                "selection_type": "single",
+                "editable": true
+            },
+            "slot_type_name": "classification_node",
+            "creator": "system",
+            "binary_ids": [],
+            "label": "Category",
+            "image": null,
+            "encrypted_value": null
+        },
+        {
+            "id": "32d1f51b-d26e-4c85-8589-133a4f8e4579",
+            "name": "type",
+            "description": null,
+            "encrypted": false,
+            "ordinal": 4,
+            "visible": true,
+            "classification_node_ids": [],
+            "slotable_id": "e053853d-6a7e-476b-8e3b-d78b4e6d2802",
+            "slotable_type": "Item",
+            "required": false,
+            "updated_at": "2020-03-12T04:38:24.364Z",
+            "created_at": "2020-03-12T04:38:24.364Z",
+            "config": null,
+            "slot_type_name": "key_value",
+            "creator": "system",
+            "binary_ids": [],
+            "label": "Type",
+            "image": null,
+            "encrypted_value": null
+        },
+        {
+            "id": "5addd943-948d-4f80-b1e8-771ff5fee2c1",
+            "name": "vin",
+            "description": null,
+            "encrypted": false,
+            "ordinal": 3,
+            "visible": true,
+            "classification_node_ids": [],
+            "slotable_id": "e053853d-6a7e-476b-8e3b-d78b4e6d2802",
+            "slotable_type": "Item",
+            "required": false,
+            "updated_at": "2020-03-12T04:38:24.326Z",
+            "created_at": "2020-03-12T04:38:24.326Z",
+            "config": null,
+            "slot_type_name": "key_value",
+            "creator": "system",
+            "binary_ids": [],
+            "label": "VIN",
+            "image": null,
+            "encrypted_value": null
+        },
+        {
+            "id": "1fdd1473-a178-43dc-8862-c1aa242cf861",
+            "name": "model_make",
+            "description": null,
+            "encrypted": false,
+            "ordinal": 1,
+            "visible": true,
+            "classification_node_ids": [],
+            "slotable_id": "e053853d-6a7e-476b-8e3b-d78b4e6d2802",
+            "slotable_type": "Item",
+            "required": false,
+            "updated_at": "2020-03-12T04:38:24.284Z",
+            "created_at": "2020-03-12T04:38:24.284Z",
+            "config": null,
+            "slot_type_name": "key_value",
+            "creator": "system",
+            "binary_ids": [],
+            "label": "Make or model",
+            "image": null,
+            "encrypted_value": null
+        },
+        {
+            "id": "e4d7f7ed-de2c-4819-9369-478f2357b6aa",
+            "name": "licence_plate",
+            "description": null,
+            "encrypted": false,
+            "ordinal": 2,
+            "visible": true,
+            "classification_node_ids": [],
+            "slotable_id": "e053853d-6a7e-476b-8e3b-d78b4e6d2802",
+            "slotable_type": "Item",
+            "required": false,
+            "updated_at": "2020-03-12T04:38:24.239Z",
+            "created_at": "2020-03-12T04:38:24.239Z",
+            "config": null,
+            "slot_type_name": "key_value",
+            "creator": "system",
+            "binary_ids": [],
+            "label": "Vehicle registration number",
+            "image": null,
+            "encrypted_value": null
+        },
+        {
+            "id": "4cd09df4-9b69-4579-9e76-9a6d7c314b02",
+            "name": "purchase_date",
+            "description": null,
+            "encrypted": false,
+            "ordinal": 5,
+            "visible": true,
+            "classification_node_ids": [],
+            "slotable_id": "e053853d-6a7e-476b-8e3b-d78b4e6d2802",
+            "slotable_type": "Item",
+            "required": false,
+            "updated_at": "2020-03-12T04:38:24.191Z",
+            "created_at": "2020-03-12T04:38:24.191Z",
+            "config": null,
+            "slot_type_name": "date",
+            "creator": "system",
+            "binary_ids": [],
+            "label": "Date purchased",
+            "image": null,
+            "encrypted_value": null
+        }
     ],
-    "category_label": null,
-    "type": "StoryItem",
-    "association_ids": [],
-    "associations_to_ids": [],
-    "slot_ids": [
-      "8f667106-de6f-433b-a7eb-ee40fbf6d376",
-      "e49a909f-dbbe-4dc0-8415-74fe2016a602",
-      "9120be11-4a43-4328-b9a3-aa0e58111ee6",
-      "2072e277-8c57-455a-9468-50970d04199e",
-      "587aa5ec-e8f9-4186-98b5-dc014cfc1e65",
-      "6872bdc3-3461-47e9-9418-f940bf329283",
-      "8d4a5202-5787-4d1a-9cfc-281bb2cd2eb6",
-      "a1c2c6f5-a07a-4294-9547-3c37fb74025d"
-    ],
-    "me": false,
-    "background_color": null
-  },
-  "classification_nodes": [
-    {
-      "id": "7f7b94f6-5a25-4de1-a2d9-2c0822aa69aa",
-      "background_color": null,
-      "description": null,
-      "image": "https://meeco-api-dev.azure-api.net/vault/global/images/d02f5cfc-b1f2-46be-805c-5a8e6702b55c",
-      "label": "eSafe Templates",
-      "name": "esafe_templates",
-      "ordinal": 1,
-      "scheme": "esafe"
-    },
-    {
-      "id": "54ce2d77-764a-41e5-9f79-d313e07554b6",
-      "background_color": "#FF00FF",
-      "description": null,
-      "image": "https://meeco-api-dev.azure-api.net/vault/global/images/ef8ef92e-e4be-4f50-bfce-774a608098ca",
-      "label": "Vehicles",
-      "name": "vehicles",
-      "ordinal": 3,
-      "scheme": "esafe"
-    }
-  ],
-  "shares": [],
-  "connections": [],
-  "attachments": [],
-  "thumbnails": [],
-  "slots": [
-    {
-      "id": "8f667106-de6f-433b-a7eb-ee40fbf6d376",
-      "name": "image",
-      "description": null,
-      "encrypted": false,
-      "ordinal": 6,
-      "visible": true,
-      "classification_node_ids": [],
-      "slotable_id": "9d2c2a14-feec-4320-bb71-5b5761b9f085",
-      "slotable_type": "TileItem",
-      "required": false,
-      "updated_at": "2020-02-03T08:33:42.211Z",
-      "created_at": "2020-02-03T08:33:42.211Z",
-      "config": null,
-      "slot_type_name": "image",
-      "creator_type_name": "system",
-      "binary_ids": [],
-      "value": "",
-      "label": "Image",
-      "image": null,
-      "encrypted_value": null
-    },
-    {
-      "id": "e49a909f-dbbe-4dc0-8415-74fe2016a602",
-      "name": "tags",
-      "description": null,
-      "encrypted": false,
-      "ordinal": 4,
-      "visible": true,
-      "classification_node_ids": [],
-      "slotable_id": "9d2c2a14-feec-4320-bb71-5b5761b9f085",
-      "slotable_type": "TileItem",
-      "required": false,
-      "updated_at": "2020-02-03T08:33:42.157Z",
-      "created_at": "2020-02-03T08:33:42.157Z",
-      "config": {
-        "classification_scheme_name": "tag",
-        "selection_type": "multiple",
-        "can_create": true
-      },
-      "slot_type_name": "classification_node",
-      "creator_type_name": "system",
-      "binary_ids": [],
-      "value": "",
-      "label": "Tags",
-      "image": null,
-      "encrypted_value": null
-    },
-    {
-      "id": "9120be11-4a43-4328-b9a3-aa0e58111ee6",
-      "name": "story_category",
-      "description": null,
-      "encrypted": false,
-      "ordinal": 3,
-      "visible": true,
-      "classification_node_ids": [],
-      "slotable_id": "9d2c2a14-feec-4320-bb71-5b5761b9f085",
-      "slotable_type": "TileItem",
-      "required": false,
-      "updated_at": "2020-02-03T08:33:42.098Z",
-      "created_at": "2020-02-03T08:33:42.098Z",
-      "config": {
-        "classification_scheme_name": "story_category",
-        "selection_type": "single",
-        "editable": true
-      },
-      "slot_type_name": "classification_node",
-      "creator_type_name": "system",
-      "binary_ids": [],
-      "value": "",
-      "label": "Category",
-      "image": null,
-      "encrypted_value": null
-    },
-    {
-      "id": "2072e277-8c57-455a-9468-50970d04199e",
-      "name": "purchase_date",
-      "description": null,
-      "encrypted": false,
-      "ordinal": 5,
-      "visible": true,
-      "classification_node_ids": [],
-      "slotable_id": "9d2c2a14-feec-4320-bb71-5b5761b9f085",
-      "slotable_type": "TileItem",
-      "required": false,
-      "updated_at": "2020-02-03T08:33:42.001Z",
-      "created_at": "2020-02-03T08:33:42.001Z",
-      "config": null,
-      "slot_type_name": "date",
-      "creator_type_name": "system",
-      "binary_ids": [],
-      "value": "",
-      "label": "Date purchased",
-      "image": null,
-      "encrypted_value": null
-    },
-    {
-      "id": "587aa5ec-e8f9-4186-98b5-dc014cfc1e65",
-      "name": "type",
-      "description": null,
-      "encrypted": false,
-      "ordinal": 4,
-      "visible": true,
-      "classification_node_ids": [],
-      "slotable_id": "9d2c2a14-feec-4320-bb71-5b5761b9f085",
-      "slotable_type": "TileItem",
-      "required": false,
-      "updated_at": "2020-02-03T08:33:41.954Z",
-      "created_at": "2020-02-03T08:33:41.954Z",
-      "config": null,
-      "slot_type_name": "key_value",
-      "creator_type_name": "system",
-      "binary_ids": [],
-      "value": "",
-      "label": "Type",
-      "image": null,
-      "encrypted_value": null
-    },
-    {
-      "id": "6872bdc3-3461-47e9-9418-f940bf329283",
-      "name": "vin",
-      "description": null,
-      "encrypted": false,
-      "ordinal": 3,
-      "visible": true,
-      "classification_node_ids": [],
-      "slotable_id": "9d2c2a14-feec-4320-bb71-5b5761b9f085",
-      "slotable_type": "TileItem",
-      "required": false,
-      "updated_at": "2020-02-03T08:33:41.888Z",
-      "created_at": "2020-02-03T08:33:41.888Z",
-      "config": null,
-      "slot_type_name": "key_value",
-      "creator_type_name": "system",
-      "binary_ids": [],
-      "value": "",
-      "label": "VIN",
-      "image": null,
-      "encrypted_value": null
-    },
-    {
-      "id": "8d4a5202-5787-4d1a-9cfc-281bb2cd2eb6",
-      "name": "licence_plate",
-      "description": null,
-      "encrypted": false,
-      "ordinal": 2,
-      "visible": true,
-      "classification_node_ids": [],
-      "slotable_id": "9d2c2a14-feec-4320-bb71-5b5761b9f085",
-      "slotable_type": "TileItem",
-      "required": false,
-      "updated_at": "2020-02-03T08:33:41.837Z",
-      "created_at": "2020-02-03T08:33:41.837Z",
-      "config": null,
-      "slot_type_name": "key_value",
-      "creator_type_name": "system",
-      "binary_ids": [],
-      "value": "",
-      "label": "Vehicle registration number",
-      "image": null,
-      "encrypted_value": null
-    },
-    {
-      "id": "a1c2c6f5-a07a-4294-9547-3c37fb74025d",
-      "name": "model_make",
-      "description": null,
-      "encrypted": false,
-      "ordinal": 1,
-      "visible": true,
-      "classification_node_ids": [],
-      "slotable_id": "9d2c2a14-feec-4320-bb71-5b5761b9f085",
-      "slotable_type": "TileItem",
-      "required": false,
-      "updated_at": "2020-02-03T08:33:41.771Z",
-      "created_at": "2020-02-03T08:33:41.771Z",
-      "config": null,
-      "slot_type_name": "key_value",
-      "creator_type_name": "system",
-      "binary_ids": [],
-      "value": "",
-      "label": "Make or model",
-      "image": null,
-      "encrypted_value": null
-    }
-  ],
-  "associations": [],
-  "associations_to": []
+    "associations": [],
+    "associations_to": []
 }
 ```
 
@@ -454,7 +417,7 @@ In the following example, we will generate a Data Encryption Key \(DEK\) and use
 * Reading a DEK from the Key Store
 * Decrypting it with the KEK
 
-To generate a DEK, change to the `:/meeco-documentation/client_scripts/guide03` directory and run the following command:
+If you followed the Meeco CLI guide, you will have already created a user with a DEK which you can find in the `.user.yaml` file.
 
 ```bash
 ./00.make_key.rb
@@ -528,10 +491,10 @@ Let's fill in a value of the `encrypted_value` slot using the encrypted value fr
 
 ```bash
 curl -i -X PUT \
- 'https://meeco-api-dev.azure-api.net/vault/items/0f56c2ff-acfb-4838-80b3-b9d41ff368f5' \
-  -H 'Authorization: DECRYPTED_VAULT_ADMISSION_TOKEN_FROM_DOCUMENT_2_STEP_11' \
+ 'https://sandbox.meeco.me/vault/items/0f56c2ff-acfb-4838-80b3-b9d41ff368f5' \
+  -H 'Authorization: VAULT_ACCESS_TOKEN_FROM_CLI_GENERATED_USER' \
   -H 'content-type: application/json' \
-  -H 'Meeco-Subscription-Key: DEVELOPER_PORTAL_SUBSCRIPTION KEY' \
+  -H 'Meeco-Subscription-Key: DEV_PORTAL_SUBSCRIPTION_KEY' \
   -d '
     {
       "story_item": {
@@ -555,7 +518,7 @@ curl -i -X PUT \
 
 Response:
 
-```javascript
+```json
     {
       "item": {
         ...
