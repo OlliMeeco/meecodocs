@@ -46,3 +46,7 @@ You're now ready to use the CLI!
 
 You can now go back to the [Meeco Quickstart](quickstart.md) guide and follow the run-through in order to create a User, setup the Keystore, gain access to the Vault and create your first Item!
 
+### How It Works
+
+
+
