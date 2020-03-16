@@ -32,6 +32,8 @@ Because creating an Item begins with an Item template, we can begin with listing
   -H 'Meeco-Subscription-Key: DEV_PORTAL_SUBSCRIPTION_KEY'
 ```
 
+The response returns a lot of data, and it lists all available items and their slots. Slots are given in a separate list and can be matched by their IDs:
+
 The response is pretty large, and it lists all available Items and their slots. Slots are given in a separate list and can be matched by their IDs:
 
 ```javascript
