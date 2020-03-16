@@ -14,7 +14,7 @@ Before diving in however, we'll start with an overview of the different componen
 
 ## Platform Overview
 
-The Meeco platform or API-of-Me as we like to call it is a technology that is designed for everyone to store data and control how data is shared with or consent is given to other people or organisations that they trust.
+The Meeco platform or API-of-Me as we like to call it is a technology that is designed for everyone to store data and control how data is shared with or consent is given to other people or organizations that they trust.
 
 At no point is information stored or accessed in plaintext. It is only the client who can access this information inside a trusted execution environment.
 
