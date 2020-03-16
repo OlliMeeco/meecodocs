@@ -38,7 +38,7 @@ After this configuration file is created, we can create the share between the tw
 meeco shares:create -c .share_config.yaml
 ```
 
-The CLI sets up a rivate encryption space between `user` and `user2` and then shares the item. 
+The CLI sets up a private encryption space between `user` and `user2` and then shares the item.
 
 We never created an item for the second user, so we can see how looking at another user's shared item works:
 

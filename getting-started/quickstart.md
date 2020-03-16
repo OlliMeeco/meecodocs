@@ -11,13 +11,13 @@ The first thing to do is setup an `.environment.yaml` file that allows you to co
 {% code title=".environment.yaml" %}
 ```yaml
 vault:
-  url: https://api-sandbox.meeco.me
+  url: https://sandbox.meeco.me/vault
 keystore:
-  url: https://keystore-sandbox.meeco.me
+  url: https://sandbox.meeco.me/keystore
 downloader:
-  url: https://downloader-sandbox.meeco.me
+  url: https://sandbox.meeco.me/downloader
 passphrase:
-  url: https://passphrasestore-sandbox.meeco.me
+  url: https://sandbox.meeco.me/passphrasestore
 ```
 {% endcode %}
 
@@ -95,4 +95,3 @@ $ meeco items:create -i vehicle.yaml -a .user.yaml
 ```
 
 Congratulations, you have now created your first item in the vault.
-

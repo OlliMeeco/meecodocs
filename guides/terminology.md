@@ -24,21 +24,21 @@ A _**Slot**_ in the smallest data entity in the _**Vault**_. A _**Slot**_ is a p
 
 _**Slot**_ values are stored in an encrypted form and only the user can read them.
 
-## Card
+## Item
 
-A _**Card**_ is a group of _**Slots**_ related by a topic. For example, a user profile is a _**Card**_. A club membership, a flight reservation - all these can be _**Cards**_ each having a number of _**Slot**_ of different tiles in them.
+An _**Item**_ is a group of _**Slots**_ related by a topic. For example, a user profile is an _**Item**_. A club membership, a flight reservation - all these can be _**Items**_ each having a number of _**Slots**_ of different tiles in them.
 
-## A Card Template
+## An Item Template
 
-A _**Card Template**_ is a predefined list of empty _**Slots**_. Each _**Card**_ is created by cloning such a template and filling in the _**Slots**_.
+An _**Item Template**_ is a predefined list of empty _**Slots**_. Each _**Item**_ is created by cloning such a template and filling in the _**Slots**_.
 
 ## Connection
 
-A _**Connection**_ between two users is a channel via which users can share individual _**Slots**_ on the _**Cards**_, or the entire _**Card**_ itself.
+A _**Connection**_ between two users is a channel via which users can share individual _**Slots**_ on the _**Items**_, or the entire _**Item**_ itself.
 
 ## Share
 
-A _**Share**_ is created when a user grants access to their _**Card**_ to another user. The _**Card**_ is re-encrypted with a data encryption key shared with the recipient of the _**Share**_.
+A _**Share**_ is created when a user grants access to their _**Item**_ to another user. The _**Item**_ is re-encrypted with a data encryption key shared with the recipient of the _**Share**_.
 
 ## Passphrase Derived Key And Derivation Artefacts
 

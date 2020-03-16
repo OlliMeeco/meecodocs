@@ -1,9 +1,9 @@
-# Card and Slots
+# Items and Slots
 
 ## Basic Concepts
 
-* **Card** — A _card_ is the basic container for all your encrypted data. Data can be strings, dates, numbers, but also binaries like images or documents. You can have as many cards as you want and these are what you typically want to keep safe in your personal data vault and selectively share information from. A card can be to store related data, for example, user profile, a club membership, and so on. Some endpoints refer to slots as _stories_. Please Consider _story_ a synonym
-* **Slot** — A _slot_ is the smallest data entity in the vault. A slot is a placeholder for a data value. A _card_ usually contains a number of slots. Each slot has a name, a label, and a value. Slots have types. A slot type defines what can be stored in a slot and how this data is handled. Supported slot types include:
+* **Items** — An _Item_ is the basic container for all your encrypted data. Data can be strings, dates, numbers, but also binaries like images or documents. You can have as many Items as you want and these are what you typically want to keep safe in your personal data vault and selectively share information from. An Item can be used to store related data, for example, user profile, a club membership, and so on. Some endpoints refer to slots as _stories_. Please Consider _story_ a synonym
+* **Slot** — A _slot_ is the smallest data entity in the vault. A slot is a placeholder for a data value. An Item usually contains a number of slots. Each slot has a name, a label, and a value. Slots have types. A slot type defines what can be stored in a slot and how this data is handled. Supported slot types include:
   * bool
   * classification\_node
   * color
@@ -19,11 +19,11 @@
   * select\_multiple
   * email
   * password
-* **Card Template** — is a predefined list of empty slots with a label and a name. Each card is created by cloning such a template and filling in the slots.
+* **Item Template** — is a predefined list of empty slots with a label and a name. Each Item is created by cloning such a template and filling in the slots.
 
-## Browsing Card Templates
+## Browsing Item Templates
 
-Because creating a card begins with a card template, we can begin with listing all available card templates:
+Because creating an Item begins with an Item template, we can begin with listing all available Item templates:
 
 ```bash
     curl --request GET \
@@ -32,7 +32,7 @@ Because creating a card begins with a card template, we can begin with listing a
   -H 'Meeco-Subscription-Key: DEV_PORTAL_SUBSCRIPTION_KEY'
 ```
 
-The response is pretty large, and it lists all available items and their slots. Slots are given in a separate list and can be matched by their IDs:
+The response is pretty large, and it lists all available Items and their slots. Slots are given in a separate list and can be matched by their IDs:
 
 ```javascript
 {
@@ -113,14 +113,14 @@ Here is a truncated sample response:
 }
 ```
 
-Here's a sample list of card templates you might get:
+Here's a sample list of Item templates you might get:
 
 * passport\_details
 * password
 * important\_document
 * vehicle
 * travel
-* bank\_card
+* bank\_Item
 * membership\_subscription
 * pet
 * device
@@ -128,7 +128,7 @@ Here's a sample list of card templates you might get:
 * custom
 * services
 
-We can also search a certain card template by its `name`:
+We can also search a certain Item template by its `name`:
 
 ```bash
 curl --request GET \
@@ -155,9 +155,9 @@ Here is a sample list of slots and their types for template "Vehicle":
 * Date Purchased — `date`
 * Image — `image`
 
-## Creating a Card
+## Creating an Item
 
-Now it is about time to create an actual card based on a card template. In this example, we will only specify the name of the template and define no slots:
+Now it is about time to create an actual Item based on an Item template. In this example, we will only specify the name of the template and define no slots:
 
 ```bash
 curl --request POST \
@@ -169,7 +169,7 @@ curl --request POST \
   --data '{"template_name": "vehicle"}'
 ```
 
-Here is a response with a created card:
+Here is a response with a created Item:
 
 ```javascript
 {
@@ -404,7 +404,7 @@ Here is a response with a created card:
 
 One of the core features of the Meeco platform is data encryption. User data stored in the Meeco Vault is encrypted in such a way that no one - including Meeco - can decrypt and read it other than the user.
 
-If we want to store data in a card, we have to encrypt it, or the Vault will refuse to store unencrypted data and return an error.
+If we want to store data in an Item, we have to encrypt it, or the Vault will refuse to store unencrypted data and return an error.
 
 To get familiar with the kinds of cryptographic key the Meeco platform uses please follow the "Setting Up Access to the Vault and Keystore". That will introduce you to the Cryppo library that we use to make encryption, decryption and serialization simpler in the context of the Meeco Service.
 
@@ -483,7 +483,7 @@ If you are feeling adventurous you are welcome to read these scripts.
 
 ## Filling in a slot
 
-Thanks to the template our newly created card already has a list of empty fields \(slots\), and a list of classification tags.
+Thanks to the template our newly created Item already has a list of empty fields \(slots\), and a list of classification tags.
 
 Let's fill in a value of the `encrypted_value` slot using the encrypted value from the previous step:
 
