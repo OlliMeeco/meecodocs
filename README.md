@@ -10,7 +10,7 @@ In the guides, the following topics are covered
 * Learn the place of classifications in the system
 * Make a connection with another user and share an item
 
-Before diving in however, we'll start with an overview of the different components within Meeco. One more note, if you want to follow along, you'll want to sign up for the [free API keys](https://).
+Before diving in however, we'll start with an overview of the different components within Meeco. One more note, if you want to follow along, you'll want to sign up for the [free API keys](https://dev.meeco.me/signup).
 
 ## Platform Overview
 
