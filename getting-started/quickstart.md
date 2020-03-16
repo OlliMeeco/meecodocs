@@ -95,3 +95,4 @@ $ meeco items:create -i vehicle.yaml -a .user.yaml
 ```
 
 Congratulations, you have now created your first item in the vault.
+

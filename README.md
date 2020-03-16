@@ -48,8 +48,7 @@ Services can be reached by appending one of the following to `https://sandbox.me
 
 Meeco has made available for use some tools to make using the API-of-Me easier.
 
-The Meeco CLI is available [here](https://github.com/Meeco/cli). Open the Meeco CLI page in this documentation for detailed installation instructions.
+The Meeco CLI is available [here](https://github.com/Meeco/cli). Open the [Meeco CLI](getting-started/meeco-cli.md) section in this documentation for detailed installation instructions.
 
-We've also created an encryption library called `Cryppo` that makes using the encryption and decryption routines we recommend much easier. We've created a Javascript and Ruby library - the examples contained within this guide will focus on the JS version.
-Check out `Cryppo-JS` [here](https://github.com/Meeco/cryppo-js) and `Cryppo` with Ruby [here](https://github.com/Meeco/cryppo).
+We've also created an encryption library called `Cryppo` that makes using the encryption and decryption routines we recommend much easier. We've created a Javascript and Ruby library - the examples contained within this guide will focus on the JS version. Check out `Cryppo-JS` [here](https://github.com/Meeco/cryppo-js) and `Cryppo` with Ruby [here](https://github.com/Meeco/cryppo).
 

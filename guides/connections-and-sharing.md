@@ -4,13 +4,13 @@ description: How to create a connection between you and another user to share da
 
 # Connections and Sharing
 
-After successfully creating an item in your user's vault, it's now time to create another user. 
+After successfully creating an item in your user's vault, it's now time to create another user.
 
 ```bash
 meeco users:create -p supersecretpassword > .user_2.yaml
 ```
 
-We used the same password as in the Quickstart example, in case you were wondering. 
+We used the same password as in the Quickstart example, in case you were wondering.
 
 Using the CLI again, we're going to make a connection configuration file between `user` and `user_2`
 
@@ -18,13 +18,13 @@ Using the CLI again, we're going to make a connection configuration file between
 meeco connections:create-config --from .user.yaml --to .user_2.yaml > .connection_config.yaml
 ```
 
-This creates a file called `.connection_config.yaml` which we will open and edit the `fromName` and `toName` keys. You can name the users whatever you like. Next, it's time to use the CLI again to create the connection between the two users. 
+This creates a file called `.connection_config.yaml` which we will open and edit the `fromName` and `toName` keys. You can name the users whatever you like. Next, it's time to use the CLI again to create the connection between the two users.
 
 ```bash
 meeco connections:create -c .connection_config.yaml
 ```
 
-This generates the keypairs for the connection, creates and accepts the invitation for the two users. 
+This generates the keypairs for the connection, creates and accepts the invitation for the two users.
 
 Now, we're ready to select an item from user's vault and share it with `user2` . First, we'll need to create the share template with the CLI. You can see the items your user has by typing `meeco items:list` in the command line. Once you have have the id, add it to the following CLI command:
 
