@@ -30,15 +30,17 @@ An _**Item**_ is a group of _**Slots**_ related by a topic. For example, a user 
 
 ## An Item Template
 
-An _**Item Template**_ is a predefined list of empty _**Slots**_. Each _**Item**_ is created by cloning such a template and filling in the _**Slots**_.
+An _**Item Template**_ is a predefined list of empty _**Slots**_. Each _**Item**_ is created by cloning such a template and filling in the _**Slots**_ with your user's data. You can read a more detailed document about Items and Templates [here](items-and-slots.md)
 
 ## Connection
 
 A _**Connection**_ between two users is a channel via which users can share individual _**Slots**_ on the _**Items**_, or the entire _**Item**_ itself.
 
+You can read a more detailed
+
 ## Share
 
-A _**Share**_ is created when a user grants access to their _**Item**_ to another user. The _**Item**_ is re-encrypted with a data encryption key shared with the recipient of the _**Share**_.
+A _**Share**_ is created when a user grants access to their _**Item**_ to another user that they've _**Connected**_ with. The _**Item**_ is re-encrypted with a data encryption key shared with the recipient of the _**Share**_.
 
 ## Passphrase Derived Key And Derivation Artefacts
 
