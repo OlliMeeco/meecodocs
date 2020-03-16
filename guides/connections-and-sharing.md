@@ -2,9 +2,9 @@
 description: How to create a connection between you and another user to share data
 ---
 
-# Connections and Sharing
+# Connections and Sharing - CLI
 
-After successfully creating an item in your user's vault, it's now time to create another user.
+After successfully creating an item in your user's Vault from the [Quickstart section](../getting-started/quickstart.md), it's now time to create another user.
 
 ```bash
 meeco users:create -p supersecretpassword > .user_2.yaml

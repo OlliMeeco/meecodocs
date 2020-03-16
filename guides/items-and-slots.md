@@ -1,4 +1,4 @@
-# Card and Slots
+# Items and Slots
 
 ## Basic Concepts
 
