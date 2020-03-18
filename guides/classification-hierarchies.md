@@ -29,7 +29,7 @@ The response will look like:
       "id": "7f7b94f6-5a25-4de1-a2d9-2c0822aa69aa",
       "background_color": null,
       "description": null,
-      "image": "https://meeco-api-dev.azure-api.net/vault/global/images/d02f5cfc-b1f2-46be-805c-5a8e6702b55c",
+      "image": "SANDBOX_URL/vault/global/images/d02f5cfc-b1f2-46be-805c-5a8e6702b55c",
       "label": "Meeco Templates",
       "name": "meeco_templates",
       "ordinal": 1,
@@ -99,7 +99,7 @@ It is also possible to search nodes by partial names:
 
 ```bash
 curl -X GET \
-  'https://meeco-api-dev.azure-api.net/vault/classification_nodes?by_name=pe' \
+  'https://sandbox.meeco.me/vault/classification_nodes?by_name=pe' \
   -H 'authorization: Bearer VAULT_ACCESS_TOKEN_FROM_CLI_GENERATED_USER' \
   -H 'Meeco-Subscription-Key: DEV_PORTAL_SUBSCRIPTION_KEY'
   -H 'Content-Type: application/json' | jq
@@ -114,7 +114,7 @@ Response:
       "id": "bc466309-1f41-414a-869c-6e28e450d72f",
       "background_color": "#FF00FF",
       "description": null,
-      "image": "https://meeco-api-dev.azure-api.net/vault/global/images/847a5928-90e9-4569-bc5b-ca37e5d65df0",
+      "image": "https://SANDBOX_API_URL/vault/global/images/847a5928-90e9-4569-bc5b-ca37e5d65df0",
       "label": "People",
       "name": "people",
       "ordinal": 2,
@@ -124,7 +124,7 @@ Response:
       "id": "a807d605-abf2-49a6-9593-930ce8adb59b",
       "background_color": "#FF00FF",
       "description": null,
-      "image": "https://meeco-api-dev.azure-api.net/vault/global/images/0c859388-fd28-4672-9e6e-3361ef8444ab",
+      "image": "https://SANDBOX_API_URL/vault/global/images/0c859388-fd28-4672-9e6e-3361ef8444ab",
       "label": "Pets",
       "name": "pets",
       "ordinal": 7,
@@ -134,7 +134,7 @@ Response:
       "id": "e2a29d20-5ffd-41da-9085-70dc49ed1978",
       "background_color": null,
       "description": null,
-      "image": "https://meeco-api-dev.azure-api.net/vault/global/images/d02f5cfc-b1f2-46be-805c-5a8e6702b55c",
+      "image": "https://SANDBOX_API_URL/vault/global/images/d02f5cfc-b1f2-46be-805c-5a8e6702b55c",
       "label": "Personal",
       "name": "personal",
       "ordinal": 6,
@@ -144,7 +144,7 @@ Response:
       "id": "d85fe895-063f-4cba-9af1-531d1f324c3d",
       "background_color": null,
       "description": null,
-      "image": "https://meeco-api-dev.azure-api.net/vault/global/images/d02f5cfc-b1f2-46be-805c-5a8e6702b55c",
+      "image": "https://SANDBOX_API_URL/vault/global/images/d02f5cfc-b1f2-46be-805c-5a8e6702b55c",
       "label": "Pets",
       "name": "pets",
       "ordinal": 8,

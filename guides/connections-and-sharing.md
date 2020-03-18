@@ -102,7 +102,7 @@ meeco shares:get -a .user_2.yaml bed6ea54-701e-4d36-9142-a975cad21911
 
 Well done - you've now created a connection between two users, and shared an item!
 
-## Sharing Cards Between Users
+## Sharing Cards Between Users - In Depth
 
 All user data stored in the Vault is encrypted and can only be decrypted and read by the user.
 

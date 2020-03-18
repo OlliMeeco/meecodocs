@@ -107,7 +107,7 @@ Here's a sample list of Item templates you might get:
 * `important_document`
 * `vehicle`
 * `travel`
-* `bank_Item`
+* `bank_item`
 * `membership_subscription`
 * `pet`
 * `device`
