@@ -2,15 +2,21 @@
 
 ## Vault
 
-Storage for encrypted user data. User data cannot be decrypted and read by Meeco. In the current implementation the _**Vault**_ functionality is implemented by the `meeco-api`.
+The Vault is where a User of the API-of-Me will store the Items they create and modify. In other words - storage for encrypted user data. 
+
+The User is the only actor that can decrypt their own data - that is to say, more importantly, that User data cannot be decrypted and read by anyone at Meeco. Your data is _your_ data. 
+
+In the [Meeco Developer Portal](https://dev.meeco.me) the Vault is reachable through the `https://sandbox.meeco.me/vault` endpoint.
 
 ## Keystore
 
-Storage for secrets and keys. In the current implementation the **Keystore** functionality is implemented by `meeco-keystore`.
+Storage for secrets and keys. This is where the [_Data Encryption Keys_](terminology.md#data-encryption-key-dek)_, Private Keys_ that have been encrypted with the [_Key Encryption Key_](terminology.md#key-encryption-key-kek)_,_ and __the __[_Derivation Artefacts_](terminology.md#passphrase-derived-key-and-derivation-artefacts) are stored. 
+
+In the [Meeco Developer Portal](https://dev.meeco.me) the Keystore is reachable through the `https://sandbox.meeco.me/keystore` endpoint.
 
 ## Slot
 
-A _**Slot**_ in the smallest data entity in the _**Vault**_. A _**Slot**_ is a placeholder for one data value. Each _**Slot**_ has a `name`, a `label`, and a `value`. _**Slots**_ are typed. A _**Slot**_ type defines what can be stored in a _**Slot**_ and how this data is handled. Example _**Slot**_ types are:
+A _**Slot**_ in the smallest data entity in the _**Vault**_. An _**Item**_ is made up of _**Slots.**_ A _**Slot**_ is a placeholder for one data value. Each _**Slot**_ has a `name`, a `label`, and a `value`. _**Slots**_ are typed. A _**Slot**_ type defines what can be stored in a _**Slot**_ and how this data is handled. Example _**Slot**_ types are:
 
 * `bool`
 * `date`
@@ -20,13 +26,50 @@ A _**Slot**_ in the smallest data entity in the _**Vault**_. A _**Slot**_ is a p
 * `url`
 * `phone_number`
 * `email`
-* `password`
+* `password` 
 
-_**Slot**_ values are stored in an encrypted form and only the user can read them.
+_**Slots**_ have the following example structure:
+
+```text
+"slots": [
+        {
+            "id": "f1668277-0db5-4cff-9210-08a2f245c4aa",
+            "name": "return_date",
+            "description": null,
+            "encrypted": false,
+            "ordinal": 2,
+            "visible": true,
+            "classification_node_ids": [],
+            "slotable_id": "ccfaadf6-e040-433f-ad34-904e988a2187",
+            "slotable_type": "ItemTemplate",
+            "required": false,
+            "updated_at": "2020-01-02T20:32:49.761Z",
+            "created_at": "2020-01-02T20:32:49.761Z",
+            "config": null,
+            "slot_type_name": "date",
+            "creator": "system",
+            "binary_ids": [],
+            "label": "Return date",
+            "image": null,
+            "encrypted_value": null
+        },
+```
+
+Once encrypted and serialized - you can use one of Meeco's [Cryppo](../getting-started/cryppo.md) family of encryption libraries -  a slot value of "BMW" would look something like this:
+
+```bash
+"encrypted_value": "Aes256Gcm.2hDl.LS0tCml2OiAhYmluYXJ5IHwtCiAgQWQwSThDZk5qRnFycmFuMAphdDogIWJpbmFyeSB8LQogIDJXVklzbUxOSWVoOHZIVDB1ZzBtZVE9PQphZDogbm9uQQo="
+```
+
+_**Slot**_ values are always stored in an encrypted form and only the user can decrypt and read them.
+
+_**Slots**_ are able to be shared after two users have made a [_**Connection**_](terminology.md#connection) _****_with each other.
 
 ## Item
 
-An _**Item**_ is a group of _**Slots**_ related by a topic. For example, a user profile is an _**Item**_. A club membership, a flight reservation - all these can be _**Items**_ each having a number of _**Slots**_ of different tiles in them.
+An _**Item**_ is a group of _**Slots**_ related by a topic. For example, a user profile is an _**Item**_. A club membership, a flight reservation - all these can be _**Items**_ each having a number of _**Slots**_ of different types in them.
+
+If a user makes a connection with another user, they can share 
 
 ## An Item Template
 
@@ -36,11 +79,13 @@ An _**Item Template**_ is a predefined list of empty _**Slots**_. Each _**Item**
 
 A _**Connection**_ between two users is a channel via which users can share individual _**Slots**_ on the _**Items**_, or the entire _**Item**_ itself.
 
-You can read a more detailed
+You can read a more detailed explanation of Connections and Sharing Items and Slots [here](connections-and-sharing.md), and you can run through creating a _**Connection**_ and sharing an item using the Meeco CLI tool [here](connections-and-sharing.md) - just make sure you've gone through the [Quickstart guide](../getting-started/quickstart.md) first!
 
 ## Share
 
 A _**Share**_ is created when a user grants access to their _**Item**_ to another user that they've _**Connected**_ with. The _**Item**_ is re-encrypted with a data encryption key shared with the recipient of the _**Share**_.
+
+For a detailed look at Sharing and Connections, have a look at the Connections and Sharing Guide, or read through the tutorial for creating a _**Connection**_ and sharing an item using the [Meeco CLI](../getting-started/meeco-cli.md) tool [here](connections-and-sharing.md)
 
 ## Passphrase Derived Key And Derivation Artefacts
 

@@ -1,25 +1,10 @@
 # Items and Slots
 
-## Basic Concepts
+#### Basic Terms
 
-* **Items** — An _Item_ is the basic container for all your encrypted data. Data can be strings, dates, numbers, but also binaries like images or documents. You can have as many Items as you want and these are what you typically want to keep safe in your personal data vault and selectively share information from. An Item can be used to store related data, for example, user profile, a club membership, and so on. Some endpoints refer to slots as _stories_. Please Consider _story_ a synonym
-* **Slot** — A _slot_ is the smallest data entity in the vault. A slot is a placeholder for a data value. An Item usually contains a number of slots. Each slot has a name, a label, and a value. Slots have types. A slot type defines what can be stored in a slot and how this data is handled. Supported slot types include:
-  * bool
-  * classification\_node
-  * color
-  * date
-  * datetime
-  * image
-  * key\_value
-  * note\_text
-  * select
-  * attachment
-  * url
-  * phone\_number
-  * select\_multiple
-  * email
-  * password
-* **Item Template** — is a predefined list of empty slots with a label and a name. Each Item is created by cloning such a template and filling in the slots.
+* **Items** — An _Item_ is the basic container for all your encrypted data. Data can be strings, dates, numbers, but also binaries like images or documents. Read more about [Items in the Terminology section](terminology.md#item)
+* **Slot** — A _slot_ is the smallest data entity in the vault. A slot is a placeholder for a data value. An Item usually contains a number of slots. Each slot has a name, a label, and a value. Read more about [slots in the Terminology section](terminology.md#slot)
+* **Item Template** — is a predefined list of empty slots with a label and a name. Each Item is created by cloning such a template and filling in the slots. More detail about [Item Templates in the Terminology section](terminology.md#an-item-template)
 
 ## Browsing Item Templates
 
@@ -74,7 +59,7 @@ Here is a truncated sample response:
                 "929ea8b9-9815-4389-99a9-163f9e0c8b15"
             ]
         },
-        ....
+        ...
     ],
     "slots": [
         {
@@ -144,7 +129,7 @@ or `item_templates` `id` \(`$['item_templates']['id']`\):
 
 ```bash
 curl --request GET \
-  --url https://sandbox.meeco.me/vault/item_templates/ITEM-TEMPLATE-ID \
+  --url 'https://sandbox.meeco.me/vault/item_templates/ITEM-TEMPLATE-ID' \
   -H 'authorization: Bearer VAULT_ACCESS_TOKEN_FROM_CLI_GENERATED_USER' \
   -H 'Meeco-Subscription-Key: DEV_PORTAL_SUBSCRIPTION_KEY'
 ```
@@ -163,7 +148,7 @@ Now it is about time to create an actual Item based on an Item template. In this
 
 ```bash
 curl --request POST \
-  --url https://sandbox.meeco.me/vault/items \
+  --url 'https://sandbox.meeco.me/vault/items' \
   -H 'accept: application/json' \
   -H 'authorization: Bearer VAULT_ACCESS_TOKEN_FROM_CLI_GENERATED_USER' \
   -H 'content-type: application/json' \
@@ -241,161 +226,8 @@ Here is a response with a created Item:
             "image": null,
             "encrypted_value": null
         },
-        {
-            "id": "6e1e4ecc-0b8b-45c1-919f-01e69f05bbf8",
-            "name": "tags",
-            "description": null,
-            "encrypted": false,
-            "ordinal": 4,
-            "visible": true,
-            "classification_node_ids": [],
-            "slotable_id": "e053853d-6a7e-476b-8e3b-d78b4e6d2802",
-            "slotable_type": "Item",
-            "required": false,
-            "updated_at": "2020-03-12T04:38:24.494Z",
-            "created_at": "2020-03-12T04:38:24.494Z",
-            "config": {
-                "classification_scheme_name": "tag",
-                "selection_type": "multiple",
-                "can_create": true
-            },
-            "slot_type_name": "classification_node",
-            "creator": "system",
-            "binary_ids": [],
-            "label": "Tags",
-            "image": null,
-            "encrypted_value": null
-        },
-        {
-            "id": "f09975cc-ec8e-4744-b883-73c115d32434",
-            "name": "story_category",
-            "description": null,
-            "encrypted": false,
-            "ordinal": 3,
-            "visible": true,
-            "classification_node_ids": [],
-            "slotable_id": "e053853d-6a7e-476b-8e3b-d78b4e6d2802",
-            "slotable_type": "Item",
-            "required": false,
-            "updated_at": "2020-03-12T04:38:24.441Z",
-            "created_at": "2020-03-12T04:38:24.441Z",
-            "config": {
-                "classification_scheme_name": "story_category",
-                "selection_type": "single",
-                "editable": true
-            },
-            "slot_type_name": "classification_node",
-            "creator": "system",
-            "binary_ids": [],
-            "label": "Category",
-            "image": null,
-            "encrypted_value": null
-        },
-        {
-            "id": "32d1f51b-d26e-4c85-8589-133a4f8e4579",
-            "name": "type",
-            "description": null,
-            "encrypted": false,
-            "ordinal": 4,
-            "visible": true,
-            "classification_node_ids": [],
-            "slotable_id": "e053853d-6a7e-476b-8e3b-d78b4e6d2802",
-            "slotable_type": "Item",
-            "required": false,
-            "updated_at": "2020-03-12T04:38:24.364Z",
-            "created_at": "2020-03-12T04:38:24.364Z",
-            "config": null,
-            "slot_type_name": "key_value",
-            "creator": "system",
-            "binary_ids": [],
-            "label": "Type",
-            "image": null,
-            "encrypted_value": null
-        },
-        {
-            "id": "5addd943-948d-4f80-b1e8-771ff5fee2c1",
-            "name": "vin",
-            "description": null,
-            "encrypted": false,
-            "ordinal": 3,
-            "visible": true,
-            "classification_node_ids": [],
-            "slotable_id": "e053853d-6a7e-476b-8e3b-d78b4e6d2802",
-            "slotable_type": "Item",
-            "required": false,
-            "updated_at": "2020-03-12T04:38:24.326Z",
-            "created_at": "2020-03-12T04:38:24.326Z",
-            "config": null,
-            "slot_type_name": "key_value",
-            "creator": "system",
-            "binary_ids": [],
-            "label": "VIN",
-            "image": null,
-            "encrypted_value": null
-        },
-        {
-            "id": "1fdd1473-a178-43dc-8862-c1aa242cf861",
-            "name": "model_make",
-            "description": null,
-            "encrypted": false,
-            "ordinal": 1,
-            "visible": true,
-            "classification_node_ids": [],
-            "slotable_id": "e053853d-6a7e-476b-8e3b-d78b4e6d2802",
-            "slotable_type": "Item",
-            "required": false,
-            "updated_at": "2020-03-12T04:38:24.284Z",
-            "created_at": "2020-03-12T04:38:24.284Z",
-            "config": null,
-            "slot_type_name": "key_value",
-            "creator": "system",
-            "binary_ids": [],
-            "label": "Make or model",
-            "image": null,
-            "encrypted_value": null
-        },
-        {
-            "id": "e4d7f7ed-de2c-4819-9369-478f2357b6aa",
-            "name": "licence_plate",
-            "description": null,
-            "encrypted": false,
-            "ordinal": 2,
-            "visible": true,
-            "classification_node_ids": [],
-            "slotable_id": "e053853d-6a7e-476b-8e3b-d78b4e6d2802",
-            "slotable_type": "Item",
-            "required": false,
-            "updated_at": "2020-03-12T04:38:24.239Z",
-            "created_at": "2020-03-12T04:38:24.239Z",
-            "config": null,
-            "slot_type_name": "key_value",
-            "creator": "system",
-            "binary_ids": [],
-            "label": "Vehicle registration number",
-            "image": null,
-            "encrypted_value": null
-        },
-        {
-            "id": "4cd09df4-9b69-4579-9e76-9a6d7c314b02",
-            "name": "purchase_date",
-            "description": null,
-            "encrypted": false,
-            "ordinal": 5,
-            "visible": true,
-            "classification_node_ids": [],
-            "slotable_id": "e053853d-6a7e-476b-8e3b-d78b4e6d2802",
-            "slotable_type": "Item",
-            "required": false,
-            "updated_at": "2020-03-12T04:38:24.191Z",
-            "created_at": "2020-03-12T04:38:24.191Z",
-            "config": null,
-            "slot_type_name": "date",
-            "creator": "system",
-            "binary_ids": [],
-            "label": "Date purchased",
-            "image": null,
-            "encrypted_value": null
-        }
+        ...
+        
     ],
     "associations": [],
     "associations_to": []

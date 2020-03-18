@@ -1,6 +1,6 @@
 # What is the API-of-Me
 
-The getting started section is our primary source for people new to the platform. Everyone should be able to follow the [Quickstart](getting-started/quickstart.md) guide as it teaches the basics. Next step is to read the guides available in the _Guides_ section and we highly recommend following along with the code samples that we provide.
+The getting started section is our primary source for people new to the platform. Everyone should be able to follow the [Quickstart](getting-started/quickstart.md) guide as it teaches the basics. Next step is to read the guides available in the _**Guides**_ section and we highly recommend following along with the code samples that we provide.
 
 In the guides, the following topics are covered
 
@@ -14,7 +14,7 @@ Before diving in however, we'll start with an overview of the different componen
 
 ## Platform Overview
 
-The Meeco platform or API-of-Me as we like to call it is a technology that is designed for everyone to store data and control how data is shared with or consent is given to other people or organisations that they trust.
+The Meeco platform or API-of-Me as we like to call it is a technology that is designed for everyone to store data and control how data is shared with or consent is given to other people or organizations that they trust.
 
 At no point is information stored or accessed in plaintext. It is only the client who can access this information inside a trusted execution environment.
 
@@ -48,7 +48,9 @@ Services can be reached by appending one of the following to `https://sandbox.me
 
 Meeco has made available for use some tools to make using the API-of-Me easier.
 
-The Meeco CLI is available [here](https://github.com/Meeco/cli). Open the [Meeco CLI](getting-started/meeco-cli.md) section in this documentation for detailed installation instructions.
+The Meeco CLI is available [here](https://github.com/Meeco/cli). Open the [Meeco CLI](getting-started/meeco-cli.md) section in this documentation for detailed installation instructions, and then you can get into the [Quickstart Guide](getting-started/quickstart.md) to create a User and an Item to save to your Vault.
 
 We've also created an encryption library called `Cryppo` that makes using the encryption and decryption routines we recommend much easier. We've created a Javascript and Ruby library - the examples contained within this guide will focus on the JS version. Check out `Cryppo-JS` [here](https://github.com/Meeco/cryppo-js) and `Cryppo` with Ruby [here](https://github.com/Meeco/cryppo).
+
+To read more about Cryppo, open the Cryppo page in the Meeco Docs [here](getting-started/cryppo.md)
 

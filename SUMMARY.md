@@ -14,7 +14,6 @@
 * [Terminology](guides/terminology.md)
 * [Setting up Access](guides/setting-up-access.md)
 * [Items and Slots](guides/items-and-slots.md)
-* [Connections and Sharing - CLI](guides/connections-and-sharing.md)
+* [Connections and Sharing](guides/connections-and-sharing.md)
 * [Classification Hierarchies](guides/classification-hierarchies.md)
-* [Connections And Sharing](guides/connections-and-sharing-1.md)
 

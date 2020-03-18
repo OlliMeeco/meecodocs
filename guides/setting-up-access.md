@@ -14,7 +14,7 @@ Once the user has been authenticated a mobile/web application interacts with the
 
 Encrypting of data and keys on the client side before it is sent up to the _**Keystore**_ or _**Vault**_ is an important part of the flow and infrastructure. By never sending unencrypted data to the services the layer of trust needed in a given service is greatly diminished and the likelihood of the data being decrypted by a nefarious entity should a data breach occur is extremely low.
 
-For this guide, in order to emulate client behaviour we will use short snippets of Ruby code. You can also find executable scripts in directory `scripts`. Please make sure you are running `Ruby 2.5` or higher. You can find installation instruction for Ruby here: [https://www.ruby-lang.org/en/documentation/installation/](https://www.ruby-lang.org/en/documentation/installation/) .
+For this guide, in order to emulate client behavior we will use short snippets of Ruby code. You can also find executable scripts in directory `scripts`. Please make sure you are running `Ruby 2.5` or higher. You can find installation instruction for Ruby here: [https://www.ruby-lang.org/en/documentation/installation/](https://www.ruby-lang.org/en/documentation/installation/) .
 
 By the end of this guide, after reading and executing the scripts you will learn about which cryptographic keys exist for each user, and how they are encrypted and stored safely in the _**Keystore**_. The scripts also demonstrate how keys are encrypted and decrypted.
 

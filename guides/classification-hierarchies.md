@@ -1,14 +1,16 @@
 # Classification Hierarchies
 
-The Meeco platform has a very flexible way to tag information. Instead of having a traditional simple flat list of tags the system can be configured to have multiple independant classifications. These classification are called _classification schemes_. Each classification scheme is a tree and consists of _classification nodes_.
+The Meeco platform has a very flexible way to tag information. Instead of having a traditional simple flat list of tags the system can be configured to have multiple independent classifications. These classification are called _classification schemes_. Each classification scheme is a tree and consists of _classification nodes_.
+
+_To complete some of the following steps, please download the `jq` command line JSON processor tool from_ [_https://stedolan.github.io/jq/download/_](https://stedolan.github.io/jq/download/)\_\_
 
 All classification nodes can be queried by `GET /v2/global/classification_nodes`:
 
 ```bash
 curl -X GET \
-  https://meeco-api-dev.azure-api.net/vault/classification_nodes \
-  -H 'Authorization: Bearer DECRYPTED_VAULT_ADMISSION_TOKEN_FROM_DOCUMENT_2_STEP_11' \
-  -H 'Meeco-Subscription-Key: DEVELOPER_PORTAL_SUBSCRIPTION KEY' \
+  https://sandbox.meeco.me/vault/classification_nodes \
+  -H 'authorization: Bearer VAULT_ACCESS_TOKEN_FROM_CLI_GENERATED_USER' \
+  -H 'Meeco-Subscription-Key: DEV_PORTAL_SUBSCRIPTION_KEY'
   -H 'Content-Type: application/json'
 ```
 
@@ -46,9 +48,9 @@ Let's see which schemes there are:
 
 ```bash
 curl -X GET \
-    'https://meeco-api-dev.azure-api.net/vault/classification_nodes' \
-    -H 'Authorization: Bearer DECRYPTED_VAULT_ADMISSION_TOKEN_FROM_DOCUMENT_2_STEP_11' \
-    -H 'Meeco-Subscription-Key: DEVELOPER_PORTAL_SUBSCRIPTION KEY' \
+  https://sandbox.meeco.me/vault/classification_nodes \
+  -H 'authorization: Bearer VAULT_ACCESS_TOKEN_FROM_CLI_GENERATED_USER' \
+  -H 'Meeco-Subscription-Key: DEV_PORTAL_SUBSCRIPTION_KEY'
     -H 'Content-Type: application/json' | jq | grep scheme | sort | uniq
 ```
 
@@ -69,9 +71,9 @@ It is possible to query only nodes belonging to a certain classification scheme:
 
 ```bash
 curl -X GET \
-    'https://meeco-api-dev.azure-api.net/vault/classification_nodes?scheme_name=esafe_tags' \
-    -H 'Authorization: Bearer DECRYPTED_VAULT_ADMISSION_TOKEN_FROM_DOCUMENT_2_STEP_11' \
-    -H 'Meeco-Subscription-Key: DEVELOPER_PORTAL_SUBSCRIPTION KEY' \
+    'https://sandbox.meeco.me/vault/classification_nodes?scheme_name=esafe_tags' \
+  -H 'authorization: Bearer VAULT_ACCESS_TOKEN_FROM_CLI_GENERATED_USER' \
+  -H 'Meeco-Subscription-Key: DEV_PORTAL_SUBSCRIPTION_KEY'
     -H 'Content-Type: application/json' | jq | grep scheme | sort | uniq
 ```
 
@@ -98,8 +100,8 @@ It is also possible to search nodes by partial names:
 ```bash
 curl -X GET \
   'https://meeco-api-dev.azure-api.net/vault/classification_nodes?by_name=pe' \
-  -H 'Authorization: Bearer DECRYPTED_VAULT_ADMISSION_TOKEN_FROM_DOCUMENT_2_STEP_11' \
-  -H 'Meeco-Subscription-Key: DEVELOPER_PORTAL_SUBSCRIPTION KEY' \
+  -H 'authorization: Bearer VAULT_ACCESS_TOKEN_FROM_CLI_GENERATED_USER' \
+  -H 'Meeco-Subscription-Key: DEV_PORTAL_SUBSCRIPTION_KEY'
   -H 'Content-Type: application/json' | jq
 ```
 
