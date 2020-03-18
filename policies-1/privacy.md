@@ -2,5 +2,5 @@
 
 Here at Meeco, we take your privacy seriously. 
 
-Here is a link to our [Privacy Policy on our Company site ](https://blog.meeco.me/privacy-policy/)
+Read our complete [Privacy Policy on our Company site ](https://blog.meeco.me/privacy-policy/)which covers cookies, your data, our obligations to you and more
 

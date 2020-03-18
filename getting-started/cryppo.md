@@ -22,9 +22,11 @@ We've also created a simple CLI for Cryppo called `cryppo-cli` which can be foun
 
 Using this tool, you can very quickly generate a Data Encryption Key and easily encrypt and decrypt data to save to the slots on an item. 
 
+#### Installation
 
+Clone the repo, run `npm install` and npm link .. This will let you use `cryppo` and it's commands, else you'll have to run `./bin/cryppo`
 
-
+And that's it! `cryppo-cli` lets you generate [DEKs](../guides/terminology.md#data-encryption-key-dek) and also allows you to encryt and decrypt data with pre-existing DEKs.
 
 
 

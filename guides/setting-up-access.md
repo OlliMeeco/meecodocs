@@ -20,7 +20,7 @@ By the end of this guide, after reading and executing the scripts you will learn
 
 ### Setting up
 
-Download the Meeco-CLI and the Cryppo-CLI
+Download the [Meeco-CLI](https://github.com/Meeco/cli) and the [Cryppo-CLI](../getting-started/cryppo.md#cryppo-cli)
 
 Let's check if Cryppo is ready to be used. Change directory to the directory with scripts and execute the following command:
 

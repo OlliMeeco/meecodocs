@@ -172,20 +172,7 @@ Here is a response with a created Item:
         "updated_at": "2020-03-12T04:38:24.556Z",
         "item_template_label": "Vehicle",
         "shareable": false,
-        "me": false,
-        "background_color": null,
-        "image": "https://api-sandbox.meeco.me/images/ef8ef92e-e4be-4f50-bfce-774a608098ca",
-        "image_background_colour": null,
-        "item_image": "https://api-sandbox.meeco.me/images/ef8ef92e-e4be-4f50-bfce-774a608098ca",
-        "item_image_background_colour": null,
-        "slot_image": null,
-        "slot_image_background_colour": null,
-        "activity_image": "https://api-sandbox.meeco.me/images/ef8ef92e-e4be-4f50-bfce-774a608098ca",
-        "activity_image_background_colour": null,
-        "category_image": null,
-        "category_image_background_colour": null,
-        "classification_node_ids": [],
-        "category_label": null,
+             ...
         "association_ids": [],
         "associations_to_ids": [],
         "slot_ids": [
@@ -249,7 +236,7 @@ In the following example, we will use the Data Encryption Key \(DEK\) that the C
 * Reading a DEK from the Key Store
 * Decrypting it with the KEK
 
-If you followed the Meeco CLI guide, you will have already created a user with a DEK which you can find in the `.user.yaml` file. You can also generate a by using the `cryppo-cli` and using the following command: 
+If you followed the Meeco CLI guide, you will have already created a user with a DEK which you can find in the `.user.yaml` file. You can also generate a DEK by using the `cryppo-cli` and using the following command: 
 
 ```bash
 cryppo genkey
@@ -271,34 +258,25 @@ cryppo encrypt -v BMW -k 3YazDa71zVVCzh_6JRd_M-J5bOKUS5HtFGLNR45prPg=
 Result:
 
 ```bash
-serialized encrypted data:
-"Aes256Gcm.hS6G.LS0tCml2OiAhYmluYXJ5IHwtCiAgaXJvKzRzVVg1dEVXR3J2cAphdDogIWJpbmFyeSB8LQogIFhjYk9KOXYwU0lFc1VKc2ZpeVJncFE9PQphZDogbm9uZQo="
+Aes256Gcm.MtK4.LS0tCml2OiAhYmluYXJ5IHwtCiAgdXN4NnozRnRUc2FldlBmdgphdDogIWJpbmFyeSB8LQogIHc2YmRTM252Z2o4TTZYSE9FUnhHd1E9PQphZDogbm9uZQo=
 ```
 
-`Aes256Gcm.hS6G.LS0tCml2OiAhYmluYXJ5IHwtCiAgaXJvKzRzVVg1dEVXR3J2cAphdDogIWJpbmFyeSB8LQogIFhjYk9KOXYwU0lFc1VKc2ZpeVJncFE9PQphZDogbm9uZQo=` is the slot value ready to be stored in the Vault.
-
-The code for the encryption of key is as follows:
-
-```ruby
-encryption_strategy = Cryppo::EncryptionStrategies::Aes256Gcm.new
-encrypted = Cryppo.encrypt(encryption_strategy.strategy_name, dek, data_to_encrypt)
-serialized_encrypted = encrypted.serialize
-```
+The output above is the encrypted slot value ready to be stored in the Vault.
 
 We can also test decryption by running the following command:
 
 ```bash
-./02.decrypt_data.rb "PpyPTEmLwxYtmRrTk/Gp5qMf1eioSJOzQ8aOUCDqOks=\n" "Aes256Gcm.hS6G.LS0tCml2OiAhYmluYXJ5IHwtCiAgaXJvKzRzVVg1dEVXR3J2cAphdDogIWJpbmFyeSB8LQogIFhjYk9KOXYwU0lFc1VKc2ZpeVJncFE9PQphZDogbm9uZQo="
+cryppo decrypt -s Aes256Gcm.MtK4.LS0tCml2OiAhYmluYXJ5IHwtCiAgdXN4NnozRnRUc2FldlBmdgphdDogIWJpbmFyeSB8LQogIHc2YmRTM252Z2o4TTZYSE9FUnhHd1E9PQphZDogbm9uZQo= -k 3YazDa71zVVCzh_6JRd_M-J5bOKUS5HtFGLNR45prPg=
 BMW
 ```
 
-The Meeco platform uses the serializaion format of Cryppo. If no derived key is used, each such string contains 3 parts concatenated with a dot:
+The Meeco platform uses the serialization format of Cryppo. If no derived key is used, each such string contains 3 parts concatenated with a dot:
 
 * Encryption strategy name
 * Encoded encrypted data encoded with Base64
 * Encoded encryption artefacts serialized into a hash converted to YAML, then encoded with Base64
 
-The directory wth scripts contains shell scripts which do the same tasks:
+Cryppo-CLI has commands which do the same tasks:
 
 * generate a key
 * encrypt with a key
@@ -306,7 +284,7 @@ The directory wth scripts contains shell scripts which do the same tasks:
 
 We do this using OpenSSL directly, plus some standard Unix utilities.
 
-If you are feeling adventurous you are welcome to read these scripts.
+If you are feeling adventurous you are welcome to dig into the Cryppo-CLI
 
 ## Filling in a slot
 
@@ -316,23 +294,23 @@ Let's fill in a value of the `encrypted_value` slot using the encrypted value fr
 
 ```bash
 curl -i -X PUT \
- 'https://sandbox.meeco.me/vault/items/0f56c2ff-acfb-4838-80b3-b9d41ff368f5' \
+ 'https://sandbox.meeco.me/vault/items/049740cb-ad1f-43d9-9254-ae25eba30f47' \
   -H 'Authorization: VAULT_ACCESS_TOKEN_FROM_CLI_GENERATED_USER' \
   -H 'content-type: application/json' \
   -H 'Meeco-Subscription-Key: DEV_PORTAL_SUBSCRIPTION_KEY' \
   -d '
     {
-      "story_item": {
+      "item": {
         "classification_nodes_attributes": [],
-        "label": "pet",
+        "label": "vehicle",
         "slots_attributes": [
           {
-            "label": "Breed",
-            "encrypted_value": "Aes256Gcm.2hDl.LS0tCml2OiAhYmluYXJ5IHwtCiAgQWQwSThDZk5qRnFycmFuMAphdDogIWJpbmFyeSB8LQogIDJXVklzbUxOSWVoOHZIVDB1ZzBtZVE9PQphZDogbm9uQQo=",
+            "label": "Make or model",
+            "encrypted_value": "Aes256Gcm.MtK4.LS0tCml2OiAhYmluYXJ5IHwtCiAgdXN4NnozRnRUc2FldlBmdgphdDogIWJpbmFyeSB8LQogIHc2YmRTM252Z2o4TTZYSE9FUnhHd1E9PQphZDogbm9uZQo=",
             "slot_type_name": "key_value",
             "image": null,
             "config": null,
-            "name": "breed_species",
+            "name": "model_make",
             "_destroy": false
           }
         ]
@@ -351,28 +329,27 @@ Response:
       ...
       "slots" [
         ...
-        {
-          "id": "06e53c16-d34c-48ee-bfc1-78ad93c9886f",
-          "name": "breed_species",
-          "description": null,
-          "encrypted": true,
-          "ordinal": 3,
-          "visible": true,
-          "classification_node_ids": [],
-          "slotable_id": "0f56c2ff-acfb-4838-80b3-b9d41ff368f5",
-          "slotable_type": "TileItem",
-          "required": false,
-          "updated_at": "2020-02-06T04:20:29.553Z",
-          "created_at": "2020-02-06T02:02:38.623Z",
-          "config": null,
-          "slot_type_name": "key_value",
-          "creator_type_name": "system",
-          "binary_ids": [],
-          "value": "",
-          "label": "Breed",
-          "image": null,
-          "encrypted_value": "Aes256Gcm.2hDl.LS0tCml2OiAhYmluYXJ5IHwtCiAgQWQwSThDZk5qRnFycmFuMAphdDogIWJpbmFyeSB8LQogIDJXVklzbUxOSWVoOHZIVDB1ZzBtZVE9PQphZDogbm9uQQo="
-        },
+      {
+        "id": "ce9d89f8-a50a-486a-b007-d1cb006ee157",
+        "name": "model_make",
+        "description": null,
+        "encrypted": true,
+        "ordinal": 1,
+        "visible": true,
+        "classification_node_ids": [],
+        "slotable_id": "049740cb-ad1f-43d9-9254-ae25eba30f47",
+        "slotable_type": "Item",
+        "required": false,
+        "updated_at": "2020-03-18T06:49:31.160Z",
+        "created_at": "2020-03-18T06:49:17.549Z",
+        "config": null,
+        "slot_type_name": "key_value",
+        "creator": "system",
+        "binary_ids": [],
+        "label": "Make or model",
+        "image": null,
+        "encrypted_value": "Aes256Gcm.MtK4.LS0tCml2OiAhYmluYXJ5IHwtCiAgdXN4NnozRnRUc2FldlBmdgphdDogIWJpbmFyeSB8LQogIHc2YmRTM252Z2o4TTZYSE9FUnhHd1E9PQphZDogbm9uZQo="
+      },
       ],
     }
 ```
