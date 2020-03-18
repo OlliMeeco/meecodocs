@@ -14,31 +14,13 @@ Once the user has been authenticated a mobile/web application interacts with the
 
 Encrypting of data and keys on the client side before it is sent up to the _**Keystore**_ or _**Vault**_ is an important part of the flow and infrastructure. By never sending unencrypted data to the services the layer of trust needed in a given service is greatly diminished and the likelihood of the data being decrypted by a nefarious entity should a data breach occur is extremely low.
 
-For this guide, in order to emulate client behavior we will use short snippets of Ruby code. You can also find executable scripts in directory `scripts`. Please make sure you are running `Ruby 2.5` or higher. You can find installation instruction for Ruby here: [https://www.ruby-lang.org/en/documentation/installation/](https://www.ruby-lang.org/en/documentation/installation/) .
+For this guide, in order to emulate client behavior we will use the Meeco-CLI to setup access to the Vault and Keystore.
 
 By the end of this guide, after reading and executing the scripts you will learn about which cryptographic keys exist for each user, and how they are encrypted and stored safely in the _**Keystore**_. The scripts also demonstrate how keys are encrypted and decrypted.
 
-## 00. Setting Up
+### Setting up
 
-### Subscription Keys
-
-Firstly, a developer must sign up at the [Meeco Developer Portal](http://dev.meeco.me/).
-
-After following the signup procedure, confirming your account via an email and finally logging in, select "Products" from the header bar.
-
-Select a product, give your new subscription a name, then hit "Subscribe".
-
-This will generate the Primary and Secondary keys that are required to make requests in the developer portal.
-
-The Primary key will be added to the `Meeco-Subscription-Key` header in all requests to the portal.
-
-Once the subscription keys have been activated, you can begin to use them to make requests.
-
-### Cryppo
-
-### Recommended setup with Docker
-
-if you have Docker installed on your system, you can type `docker-compose run cli /bin/bash` in the Ruby Cryppo root directory. This will give you a container with the required version of Ruby and bundler, and open a bash shell there where you can test the requests.
+Download the Meeco-CLI and the Cryppo-CLI
 
 Let's check if Cryppo is ready to be used. Change directory to the directory with scripts and execute the following command:
 
@@ -66,7 +48,7 @@ Let's check if Cryppo is ready to be used. Change directory to the directory wit
 Cryppo found and is usable
 ```
 
-## 01. Creating A Keystore User Account
+## Creating A Keystore User Account
 
 Setting up user accounts begins with the _**Keystore**_.
 
@@ -125,7 +107,7 @@ The response will contain a `user` object with an `id` and the `username`
 }
 ```
 
-## 02. Logging in to the Keystore
+## Logging in to the Keystore
 
 Next, a user will need to create a _Session_ with `POST /session`
 
@@ -156,7 +138,7 @@ The result returns the following:
 
 From now on all calls are going to contain `session_authentication_string` in the `Authorization` header. Each session authentication string has a limited lifetime. Once it expires, a new session token can be requested in the same fashion.
 
-## 03. Generation Of The Password Derived Key
+## Generation Of The Password Derived Key
 
 The first step in generating cryptographic keys is generation of the _password derived key_ \(PDK\). The PDK itself is not stored in the _**Keystore**_, but it can be re-generated from a password and _key derivation artefacts_. Key derivation artefacts will later be stored in the Keystore.
 
@@ -180,7 +162,7 @@ passphrase_derived_key = derivation_strategy.generate_derived_key(passphrase)
 derivation_artefacts = stringify_keys(passphrase_derived_key.derivation_artefacts)
 ```
 
-## 04. Storing The Password Derivation Artefacts
+## Storing The Password Derivation Artefacts
 
 Now we need to store the key derivation artefacts from the previous step in the _**Keystore**_ :
 

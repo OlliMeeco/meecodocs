@@ -9,6 +9,11 @@
 * [Meeco CLI](getting-started/meeco-cli.md)
 * [Cryppo](getting-started/cryppo.md)
 
+## Policies <a id="policies-1"></a>
+
+* [Privacy](policies-1/privacy.md)
+* [Developer Policy](policies-1/developer-policy.md)
+
 ## Guides
 
 * [Terminology](guides/terminology.md)

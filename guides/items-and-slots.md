@@ -102,18 +102,18 @@ Here is a truncated sample response:
 
 Here's a sample list of Item templates you might get:
 
-* passport\_details
-* password
-* important\_document
-* vehicle
-* travel
-* bank\_Item
-* membership\_subscription
-* pet
-* device
-* important\_document
-* custom
-* services
+* `passport_details`
+* `password`
+* `important_document`
+* `vehicle`
+* `travel`
+* `bank_Item`
+* `membership_subscription`
+* `pet`
+* `device`
+* `important_document`
+* `custom`
+* `services`
 
 We can also search a certain Item template by its `name`:
 
@@ -240,39 +240,32 @@ One of the core features of the Meeco platform is data encryption. User data sto
 
 If we want to store data in an Item, we have to encrypt it, or the Vault will refuse to store unencrypted data and return an error.
 
-To get familiar with the kinds of cryptographic key the Meeco platform uses please follow the "Setting Up Access to the Vault and Keystore". That will introduce you to the Cryppo library that we use to make encryption, decryption and serialization simpler in the context of the Meeco Service.
+To get familiar with the kinds of cryptographic key the Meeco platform uses please follow either the [Quickstart](../getting-started/quickstart.md) guide, or "[Setting Up Access to the Vault and Keystore](setting-up-access.md)". That will introduce you to the Cryppo library that we use to make encryption, decryption and serialization simpler in the context of the Meeco Service.
 
-In the following example, we will generate a Data Encryption Key \(DEK\) and use it to encrypt a slot value. Of course, in the real world scenario this process would involve a few more steps:
+In the following example, we will use the Data Encryption Key \(DEK\) that the CLI generated for us from the Quickstart guide and saved into the `.user.yaml` file. We will use this to encrypt a slot value. Of course, in the real world scenario this process would involve a few more steps:
 
 * Reading the encrypted Key Encryption Key \(KEK\) from the Key Store
 * Decrypting it with the Password Derived Key \(PDK\)
 * Reading a DEK from the Key Store
 * Decrypting it with the KEK
 
-If you followed the Meeco CLI guide, you will have already created a user with a DEK which you can find in the `.user.yaml` file.
+If you followed the Meeco CLI guide, you will have already created a user with a DEK which you can find in the `.user.yaml` file. You can also generate a by using the `cryppo-cli` and using the following command: 
 
 ```bash
-./00.make_key.rb
+cryppo genkey
 ```
 
 Result:
 
 ```bash
-unencrypted data encryption key:
-"PpyPTEmLwxYtmRrTk/Gp5qMf1eioSJOzQ8aOUCDqOks=\n"
-```
-
-The code for generation of the key is as follows:
-
-```ruby
-encryption_strategy = Cryppo::EncryptionStrategies::Aes256Gcm.new
-data_encryption_key = encryption_strategy.generate_key
+URL-Safe Base64 encoded key:
+3YazDa71zVVCzh_6JRd_M-J5bOKUS5HtFGLNR45prPg=
 ```
 
 To encrypt slot value `BMW` run the following command:
 
 ```bash
-./01.encrypt_data.rb "PpyPTEmLwxYtmRrTk/Gp5qMf1eioSJOzQ8aOUCDqOks=\n" BMW
+cryppo encrypt -v BMW -k 3YazDa71zVVCzh_6JRd_M-J5bOKUS5HtFGLNR45prPg=
 ```
 
 Result:

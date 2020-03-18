@@ -6,8 +6,6 @@ description: >-
 
 # Cryppo
 
-## What is it?
-
 Cryppo is a cryptographic library that helps you encrypt and decrypt data in way that is compatible with Meeco's recommended serialization and encryption formats.
 
 It comes in two flavours - Ruby and Javascript - but you can re-implement the routines in whatever Language you like. Feel like using Flutter? Write the library in Dart!
@@ -16,7 +14,19 @@ Cryptography is hard, and the Cryppo libraries do all the heavy lifting in the c
 
 Visit [https://github.com/Meeco/cryppo](https://github.com/Meeco/cryppo) for the Ruby version, and [https://github.com/Meeco/cryppo-js](https://github.com/Meeco/cryppo-js) for the Javascript library. 
 
-We'll be using the libraries to run through some of the more in-depth examples on this documentation site,  so choose your preferred language and follow along. 
+We'll be using the libraries to run through some of the more in-depth examples on this documentation site,  so choose your preferred language and follow along.
+
+### Cryppo CLI
+
+We've also created a simple CLI for Cryppo called `cryppo-cli` which can be found at [https://github.com/Meeco/cryppo-cli](https://github.com/Meeco/cryppo-cli)
+
+Using this tool, you can very quickly generate a Data Encryption Key and easily encrypt and decrypt data to save to the slots on an item. 
+
+
+
+
+
+
 
 
 
