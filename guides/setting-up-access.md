@@ -30,17 +30,11 @@ Let's check if Cryppo is ready to be used. Change directory to the directory wit
 Cryppo found and is usable
 ```
 
-### Setup without Docker
 
-The Ruby port of Cryppo exists as a repository on Github and has not been published as a package yet. In order to use it we need to install Bundler first.
-
-On a POSIX system like MacOS or Linux open a shell and run the following command:
 
 ```bash
 gem install bundler -v '1.17.3'
 ```
-
-Let's check if Cryppo is ready to be used. Change directory to the directory with scripts and execute the following command:
 
 ```bash
 ./00.check_cryppo.rb
@@ -192,7 +186,7 @@ The response will be a 200 with the same artefacts:
 }
 ```
 
-## 05. Generating the _Key Encryption Key_ And Encrypting It
+## Generating the _Key Encryption Key_ And Encrypting It
 
 _Key Encryption Key_ is a _key encryption key_ \(KEK\) which will be used to encrypt all other keys \(data encryption keys and keypairs\). There is only one _KEK_ per user.
 
@@ -244,7 +238,7 @@ If you look at the serialized encrypted KEK you might notice it contains 3 parts
 * Encrypted data encoded with Base64
 * Encryption artefacts serialized into a hash converted to YAML, then encoded with Base64
 
-## 06. Storing The Serialized Encrypted Key Encryption Key
+## Storing The Serialized Encrypted Key Encryption Key
 
 Let's store the encrypted _**Key Encryption Key**_ in the _**Keystore**_:
 
@@ -268,7 +262,7 @@ curl -X POST \
 }
 ```
 
-## 07. Generating the Data Encryption Key And Encrypting It
+## Generating the Data Encryption Key And Encrypting It
 
 _Data Encryption Keys_ are used to encrypt data. A user can have different data encryption keys used for different purposes.
 
@@ -318,7 +312,7 @@ encrypted_data_encryption_key = Cryppo.encrypt(
 serialized_encrypted_data_encryption_key = encrypted_data_encryption_key.serialize
 ```
 
-## 08. Storing The Encrypted Data Encryption Key
+## Storing The Encrypted Data Encryption Key
 
 Let's store the generated and encrypted data encryption key:
 
@@ -344,7 +338,7 @@ Response:
 }
 ```
 
-## 09. Generating a Keypair
+## Generating a Keypair
 
 A user can have many keypairs for different purposes. A keypair can be tagged by the client to specify what the keypair is used for.
 
@@ -417,7 +411,7 @@ serialized_encrypted_keypair = encrypted_private_key_pem.serialize
 public_key = keypair.unwrap_key.public_key.to_s
 ```
 
-## 10. Storing The Keypair
+## Storing The Keypair
 
 Let's store the keypair. We will later use it for accessing the _**Vault**_, therefore we'll tag it with `vault`:
 
@@ -455,7 +449,7 @@ Response:
 }
 ```
 
-## 11. Requesting Access To The Vault
+## Requesting Access To The Vault
 
 It is time to set up access to the _**Vault**_.
 
@@ -504,7 +498,7 @@ Response:
 }
 ```
 
-## 12. Creating a Vault User Account
+## Creating a Vault User Account
 
 An _admission token_ can only be used once. To create a vault user account we'll submit:
 
@@ -541,7 +535,7 @@ The response contains
 
 Once decrypted, the encrypted session token can now be used with the `Authorization` header to work with the _**Vault**_.
 
-## 13 Decrypting the encrypted session token
+## Decrypting the encrypted session token
 
 The encrypted session token is encrypted with the public key we used to creating a _**Vault**_ user account. We can decrypt it with script `13.decrypt_encrypted_access_token.rb` submitting the following arguments:
 
@@ -565,7 +559,7 @@ Cryppo::EncryptionStrategies::Rsa4096
 
 Now the encrypted session token can now be used with the `Authorization` header to work with the _**Vault**_.
 
-## 14. Logging In Into The Vault
+## Logging In Into The Vault
 
 To login into the vault we post the same public key
 

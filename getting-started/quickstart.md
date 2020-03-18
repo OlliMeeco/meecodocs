@@ -12,12 +12,16 @@ The first thing to do is setup an `.environment.yaml` file that allows you to co
 ```yaml
 vault:
   url: https://sandbox.meeco.me/vault
+  subscription_key: DEV_PORTAL_SUBSCRIPTION_KEY
 keystore:
   url: https://sandbox.meeco.me/keystore
+  subscription_key: DEV_PORTAL_SUBSCRIPTION_KEY
 downloader:
   url: https://sandbox.meeco.me/downloader
+  subscription_key: DEV_PORTAL_SUBSCRIPTION_KEY
 passphrase:
   url: https://sandbox.meeco.me/passphrasestore
+  subscription_key: DEV_PORTAL_SUBSCRIPTION_KEY
 ```
 {% endcode %}
 

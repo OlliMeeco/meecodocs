@@ -69,7 +69,7 @@ _**Slots**_ are able to be shared after two users have made a [_**Connection**_]
 
 An _**Item**_ is a group of _**Slots**_ related by a topic. For example, a user profile is an _**Item**_. A club membership, a flight reservation - all these can be _**Items**_ each having a number of _**Slots**_ of different types in them.
 
-If a user makes a connection with another user, they can share 
+If a user makes a C_**onnection**_ with another user, they can share the encrypted slots with that user. 
 
 ## An Item Template
 
@@ -79,7 +79,7 @@ An _**Item Template**_ is a predefined list of empty _**Slots**_. Each _**Item**
 
 A _**Connection**_ between two users is a channel via which users can share individual _**Slots**_ on the _**Items**_, or the entire _**Item**_ itself.
 
-You can read a more detailed explanation of Connections and Sharing Items and Slots [here](connections-and-sharing.md), and you can run through creating a _**Connection**_ and sharing an item using the Meeco CLI tool [here](connections-and-sharing.md) - just make sure you've gone through the [Quickstart guide](../getting-started/quickstart.md) first!
+You can read a more detailed explanation of _**Connections**_ and Sharing Items and Slots [here](connections-and-sharing.md), and you can run through creating a _**Connection**_ and sharing an item using the Meeco CLI tool [here](connections-and-sharing.md) - just make sure you've gone through the [Quickstart guide](../getting-started/quickstart.md) first to have gained access to !
 
 ## Share
 

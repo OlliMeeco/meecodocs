@@ -14,7 +14,7 @@ The Primary key will be added to the `Meeco-Subscription-Key` header in all requ
 
 Once the subscription keys have been activated, you can begin to use them to make requests.
 
-Now, jump into the [Quickstart section](quickstart.md) and follow along to create your first User and vault item.
+Now, jump into the [Quickstart section](quickstart.md) and follow along to create your first User and Vault item.
 
 
 
