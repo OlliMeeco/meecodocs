@@ -20,27 +20,9 @@ By the end of this guide, after reading and executing the scripts you will learn
 
 ### Setting up
 
-Download the [Meeco-CLI](https://github.com/Meeco/cli) and the [Cryppo-CLI](../getting-started/cryppo.md#cryppo-cli)
-
-Let's check if Cryppo is ready to be used. Change directory to the directory with scripts and execute the following command:
-
-```bash
-./00.check_cryppo.rb
-
-Cryppo found and is usable
-```
+Download the [Meeco-CLI](https://github.com/Meeco/cli) and the [Cryppo-CLI](../getting-started/cryppo.md#cryppo-cli) and follow the installation instructions for each tool
 
 
-
-```bash
-gem install bundler -v '1.17.3'
-```
-
-```bash
-./00.check_cryppo.rb
-
-Cryppo found and is usable
-```
 
 ## Creating A Keystore User Account
 
