@@ -48,9 +48,13 @@ Services can be reached by appending one of the following to `https://sandbox.me
 
 Meeco has made available for use some tools to make using the API-of-Me easier.
 
-The Meeco CLI is available [here](https://github.com/Meeco/cli). Open the [Meeco CLI](getting-started/meeco-cli.md) section in this documentation for detailed installation instructions, and then you can get into the [Quickstart Guide](getting-started/quickstart.md) to create a User and an Item to save to your Vault.
+The Meeco CLI is available [here](https://github.com/Meeco/cli). Open the [Meeco CLI](tools/meeco-cli.md) section in this documentation for detailed installation instructions, and then you can get into the [Quickstart Guide](getting-started/quickstart.md) to create a User and an Item to save to your Vault.
 
 We've also created an encryption library called `Cryppo` that makes using the encryption and decryption routines we recommend much easier. We've created a Javascript and Ruby library - the examples contained within this guide will focus on the JS version. Check out `Cryppo-JS` [here](https://github.com/Meeco/cryppo-js) and `Cryppo` with Ruby [here](https://github.com/Meeco/cryppo).
 
-To read more about Cryppo and the Cryppo-CLI, open the Cryppo page in the Meeco Docs [here](getting-started/cryppo.md)
+`cryppo-cli` is a tool that we've created that quickly makes you a Data Encryption Key, and let's you encode and decode information with it from the command line. We recommend using this to follow along with some of the examples on the site.
+
+You can even use them to generate encrypted data to use in the calls to the Developer Portal API Sandbox
+
+To read more about Cryppo and the Cryppo-CLI, open the Cryppo page in the Meeco Docs [here](tools/cryppo.md)
 

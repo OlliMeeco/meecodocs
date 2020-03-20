@@ -31,7 +31,7 @@ This generates the keypairs for the connection, creates and accepts the invitati
 Now, we're ready to select an item from user's vault and share it with `user2` . First, we'll need to create the share template with the CLI. You can see the items your user has by typing `meeco items:list` in the command line. Once you have have the id, add it to the following CLI command:
 
 ```bash
-meeco shares:create-config --from .user.yaml --to .user_2.yaml 5fc9c712-5abe-4f6a-a551-61c32f2e09f5 > .share_config.yaml
+meeco shares:create-config --from .user.yaml --to .user_2.yaml -i 5fc9c712-5abe-4f6a-a551-61c32f2e09f5 > .share_config.yaml
 ```
 
 After this configuration file is created, we can create the share between the two users:

@@ -4,7 +4,7 @@ This guide aims to get you up and running and familiar with the API in about 15 
 
 ## Get the Meeco CLI
 
-Download the Meeco CLI and follow the installation instructions in the [Meeco CLI section](meeco-cli.md) of the documentation.
+Download the Meeco CLI and follow the installation instructions in the [Meeco CLI section](../tools/meeco-cli.md) of the documentation.
 
 The first thing to do is setup an `.environment.yaml` file that allows you to connect to the sandbox environment.
 

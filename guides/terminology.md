@@ -55,7 +55,7 @@ _**Slots**_ have the following example structure:
         },
 ```
 
-Once encrypted and serialized - you can use one of Meeco's [Cryppo](../getting-started/cryppo.md) family of encryption libraries -  a slot value of "BMW" would look something like this:
+Once encrypted and serialized - you can use one of Meeco's [Cryppo](../tools/cryppo.md) family of encryption libraries -  a slot value of "BMW" would look something like this:
 
 ```bash
 "encrypted_value": "Aes256Gcm.2hDl.LS0tCml2OiAhYmluYXJ5IHwtCiAgQWQwSThDZk5qRnFycmFuMAphdDogIWJpbmFyeSB8LQogIDJXVklzbUxOSWVoOHZIVDB1ZzBtZVE9PQphZDogbm9uQQo="
@@ -85,7 +85,7 @@ You can read a more detailed explanation of _**Connections**_ and Sharing Items 
 
 A _**Share**_ is created when a user grants access to their _**Item**_ to another user that they've _**Connected**_ with. The _**Item**_ is re-encrypted with a data encryption key shared with the recipient of the _**Share**_.
 
-For a detailed look at Sharing and Connections, have a look at the Connections and Sharing Guide, or read through the tutorial for creating a _**Connection**_ and sharing an item using the [Meeco CLI](../getting-started/meeco-cli.md) tool [here](connections-and-sharing.md)
+For a detailed look at Sharing and Connections, have a look at the Connections and Sharing Guide, or read through the tutorial for creating a _**Connection**_ and sharing an item using the [Meeco CLI](../tools/meeco-cli.md) tool [here](connections-and-sharing.md)
 
 ## Passphrase Derived Key And Derivation Artefacts
 
