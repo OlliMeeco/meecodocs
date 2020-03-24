@@ -284,7 +284,7 @@ Cryppo-CLI has commands which do the same tasks:
 
 We do this using OpenSSL directly, plus some standard Unix utilities.
 
-If you are feeling adventurous you are welcome to dig into the Cryppo-CLI
+If you are feeling adventurous you are welcome to dig into the [Cryppo-CLI](https://github.com/Meeco/cryppo-cli)
 
 ## Filling in a slot
 
