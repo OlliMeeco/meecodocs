@@ -98,5 +98,5 @@ Based on this configuration, we can create a new vehicle in the user digital vau
 $ meeco items:create -i vehicle.yaml -a .user.yaml
 ```
 
-Congratulations, you have now created your first item in the vault.
+Congratulations, you have now created your first item in the _**Vault**_.
 
