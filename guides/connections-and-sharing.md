@@ -6,6 +6,8 @@ description: How to create a connection between you and another user to share da
 
 ### A follow along guide using the Meeco CLI to build on the Quickstart Guide
 
+_Below the guide using the CLI we have a more in depth explanation of how sharing works_
+
 After successfully creating an item in your user's Vault from the [Quickstart section](../getting-started/quickstart.md), it's now time to create another user.
 
 ```bash
