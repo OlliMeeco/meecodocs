@@ -118,7 +118,7 @@ Let's dive into it.
 
 ### Invitation To Connect
 
-Before anything can be shared, 2 Users need to establish a _connection_. In order to create a connection in this example, User 1 \(Alice\) will invite User 2 \(Bob\)
+Before anything can be shared, 2 Users need to establish a _**connection**_. In order to create a connection in this example, User 1 \(Alice\) will invite User 2 \(Bob\)
 
 The process can be described in the following sequence diagram:
 
@@ -161,7 +161,7 @@ The most important results after these two sections are as follows:
 
 In this section, to create a share, User 1 will generate a DEK dedicated to this share, re-encrypt a card and store it as a share, and share the DEK with User2, encrypted by the Public Key of User 2.
 
-The process of encryption and the key exchange is abstracted into something called _Encryption Space_. An encryption space exists both in the Keystore and the Vault and both records share the same ID. The function of the encryption space in the Keystore is key exchange. The function of the encryption space in the Vault is a way to point to the correct encryption space in the Keystore for a given connection.
+The process of encryption and the key exchange is abstracted into something called _Encryption Space_. An encryption space exists both in the _**Keystore**_ and the _**Vault**_ and both records share the same ID. The function of the encryption space in the _**Keystore**_ is key exchange. The function of the encryption space in the _**Vault**_ is a way to point to the correct encryption space in the _**Keystore**_ for a given connection.
 
 Creation of a share can be described in the following sequence diagram:
 
@@ -169,7 +169,7 @@ Creation of a share can be described in the following sequence diagram:
 
 At step 23 User 1 generates a DEK. This DEK will be used to encrypt the shared card. As we always do with DEKs, we encrypt it the Key Encryption Key \(step24\). But we also need to have the key readable by User 2, so at step 25 we encrypt the same KEK by the Public Key of User 2.
 
-At steps 26 and 27 an encryption space is created in the Keystore, containing two versions of the same DEK, one only readable by User 1, the other one only readable by User 2.
+At steps 26 and 27 an encryption space is created in the _**Keystore**_, containing two versions of the same DEK, one only readable by User 1, the other one only readable by User 2.
 
 In steps 28-29 an encryption space is created in the Vault with the same ID as the encryption space in the Keystore. The encryption space in the Vault is linked to the connection record.
 
