@@ -4,7 +4,7 @@ The Meeco platform has a very flexible way to tag information. Instead of having
 
 _To complete some of the following steps, please download the `jq` command line JSON processor tool from_ [_https://stedolan.github.io/jq/download/_](https://stedolan.github.io/jq/download/)\_\_
 
-All classification nodes can be queried by `GET /v2/global/classification_nodes`:
+All classification nodes can be queried by `GET /vault/classification_nodes`:
 
 ```bash
 curl -X GET \

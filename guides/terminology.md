@@ -117,6 +117,14 @@ It is possible for a user to have multiple _**Data Encryption Keys**_
 
 Public key cryptography is used for _**Connections**_ and shared between users. Private keys are stored in the _**Keystore**_ encrypted with the _**Key Encryption Key**_.
 
+## SRP - Secure Remote Password
+
+A type of password authenticated key exchange that we have adopted for signup and key handling.
+
+You can read more about it here - [https://en.wikipedia.org/wiki/Secure\_Remote\_Password\_protocol](https://en.wikipedia.org/wiki/Secure_Remote_Password_protocol) 
+
+This greatly simplifies user creation
+
 ## Classification Scheme
 
 The Meeco platform has a very flexible way to tag information. Instead of having a traditional simple flat list of tags the system can be configured to have multiple independent _**Classifications**_. Combinations of these _**Classifications**_ are called _**Classification Schemes**_.
