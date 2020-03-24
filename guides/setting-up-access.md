@@ -5,24 +5,22 @@ This guide contains step by step instructions on how to create user accounts for
 * The _**Keystore**_ is where a users stores their secrets and encryption keys.
 * The _**Vault**_ is where users store their encrypted user data. User data cannot be decrypted and read by anyone but the user.
 
-In this scenario the means of creating and authenticating a user is done by an external party's infrastructure. This allows the _**Vault**_ and _**Keystore**_ to be provided to the external party's existing userbase.
-
-Once the user has been authenticated a mobile/web application interacts with the _**Vault**_ and _**Keystore**_ to securely store users data and encryption keys. The mobile application and/or its backend will perform calls to the _**Vault**_ and _**Keystore**_. Generation of various keys, data encryption, and decryption will also happen on the client side. In order to simplify the client side cryptography Meeco has developed an open-source library which implements the required cryptographic routines. Currently there are two ports of this library:
+Once the user has been authenticated a mobile/web application interacts with the _**Vault**_ and _**Keystore**_ to securely store user's data and encryption keys. The mobile application and/or its backend will perform calls to the _**Vault**_ and _**Keystore**_. Generation of various keys, data encryption, and decryption will also happen on the client side. In order to simplify the client side cryptography Meeco has developed an open-source library which implements the required cryptographic routines. Currently there are two ports of this library:
 
 * Ruby [https://github.com/Meeco/cryppo](https://github.com/Meeco/cryppo)
 * Javascript \(Typescript\) [https://github.com/Meeco/cryppo-js](https://github.com/Meeco/cryppo-js)
 
 Encrypting of data and keys on the client side before it is sent up to the _**Keystore**_ or _**Vault**_ is an important part of the flow and infrastructure. By never sending unencrypted data to the services the layer of trust needed in a given service is greatly diminished and the likelihood of the data being decrypted by a nefarious entity should a data breach occur is extremely low.
 
-For this guide, in order to emulate client behavior we will use the Meeco-CLI to setup access to the Vault and Keystore.
+For this guide, in order to emulate client behavior we will use the [Meeco-CLI](../tools/meeco-cli.md) to setup access to the _**Vault**_ and _**Keystore**_.
 
-By the end of this guide, after reading and executing the scripts you will learn about which cryptographic keys exist for each user, and how they are encrypted and stored safely in the _**Keystore**_. The scripts also demonstrate how keys are encrypted and decrypted.
+By the end of this guide, after reading and executing the scripts you will learn about which cryptographic keys exist for a user, and how they are encrypted and stored safely in the _**Keystore**_. The guide also demonstrate how keys are encrypted and decrypted.
 
 ### Setting up
 
 Download the [Meeco-CLI](https://github.com/Meeco/cli) and the [Cryppo-CLI](../tools/cryppo.md#cryppo-cli) and follow the installation instructions for each tool. If you'd like to read more about the tools, you can find each description page in the "Tools" section on this site. 
 
-To Explain what is required to access the Meeco Vault, we're going to look in detail at what the Meeco CLI does when you create a new user. 
+To explain what is required to access the Meeco _**Vault**_, we're going to look in detail at what the Meeco CLI does when you create a new user. 
 
 The CLI uses [Secure Remote Password protocol](https://en.wikipedia.org/wiki/Secure_Remote_Password_protocol) - otherwise known as SRP - to generate all the required keys and tokens so that you can access the Meeco Vault.
 
@@ -52,15 +50,15 @@ We use the user's password - `supersecretpassword` from the CLI command - and us
 
 We also generate an "SRP Password" which uses the _reverse_ of the Secret Key as a salt.
 
-We're now ready to create a Keystore account. 
+We're now ready to create a _**Keystore**_ account. 
 
 ## Creating A Keystore User Account
 
 _'_'_Create SRP keystore user'_
 
-The CLI uses the SRP Password and the SRP username in order to create a salt and a verifier, and sends this _plus_ the SRP username to the Keystore API.
+The CLI uses the SRP Password and the SRP username in order to create a salt and a verifier, and sends this _plus_ the SRP username to the _**Keystore**_ API.
 
-Now, the CLI is going to log into the Keystore via SRP.
+Now, the CLI is going to log into the _**Keystore**_ via SRP.
 
 _'Requesting SRP challenge from server'_
 
@@ -68,9 +66,9 @@ From here, the server generates a challenge from that salt, and sends it back to
 
 _'Creating SRP session with proof'_
 
-The server receives the solution and verifies it, which sends back a Keystore authentication token. Login to the Keystore is complete!
+The server receives the solution and verifies it, which sends back a _**Keystore**_ authentication token. Login to the _**Keystore**_ is complete!
 
-Now we can access the Keystore, generate keys to store in there, and request external admission tokens from it so that we can eventually access the Vault.
+Now we can access the _**Keystore**_, generate keys to store in there, and request external admission tokens from it so that we can eventually access the Vault.
 
 ## Requesting Access To The Vault
 
@@ -90,7 +88,7 @@ curl -v -X GET "https://sandbox.meeco.me/keystore/external_admission_tokens"
 -H "Authorization: KEYSTORE_ACCESS_TOKEN"
 ```
 
-The response contains the Vault API admission token, which the CLI will use later to get access to the _**Vault**_
+The response contains the _**Vault**_ API admission token, which the CLI will use later to get access to the _**Vault**_
 
 ```javascript
   "external_admission_token": {
@@ -106,7 +104,7 @@ _'Generate and store key encryption key'_
 
 _Key Encryption Key_ is a _key encryption key_ \(KEK\) which will be used to encrypt all other keys \(data encryption keys and keypairs\). There is only one _KEK_ per user.
 
-The CLI uses the `cryppo` library to generate a new random key, and then encrypt and serializes it with the PDK from the earlier SRP login steps. 
+The CLI uses the `cryppo` library to generate a new random key, and then encrypt and serializes it with the _PDK_ from the earlier SRP login steps. 
 
 The code that does this looks like this:
 
@@ -119,15 +117,15 @@ The code that does this looks like this:
         });
 ```
 
- The PDK is the `derivedKey`
+ The _PDK_ is the `derivedKey`
 
-The KEK gets serialized in the above step.
+The _KEK_ gets serialized in the above step.
 
 To do this manually, you can use the `cryppo-cli` library by using the following command with the unencrypted KEK you can find in the user's YAML file that the CLI creates in the root of the CLI directory: `cryppo encrypt -k PASSPHRASE_DERIVED_KEY -v UNENCRYPTED_KEY` 
 
-The resulting encrypted KEK looks like this: `Aes256Gcm.3EvCOUWD-zsHfe5hvrsMcppHx14SOMHXrEZC4Eyfw3s2JpvrIQRAH5Ydqcc=.LS0tCml2OiAhYmluYXJ5IHwtCiAgSVdjQ0M1ZC9FeHdRSVVFMAphdDogIWJpbmFyeSB8LQogIFN0L1o5QTZOMCswczBWQXgxcjQ0Rmc9PQphZDogbm9uZQo=`
+The resulting encrypted _KEK_ looks like this: `Aes256Gcm.3EvCOUWD-zsHfe5hvrsMcppHx14SOMHXrEZC4Eyfw3s2JpvrIQRAH5Ydqcc=.LS0tCml2OiAhYmluYXJ5IHwtCiAgSVdjQ0M1ZC9FeHdRSVVFMAphdDogIWJpbmFyeSB8LQogIFN0L1o5QTZOMCswczBWQXgxcjQ0Rmc9PQphZDogbm9uZQo=`
 
-If you look at the serialized encrypted KEK you might notice it contains 3 parts concatenated with dots. This is the serialization format of Cryppo. If no derived key is used, each such string contains 3 parts concatenated with a dot:
+If you look at the serialized encrypted _KEK_ you might notice it contains 3 parts concatenated with dots. This is the serialization format of `cryppo`. If no derived key is used, each such string contains 3 parts concatenated with a dot:
 
 * Encryption strategy name
 * Encrypted data encoded with Base64
@@ -135,7 +133,7 @@ If you look at the serialized encrypted KEK you might notice it contains 3 parts
 
 #### Storing The Serialized Encrypted Key Encryption Key
 
-The CLI now stores the serialized and encrypted KEK in the keystore.
+The CLI now stores the serialized and encrypted _KEK_ in the keystore.
 
 ```bash
 curl -v -X POST "https://sandbox.meeco.me/keystore/key_encryption_key"
@@ -167,9 +165,9 @@ _Data Encryption Keys_ \(DEKs\) are used to encrypt data. A user can have differ
 
 For instance, you will have one for encrypting _**Vault**_ data, and one per _**Connection**_ that you create with a user.
 
-To store a DEK we need to encrypt it with the _Key Encryption Key_.
+To store a _DEK_ we need to encrypt it with the _Key Encryption Key_.
 
-This follows the same general form as generating and encrypting the KEK, but this time, we encrypt the DEK with the KEK instead of the PDK.
+This follows the same general form as generating and encrypting the _KEK_, but this time, we encrypt the _DEK_ with the _KEK_ instead of the _PDK_.
 
 ```javascript
 const dek = cryppo.generateRandomKey();
@@ -182,7 +180,7 @@ const dek = cryppo.generateRandomKey();
 
 #### Storing The Encrypted Data Encryption Key
 
-As with the KEK, we store the DEK in the Keystore. The CLI uses the following API call:
+As with the _KEK_, we store the _DEK_ in the _**Keystore**_. The CLI uses the following API call:
 
 ```bash
 curl -v -X POST "https://sandbox.meeco.me/keystore/data_encryption_keys"
@@ -238,7 +236,7 @@ const privateKeyEncryptedWithKEK = await cryppo.encryptWithKey({
         });
 ```
 
-The CLI now has the encrypted Private Key ready to be uploaded to the Keystore
+The CLI now has the encrypted Private Key ready to be uploaded to the _**Keystore**_
 
 #### Storing The Keypair
 
