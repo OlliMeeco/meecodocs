@@ -22,7 +22,7 @@ Download the [Meeco-CLI](https://github.com/Meeco/cli) and the [Cryppo-CLI](../t
 
 To explain what is required to access the Meeco _**Vault**_, we're going to look in detail at what the Meeco CLI does when you create a new user. 
 
-The CLI uses [Secure Remote Password protocol](https://en.wikipedia.org/wiki/Secure_Remote_Password_protocol) - otherwise known as SRP - to generate all the required keys and tokens so that you can access the Meeco Vault.
+The CLI uses [Secure Remote Password protocol](https://en.wikipedia.org/wiki/Secure_Remote_Password_protocol) - otherwise known as SRP - to generate all the required keys and tokens so that you can access the Meeco _**Vault**_.
 
 Below is a diagram that explains the flow.
 
