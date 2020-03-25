@@ -102,7 +102,7 @@ The response contains the _**Vault**_ API admission token, which the CLI will us
 
 _'Generate and store key encryption key'_
 
-_Key Encryption Key_ is a _key encryption key_ \(KEK\) which will be used to encrypt all other keys \(data encryption keys and keypairs\). There is only one _KEK_ per user.
+The key encryption key \(_KEK_\) is a special encryption key which is used to encrypt all of the user’s other keys \(data encryption keys and keypairs\). There is only one _KEK_ per user.
 
 The CLI uses the `cryppo` library to generate a new random key, and then encrypt and serializes it with the _PDK_ from the earlier SRP login steps. 
 
@@ -219,7 +219,7 @@ Keypairs are stored in the following fashion:
 
 The CLI will do the following:
 
-1. Decrypt the encrypted KEK with the password derived key
+1. Decrypt the encrypted KEK with the Passphrase Derived Key
 2. Generate a RSA keypair with `cryppo`
 3. Extract the public key
 4. Encrypt the private key with the KEK
