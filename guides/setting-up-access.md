@@ -286,7 +286,7 @@ Here, the CLI is using the admission token that it got from the 'Request Externa
 
 Importantly, this call is made to the _**Vault**_ API instead of the _**Keystore**_ API
 
-An _admission token_ can only be used once. You can think of it like a ticket to a cinema - once you're in, you can't use it again! To create a vault user account we'll submit:
+An _admission token_ can only be used once. You can think of it like a ticket for a plane ride - once you're in, you can't use it again! To create a vault user account we'll submit:
 
 * The _admission token_
 * The _public key_ from the keypair we generated.
