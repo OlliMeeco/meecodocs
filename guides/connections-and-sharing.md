@@ -32,7 +32,55 @@ This generates the keypairs for the connection, creates and accepts the invitati
 
 Now, we're ready to select an item from Alice's vault and share it with Bob. 
 
-First, we'll need to create the share template with the CLI. You can see the items Alice has by typing `meeco items:list -a .alice.yaml` in the command line. Once you have have the `id` of the item, add it to the following CLI command:
+First, we'll need to create the share template with the CLI. You can see the items Alice has by useing the `items:list` command:
+
+```yaml
+meeco items:list -a .alice.yaml
+```
+
+This will give you all the information about the items Alice has in her vault. The response will look like this:
+
+```yaml
+kind: Items
+spec:
+  - id: ed6ac62d-4f9e-4ec3-94f4-9bd1166942ce
+    name: delorean
+    label: DeLorean
+    description: null
+    created_at: "2020-03-25T09:31:19.959Z"
+    item_template_id: 61516c6f-81df-4c86-96df-8af915f0aec0
+    ordinal: 1
+    visible: true
+    updated_at: "2020-03-25T09:31:20.701Z"
+    item_template_label: Vehicle
+    shareable: false
+    me: false
+    background_color: null
+    image: https://api-sandbox.meeco.me/images/ef8ef92e-e4be-4f50-bfce-774a608098ca
+    image_background_colour: null
+    item_image: https://api-sandbox.meeco.me/images/ef8ef92e-e4be-4f50-bfce-774a608098ca
+    item_image_background_colour: null
+    slot_image: null
+    slot_image_background_colour: null
+    category_image: null
+    category_image_background_colour: null
+    classification_node_ids: []
+    category_label: null
+    association_ids: []
+    associations_to_ids: []
+    slot_ids:
+      - 00e99d0d-d1be-469c-aa91-71e9f47333b1
+      - 38d6b94c-a3da-4b82-942f-5b7941e0bd7d
+      - 94e422b9-b0fb-4b36-bfa9-f2234bf03d69
+      - ec6c3f97-b806-4bed-9da3-46a81635c0e3
+      - 2c833498-9dfa-4667-94cc-d39c719cab86
+      - b583b85e-4e98-49b5-adcd-185b31cc8d90
+      - bb1ff70c-6bf6-47ba-9a8a-d916740c55a6
+      - f24572c4-0d7b-404d-82f5-8fec593592fc
+      - 08471b2d-ac3f-44bc-8932-4faa81366178
+```
+
+Once you have have the `id` of the item, add it to the following CLI command:
 
 ```bash
 meeco shares:create-config --from .alice.yaml --to .bob.yaml -i ITEM_ID_TO_SHARE > .share_config.yaml
@@ -46,7 +94,7 @@ meeco shares:create -c .share_config.yaml
 
 The CLI sets up a _private encryption space_ between Alice and Bob and then shares the item.
 
-We never created an item for the Bob, so we can see how looking at another user's shared item works:
+We never created an item for the Bob, so we know that the following command will show the items that have been shared with Bob.
 
 ```bash
 meeco shares:list -a .bob.yaml
@@ -57,18 +105,18 @@ The above lists all the shares between the users:
 ```yaml
 kind: Shares
 spec:
-  - share_id: bed6ea54-701e-4d36-9142-a975cad21911
-    connection_id: 9123d4ff-2fd3-42c9-bd73-634d8b1792a6
+  - share_id: 1f4f9009-7a3a-43ee-b9f2-71d726919d5c
+    connection_id: 8c50ec41-acf4-4441-983f-cb8d6f21743c
     item:
-      id: 5fc9c712-5abe-4f6a-a551-61c32f2e09f5
-      name: my_car
-      label: My Car
+      id: ed6ac62d-4f9e-4ec3-94f4-9bd1166942ce
+      name: delorean
+      label: DeLorean
       description: null
-      created_at: "2020-03-12T07:26:07.374Z"
+      created_at: "2020-03-25T09:31:19.959Z"
       item_template_id: 61516c6f-81df-4c86-96df-8af915f0aec0
       ordinal: 1
       visible: true
-      updated_at: "2020-03-12T07:26:08.095Z"
+      updated_at: "2020-03-25T09:31:20.701Z"
       item_template_label: Vehicle
       shareable: false
       me: false
@@ -79,8 +127,6 @@ spec:
       item_image_background_colour: null
       slot_image: null
       slot_image_background_colour: null
-      activity_image: https://api-sandbox.meeco.me/images/ef8ef92e-e4be-4f50-bfce-774a608098ca
-      activity_image_background_colour: null
       category_image: null
       category_image_background_colour: null
       classification_node_ids: []
@@ -88,20 +134,129 @@ spec:
       association_ids: []
       associations_to_ids: []
       slot_ids:
-        - a6e6bc15-1f3a-415d-8e0c-145a64b8227b
-        - 1a266560-779f-47e6-b633-7c6697f08ac9
-        - f60d4bb1-3a17-4b26-8abc-5ca9f438b74c
-        - ca33626a-9e9b-46f3-8177-895fc4d20d2f
-        - 18ec155d-4770-4932-9fa5-4582822b5baf
-        - 2dc3de7e-080c-4eec-9159-f12bda06fa30
-        - a0bc209d-0f49-454c-a262-ab4216770368
-        - 66c44e27-c1ed-44cb-8a6d-e50699273f7a
+        - 00e99d0d-d1be-469c-aa91-71e9f47333b1
+        - 38d6b94c-a3da-4b82-942f-5b7941e0bd7d
+        - 94e422b9-b0fb-4b36-bfa9-f2234bf03d69
+        - ec6c3f97-b806-4bed-9da3-46a81635c0e3
+        - 2c833498-9dfa-4667-94cc-d39c719cab86
+        - b583b85e-4e98-49b5-adcd-185b31cc8d90
+        - bb1ff70c-6bf6-47ba-9a8a-d916740c55a6
+        - f24572c4-0d7b-404d-82f5-8fec593592fc
+        - 08471b2d-ac3f-44bc-8932-4faa81366178
 ```
 
 We can then grab the `share_id` and use it in the next call:
 
 ```yaml
 meeco shares:get -a .bob.yaml SHARE_ID
+```
+
+Here's the shared DeLorean:
+
+```yaml
+kind: Item
+spec:
+  id: ed6ac62d-4f9e-4ec3-94f4-9bd1166942ce
+  name: delorean
+  label: DeLorean
+  description: null
+  created_at: "2020-03-25T09:31:19.959Z"
+  item_template_id: 61516c6f-81df-4c86-96df-8af915f0aec0
+  ordinal: 1
+  visible: true
+  updated_at: "2020-03-25T09:31:20.701Z"
+  item_template_label: Vehicle
+  shareable: false
+  me: false
+  background_color: null
+  image: https://api-sandbox.meeco.me/images/ef8ef92e-e4be-4f50-bfce-774a608098ca
+  image_background_colour: null
+  item_image: https://api-sandbox.meeco.me/images/ef8ef92e-e4be-4f50-bfce-774a608098ca
+  item_image_background_colour: null
+  slot_image: null
+  slot_image_background_colour: null
+  category_image: null
+  category_image_background_colour: null
+  classification_node_ids: []
+  category_label: null
+  association_ids: []
+  associations_to_ids: []
+  slot_ids:
+    - 00e99d0d-d1be-469c-aa91-71e9f47333b1
+    - 38d6b94c-a3da-4b82-942f-5b7941e0bd7d
+    - 94e422b9-b0fb-4b36-bfa9-f2234bf03d69
+    - ec6c3f97-b806-4bed-9da3-46a81635c0e3
+    - 2c833498-9dfa-4667-94cc-d39c719cab86
+    - b583b85e-4e98-49b5-adcd-185b31cc8d90
+    - bb1ff70c-6bf6-47ba-9a8a-d916740c55a6
+    - f24572c4-0d7b-404d-82f5-8fec593592fc
+    - 08471b2d-ac3f-44bc-8932-4faa81366178
+  slots:
+    - id: 00e99d0d-d1be-469c-aa91-71e9f47333b1
+      name: power
+      created_at: "2020-03-25T09:31:20.679Z"
+      updated_at: "2020-03-25T09:31:20.679Z"
+      value: 132 PS
+      label: Power
+      encrypted_value: Aes256Gcm.QAYRmdDe.LS0tCml2OiAhYmluYXJ5IHwtCiAgTzhXa0pQdFE5R1haNURUcQphdDogIWJpbmFyeSB8LQogIFhSaUJYVmtWVW93ak1DTGUyTFRPRHc9PQphZDogbm9uZQo=
+    - id: 38d6b94c-a3da-4b82-942f-5b7941e0bd7d
+      name: model_make
+      created_at: "2020-03-25T09:31:20.174Z"
+      updated_at: "2020-03-25T09:31:20.660Z"
+      value: DMC DeLorean
+      label: Make or model
+      encrypted_value: Aes256Gcm.XYQwMPJurLuPIDHR.LS0tCml2OiAhYmluYXJ5IHwtCiAgc3E1RXJIZVN3TVRkUTFrOAphdDogIWJpbmFyeSB8LQogIDlrWGhSQWhIbVdjdUNVemY1NDlIRlE9PQphZDogbm9uZQo=
+    - id: 94e422b9-b0fb-4b36-bfa9-f2234bf03d69
+      name: licence_plate
+      created_at: "2020-03-25T09:31:20.017Z"
+      updated_at: "2020-03-25T09:31:20.633Z"
+      value: 1AAA999
+      label: Vehicle registration number
+      encrypted_value: Aes256Gcm.HIcPWNbEaA==.LS0tCml2OiAhYmluYXJ5IHwtCiAgdzcyM09PWnJZTGtITi9DRQphdDogIWJpbmFyeSB8LQogIDVEZVNxRWRoNitURkVMZmRCVWV4a2c9PQphZDogbm9uZQo=
+    - id: ec6c3f97-b806-4bed-9da3-46a81635c0e3
+      name: vin
+      created_at: "2020-03-25T09:31:20.085Z"
+      updated_at: "2020-03-25T09:31:20.604Z"
+      value: "123456789"
+      label: VIN
+      encrypted_value: Aes256Gcm.qEdyalKPXS75.LS0tCml2OiAhYmluYXJ5IHwtCiAgQzBIUDhCdGh6SStKZC9OdQphdDogIWJpbmFyeSB8LQogIGlqS1lPNDlQOTVXemJHQ0NNcGZjWlE9PQphZDogbm9uZQo=
+    - id: 2c833498-9dfa-4667-94cc-d39c719cab86
+      name: image
+      created_at: "2020-03-25T09:31:20.382Z"
+      updated_at: "2020-03-25T09:31:20.382Z"
+      value: null
+      label: Image
+      encrypted_value: null
+    - id: b583b85e-4e98-49b5-adcd-185b31cc8d90
+      name: tags
+      created_at: "2020-03-25T09:31:20.332Z"
+      updated_at: "2020-03-25T09:31:20.332Z"
+      value: null
+      label: Tags
+      encrypted_value: null
+    - id: bb1ff70c-6bf6-47ba-9a8a-d916740c55a6
+      name: story_category
+      created_at: "2020-03-25T09:31:20.297Z"
+      updated_at: "2020-03-25T09:31:20.297Z"
+      value: null
+      label: Category
+      encrypted_value: null
+    - id: f24572c4-0d7b-404d-82f5-8fec593592fc
+      name: type
+      created_at: "2020-03-25T09:31:20.218Z"
+      updated_at: "2020-03-25T09:31:20.576Z"
+      value: Sports Car
+      label: Type
+      encrypted_value: Aes256Gcm.hS5iJt0KvmoJhA==.LS0tCml2OiAhYmluYXJ5IHwtCiAgOEVlejhVQy9WRUxjd0g5MwphdDogIWJpbmFyeSB8LQogIDZrYk5Gb3hkSFhGNlNHNnhHV1V3a0E9PQphZDogbm9uZQo=
+    - id: 08471b2d-ac3f-44bc-8932-4faa81366178
+      name: purchase_date
+      created_at: "2020-03-25T09:31:20.131Z"
+      updated_at: "2020-03-25T09:31:20.547Z"
+      value: 01/01/1981
+      label: Date purchased
+      encrypted_value: Aes256Gcm.te5KGY2qJ2pIRw==.LS0tCml2OiAhYmluYXJ5IHwtCiAgc1Nqd0NZb1dEUlM3b2JQNQphdDogIWJpbmFyeSB8LQogIG5PRGhQVmtFVDZLeStEZnRLOHZ3NGc9PQphZDogbm9uZQo=
+
+Fetching connection... done
 ```
 
 Well done - you've now created a connection between two users, and shared an item!
