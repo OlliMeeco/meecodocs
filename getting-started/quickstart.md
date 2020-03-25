@@ -27,22 +27,22 @@ passphrase:
 
 ## Create a User
 
-Create your first user.
+Create your first user - let's call them "Alice".
 
 ```bash
-$ meeco users:create -p supersecretpassword > .user.yaml
+$ meeco users:create -p supersecretpassword > .alice.yaml
 ```
 
-The command above does a lot, if you want to learn what happens behind the scenes look at the guide about [Setting up Access](../guides/setting-up-access.md). The end result is captures in a file `.user.yaml` that captures the necessary information about the user that allows us to talk to the API in the next steps.
+The command above does a lot, if you want to learn what happens behind the scenes look at the guide about [Setting up Access](../guides/setting-up-access.md). The end result is captured in a file `.alice.yaml` that holds the necessary information about the user that allows us to talk to the API in the next steps.
 
-In next calls, you'll see an argument added `-a .user.yaml`
+In next calls, you'll see an argument added `-a .alice.yaml`
 
 ## Creating an Item
 
 Items in the Meeco API require you to specify a template. This template can be seen as a contract with a number of predefined fields \(which we call slots\). To get all available templates execute the following command
 
 ```bash
-$ meeco templates:list -a .user.yaml
+$ meeco templates:list -a .alice.yaml
 Fetching available templates... done
 kind: Templates
 spec:
@@ -64,7 +64,7 @@ spec:
 Let's create a `vehicle` item. To prepare this we can run the create config command
 
 ```bash
-$ meeco items:create-config vehicle -a .user.yaml > vehicle.yaml
+$ meeco items:create-config vehicle -a .alice.yaml > vehicle.yaml
 ```
 
 The next step is to edit the file to contain some data.
@@ -92,10 +92,10 @@ spec:
 ```
 {% endcode %}
 
-Based on this configuration, we can create a new vehicle in the user digital vault.
+Based on this configuration, we can create a new vehicle in Alice's digital vault.
 
 ```bash
-$ meeco items:create -i vehicle.yaml -a .user.yaml
+$ meeco items:create -i vehicle.yaml -a .alice.yaml
 ```
 
 Congratulations, you have now created your first item in the _**Vault**_.

@@ -6,11 +6,17 @@ We have created the [Meeco CLI](https://github.com/Meeco/cli) tool that allows y
 
 ## Installation Instructions
 
+
+
 To install the Meeco CLI you'll need to grab the latest version from the releases page [https://github.com/Meeco/cli/releases](https://github.com/Meeco/cli/releases).
 
 We've created versions for Windows, Linux distributions and macOS
 
-### macOS
+Minimum requirements: 
+
+`"node": ">=8.0.0"`
+
+### Note - macOS
 
 With newer versions of macOS, the operating system stops you from running unsigned code. In the near future we will sign the code for this repository, but in the mean time, here are the steps to running the Meeco CLI from the command line despite the warning from macOS.
 

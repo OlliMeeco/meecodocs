@@ -8,21 +8,21 @@ description: How to create a connection between you and another user to share da
 
 _Below the guide using the CLI we have a more in depth explanation of how sharing works_
 
-After successfully creating an item in your user's Vault from the [Quickstart section](../getting-started/quickstart.md), it's now time to create another user.
+After successfully creating an item in your user's Vault from the [Quickstart section](../getting-started/quickstart.md), it's now time to create another user called Bob.
 
 ```bash
-meeco users:create -p supersecretpassword > .user_2.yaml
+meeco users:create -p supersecretpassword > .bob.yaml
 ```
 
 We used the same password as in the [Quickstart](../getting-started/quickstart.md) example, in case you were wondering.
 
-Using the CLI again, we're going to make a connection configuration file between `user` and `user_2`
+Using the CLI again, we're going to make a connection configuration file between _Alice_ and _Bob_
 
 ```bash
-meeco connections:create-config --from .user.yaml --to .user_2.yaml > .connection_config.yaml
+meeco connections:create-config --from .alice.yaml --to .bob.yaml > .connection_config.yaml
 ```
 
-This creates a file called `.connection_config.yaml` which we will open and edit the `fromName` and `toName` keys. You can name the users whatever you like. Next, it's time to use the CLI again to create the connection between the two users.
+This creates a file called `.connection_config.yaml` which we will open and edit the `fromName` and `toName` keys. Let's make it between Alice and Bob. Next, it's time to use the CLI again to create the connection between the two users.
 
 ```bash
 meeco connections:create -c .connection_config.yaml
@@ -30,10 +30,12 @@ meeco connections:create -c .connection_config.yaml
 
 This generates the keypairs for the connection, creates and accepts the invitation for the two users.
 
-Now, we're ready to select an item from user's vault and share it with `user2` . First, we'll need to create the share template with the CLI. You can see the items your user has by typing `meeco items:list` in the command line. Once you have have the id, add it to the following CLI command:
+Now, we're ready to select an item from Alice's vault and share it with Bob. 
+
+First, we'll need to create the share template with the CLI. You can see the items Alice has by typing `meeco items:list -a .alice.yaml` in the command line. Once you have have the `id` of the item, add it to the following CLI command:
 
 ```bash
-meeco shares:create-config --from .user.yaml --to .user_2.yaml -i 5fc9c712-5abe-4f6a-a551-61c32f2e09f5 > .share_config.yaml
+meeco shares:create-config --from .alice.yaml --to .bob.yaml -i ITEM_ID_TO_SHARE > .share_config.yaml
 ```
 
 After this configuration file is created, we can create the share between the two users:
@@ -42,12 +44,12 @@ After this configuration file is created, we can create the share between the tw
 meeco shares:create -c .share_config.yaml
 ```
 
-The CLI sets up a private encryption space between `user` and `user2` and then shares the item.
+The CLI sets up a _private encryption space_ between Alice and Bob and then shares the item.
 
-We never created an item for the second user, so we can see how looking at another user's shared item works:
+We never created an item for the Bob, so we can see how looking at another user's shared item works:
 
 ```bash
-meeco shares:list -a .user_2.yaml
+meeco shares:list -a .bob.yaml
 ```
 
 The above lists all the shares between the users:
@@ -99,7 +101,7 @@ spec:
 We can then grab the `share_id` and use it in the next call:
 
 ```yaml
-meeco shares:get -a .user_2.yaml bed6ea54-701e-4d36-9142-a975cad21911
+meeco shares:get -a .bob.yaml SHARE_ID
 ```
 
 Well done - you've now created a connection between two users, and shared an item!
