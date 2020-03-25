@@ -100,3 +100,5 @@ $ meeco items:create -i vehicle.yaml -a .user.yaml
 
 Congratulations, you have now created your first item in the _**Vault**_.
 
+From here you can either keep learning about the Meeco Platform and tools, or jump into the [Connections and Sharing tutorial](../guides/connections-and-sharing.md) to keep using the CLI to make a connection with another user and share the item you created above. 
+

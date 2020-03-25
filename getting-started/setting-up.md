@@ -4,9 +4,9 @@
 
 Firstly, a developer must sign up at the [Meeco Developer Portal](http://dev.meeco.me/).
 
-After following the signup procedure, confirming your account via an email and finally logging in, select "Products" from the header bar.
+After following the signup procedure, confirming your account via an email and finally logging in, select "Get API Keys" from the home page.
 
-Select a product, give your new subscription a name, then hit "Subscribe".
+Give your subscription a name, read through and agree to the Terms of Use, and subscribe.
 
 This will generate the Primary and Secondary keys that are required to make requests in the developer portal.
 
