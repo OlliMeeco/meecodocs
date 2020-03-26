@@ -269,7 +269,7 @@ Howerver, the Meeco platform makes it possible for one user to share cards with 
 
 In summary, the sharer will generate a DEK \(data encryption key\) specifically for the purpose of this share and re-encrypt the shared card with this key. In order to share the DEK, Public Key cryptography is used: the sharer will encrypt the DEK with a Public Key of the share recipient, so only the share recipient can decrypt the DEK with their Private Key, and then use the DEK to decrypt the card.
 
-![Overview of sharing](../.gitbook/assets/download_alice_bob.png)
+![](../.gitbook/assets/section3.png)
 
 Let's dive into it.
 
@@ -341,9 +341,7 @@ The main results of these steps are as follows:
 
 Reading of the share can be described in the following sequence diagram:
 
-
-
-![](https://files.slack.com/files-pri/TC3PD7GUB-F010981SNBT/read_share_experian.png)
+![](../.gitbook/assets/read_share_experian.png)
 
 First in step 33 User 2 retrieves a list of all incoming shares. Each share has a connection ID.
 
