@@ -300,7 +300,7 @@ In this section we'll describe the scenario when User 2 accepts the invitation f
 
 This process can be described in the following sequence diagram:
 
-![](https://files.slack.com/files-pri/TC3PD7GUB-F010MG07G2J/accept_invitation_experian.png)
+![](../.gitbook/assets/accept_invitation_experian.png)
 
 Most of these steps are the the same steps of User 1 in the previous section: just like User 1, User 2 generates a Keypair for this connection \(step 11\), encrypts it and stores in the Keystore \(steps 12-14\), and publishes the Public Key in the Vault \(steps 15-16\).
 
