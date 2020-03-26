@@ -320,7 +320,7 @@ The process of encryption and the key exchange is abstracted into something call
 
 Creation of a share can be described in the following sequence diagram:
 
-![](https://files.slack.com/files-pri/TC3PD7GUB-F010K9RS56C/create_share_experian.png)
+![](../.gitbook/assets/create_share_experian.png)
 
 At step 23 User 1 generates a DEK. This DEK will be used to encrypt the shared card. As we always do with DEKs, we encrypt it the Key Encryption Key \(step24\). But we also need to have the key readable by User 2, so at step 25 we encrypt the same KEK by the Public Key of User 2.
 
