@@ -279,9 +279,7 @@ Before anything can be shared, 2 Users need to establish a _**connection**_. In 
 
 The process can be described in the following sequence diagram:
 
-
-
-![](https://files.slack.com/files-pri/TC3PD7GUB-F010M305YFR/send_invitation_experian.png)
+![](../.gitbook/assets/send_invitation_experian.png)
 
 At step \(1\) User 1 generates a Keypair which will be used for inviting another user, and later for the key exchange.
 
