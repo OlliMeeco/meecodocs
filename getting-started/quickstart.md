@@ -6,7 +6,7 @@ This guide aims to get you up and running and familiar with the API in about 15 
 
 Download the Meeco CLI and follow the installation instructions in the [Meeco CLI section](../tools/meeco-cli.md) of the documentation.
 
-The first thing to do is setup an `.environment.yaml` file that allows you to connect to the sandbox environment.
+The first thing to do after setup is to create an `.environment.yaml` file that allows you to connect to the sandbox environment.
 
 {% code title=".environment.yaml" %}
 ```yaml
@@ -35,7 +35,7 @@ $ meeco users:create -p supersecretpassword > .alice.yaml
 
 The command above does a lot, if you want to learn what happens behind the scenes look at the guide about [Setting up Access](../guides/setting-up-access.md). The end result is captured in a file `.alice.yaml` that holds the necessary information about the user that allows us to talk to the API in the next steps.
 
-In next calls, you'll see an argument added `-a .alice.yaml`
+In the next calls, you'll see an argument added with `-a .alice.yaml`
 
 ## Creating an Item
 

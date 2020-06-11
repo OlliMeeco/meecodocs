@@ -9,7 +9,7 @@
 
 ## Tools
 
-* [Meeco CLI](tools/meeco-cli.md)
+* [Meeco SDK & CLI](tools/meeco-cli.md)
 * [Cryppo](tools/cryppo.md)
 * [Cryppo CLI](tools/cryppo-cli.md)
 
