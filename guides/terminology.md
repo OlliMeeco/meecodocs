@@ -4,10 +4,6 @@
 
 A _**Classification**_ is a link between a _**Classification Node**_ and a classified entity. The link to a classified entity is polymorphic, that is, many entities can be classified in the Meeco model.
 
-## Classification Scheme
-
-The Meeco platform has a very flexible way to tag information. Instead of having a traditional simple flat list of tags the system can be configured to have multiple independent _**Classifications**_. Combinations of these _**Classifications**_ are called _**Classification Schemes**_.
-
 ## Classification Node
 
 A _**Classification Scheme**_ consists of a tree of _**Classification Nodes**_. A _**Classification Node**_
@@ -18,6 +14,10 @@ A _**Classification Scheme**_ consists of a tree of _**Classification Nodes**_. 
 * has property `label`
 * has property `description`
 * has property `image`
+
+## Classification Scheme
+
+The Meeco platform has a very flexible way to tag information. Instead of having a traditional simple flat list of tags the system can be configured to have multiple independent _**Classifications**_. Combinations of these _**Classifications**_ are called _**Classification Schemes**_.
 
 ## Connection
 
