@@ -1,18 +1,94 @@
 # Terminology
 
-## Vault
+## Classification
 
-The Vault is where a User of the API-of-Me will store the Items they create and modify. In other words - storage for encrypted user data. 
+A _**Classification**_ is a link between a _**Classification Node**_ and a classified entity. The link to a classified entity is polymorphic, that is, many entities can be classified in the Meeco model.
 
-The User is the only actor that can decrypt their own data - that is to say, more importantly, that User data cannot be decrypted and read by anyone at Meeco. Your data is _your_ data. 
+## Classification Node
 
-In the [Meeco Developer Portal](https://dev.meeco.me) the Vault is reachable through the `https://sandbox.meeco.me/vault` endpoint.
+A _**Classification Scheme**_ consists of a tree of _**Classification Nodes**_. A _**Classification Node**_
+
+* belongs to a _**Classification Scheme**_
+* has a parent _**Classification Node**_ unless it is the top node
+* has property `name`
+* has property `label`
+* has property `description`
+* has property `image`
+
+## Classification Scheme
+
+The Meeco platform has a very flexible way to tag information. Instead of having a traditional simple flat list of tags the system can be configured to have multiple independent _**Classifications**_. Combinations of these _**Classifications**_ are called _**Classification Schemes**_.
+
+## Connection
+
+A _**Connection**_ between two users is a channel via which users can share individual _**Slots**_ on the _**Items**_, or the entire _**Item**_ itself.
+
+You can read a more detailed explanation of _**Connections**_ and Sharing Items and Slots [here](connections-and-sharing.md), and you can run through creating a _**Connection**_ and sharing an item using the Meeco CLI tool [here](connections-and-sharing.md) - just make sure you've gone through the [Quickstart guide](../getting-started/quickstart.md) first to have gained access to!
+
+## Data Encryption Key \(DEK\)
+
+_**Data Encryption Keys**_ are `AES256-GCM` keys used to encrypted and decrypt user data. _**Data Encryption Keys**_ are stored in the **Keystore** encrypted with the _**Key Encryption Key**_.
+
+A _**Data Encryption Key**_ is created for various functions of the API. For instance, a DEK is created when a user _**Shares**_ a _**Slot**_ with another user. When that user connects with another user, the first time they share another DEK is created.
+
+It is possible for a user to have multiple _**Data Encryption Keys**_
+
+## Item
+
+An _**Item**_ is a group of _**Slots**_ related by a topic. For example, a user profile is an _**Item**_. A club membership, a flight reservation - all these can be _**Items**_ each having a number of _**Slots**_ of different types in them.
+
+If a user makes a _**Connection**_ with another user, they can share the encrypted slots with that user.
+
+## Item Template
+
+An _**Item Template**_ is a predefined list of empty _**Slots**_. Each _**Item**_ is created by cloning such a template and filling in the _**Slots**_ with your user's data. You can read a more detailed document about Items and Templates [here](items-and-slots.md)
+
+## Key Encryption Key \(KEK\)
+
+The _**Key Encryption Key**_ which is used to encrypt all other keys \(data encryption keys and keypairs\) before they are stored in the _**Keystore**_. The _**Key Encryption Key**_ is encrypted with the _**Password Derived Key**_.
+
+In the current implementation this is an [`AES256-GCM`](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) key, but the serialization format of encrypted data used in the Meeco platform allows for adding new encryption algorithms without breaking backwards compatibility.
+
+There is one _**Key Encryption Key**_ per user.
+
+## Keypair
+
+Public key cryptography is used for _**Connections**_ and shared between users. Private keys are stored in the _**Keystore**_ encrypted with the _**Key Encryption Key**_.
 
 ## Keystore
 
 Storage for secrets and keys. This is where the [_Data Encryption Keys_](terminology.md#data-encryption-key-dek)_, Private Keys_ that have been encrypted with the [_Key Encryption Key_](terminology.md#key-encryption-key-kek)_,_ and __the __[_Derivation Artefacts_](terminology.md#passphrase-derived-key-and-derivation-artefacts) are stored. 
 
 In the [Meeco Developer Portal](https://dev.meeco.me) the Keystore is reachable through the `https://sandbox.meeco.me/keystore` endpoint.
+
+## Passphrase Derived Key And Derivation Artefacts
+
+A _**Passphrase Derived Key**_ is a [`PBKDF2`](https://en.wikipedia.org/wiki/PBKDF2) key in the current implementation. To generate or re-generate this key, a passphrase and derivation artefacts are required. Derivation artefacts include:
+
+* Number of iterations
+* Salt
+* Derived key length
+
+Derivation artefacts are stored in the _**Keystore**_. Neither the _**Passphrase Derived Key**_ itself nor the passphrase are stored in the _**Keystore**_
+
+## Secret Key
+
+The secret key is a component of the SRP flow, created on the client and stored \(securely\) by the user. The first character of the key denotes the version.
+
+The format for version 1 is as follows:
+
+```bash
+{version}-{username}-{salt}
+```
+
+* The `username` is generated by the server
+* The `salt` is a 256 bit randomly generated key, which is base58 encoded and has a hypen \(`-`\) at each 6th character.
+
+## Share
+
+A _**Share**_ is created when a user grants access to their _**Item**_ to another user that they've _**Connected**_ with. The _**Item**_ is re-encrypted with a data encryption key shared with the recipient of the _**Share**_.
+
+For a detailed look at Sharing and Connections, have a look at the Connections and Sharing Guide, or read through the tutorial for creating a _**Connection**_ and sharing an item using the [Meeco CLI](../tools/meeco-cli.md) tool [here](connections-and-sharing.md)
 
 ## Slot
 
@@ -26,7 +102,7 @@ A _**Slot**_ in the smallest data entity in the _**Vault**_. An _**Item**_ is ma
 * `url`
 * `phone_number`
 * `email`
-* `password` 
+* `password`
 
 _**Slots**_ have the following example structure:
 
@@ -65,71 +141,6 @@ _**Slot**_ values are always stored in an encrypted form and only the user can d
 
 _**Slots**_ are able to be shared after two users have made a [_**Connection**_](terminology.md#connection) _****_with each other.
 
-## Item
-
-An _**Item**_ is a group of _**Slots**_ related by a topic. For example, a user profile is an _**Item**_. A club membership, a flight reservation - all these can be _**Items**_ each having a number of _**Slots**_ of different types in them.
-
-If a user makes a _**Connection**_ with another user, they can share the encrypted slots with that user. 
-
-## An Item Template
-
-An _**Item Template**_ is a predefined list of empty _**Slots**_. Each _**Item**_ is created by cloning such a template and filling in the _**Slots**_ with your user's data. You can read a more detailed document about Items and Templates [here](items-and-slots.md)
-
-## Connection
-
-A _**Connection**_ between two users is a channel via which users can share individual _**Slots**_ on the _**Items**_, or the entire _**Item**_ itself.
-
-You can read a more detailed explanation of _**Connections**_ and Sharing Items and Slots [here](connections-and-sharing.md), and you can run through creating a _**Connection**_ and sharing an item using the Meeco CLI tool [here](connections-and-sharing.md) - just make sure you've gone through the [Quickstart guide](../getting-started/quickstart.md) first to have gained access to!
-
-## Share
-
-A _**Share**_ is created when a user grants access to their _**Item**_ to another user that they've _**Connected**_ with. The _**Item**_ is re-encrypted with a data encryption key shared with the recipient of the _**Share**_.
-
-For a detailed look at Sharing and Connections, have a look at the Connections and Sharing Guide, or read through the tutorial for creating a _**Connection**_ and sharing an item using the [Meeco CLI](../tools/meeco-cli.md) tool [here](connections-and-sharing.md)
-
-## Passphrase Derived Key And Derivation Artefacts
-
-A _**Passphrase Derived Key**_ is a [`PBKDF2`](https://en.wikipedia.org/wiki/PBKDF2) key in the current implementation. To generate or re-generate this key, a passphrase and derivation artefacts are required. Derivation artefacts include:
-
-* Number of iterations
-* Salt
-* Derived key length
-
-Derivation artefacts are stored in the _**Keystore**_. Neither the _**Passphrase Derived Key**_ itself nor the passphrase are stored in the _**Keystore**_
-
-## Key Encryption Key \(KEK\)
-
-The _**Key Encryption Key**_ which is used to encrypt all other keys \(data encryption keys and keypairs\) before they are stored in the _**Keystore**_. The _**Key Encryption Key**_ is encrypted with the _**Password Derived Key**_.
-
-In the current implementation this is an [`AES256-GCM`](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) key, but the serialization format of encrypted data used in the Meeco platform allows for adding new encryption algorithms without breaking backwards compatibility.
-
-There is one _**Key Encryption Key**_ per user.
-
-## Data Encryption Key \(DEK\)
-
-_**Data Encryption Keys**_ are `AES256-GCM` keys used to encrypted and decrypt user data. _**Data Encryption Keys**_ are stored in the **Keystore** encrypted with the _**Key Encryption Key**_.
-
-A _**Data Encryption Key**_ is created for various functions of the API. For instance, a DEK is created when a user _**Shares**_ a _**Slot**_ with another user. When that user connects with another user, the first time they share another DEK is created.
-
-It is possible for a user to have multiple _**Data Encryption Keys**_
-
-## Keypair
-
-Public key cryptography is used for _**Connections**_ and shared between users. Private keys are stored in the _**Keystore**_ encrypted with the _**Key Encryption Key**_.
-
-## Secret Key
-
-The secret key is a component of the SRP flow, created on the client and stored \(securely\) by the user. The first character of the key denotes the version.
-
-The format for version 1 is as follows:
-
-```bash
-{version}-{username}-{salt}
-```
-
-* The `username` is generated by the server
-* The `salt` is a 256 bit randomly generated key, which is base58 encoded and has a hypen \(`-`\) at each 6th character.
-
 ## SRP - Secure Remote Password
 
 A type of password authenticated key exchange that we have adopted for signup and key handling.
@@ -138,22 +149,10 @@ You can read more about it here - [https://en.wikipedia.org/wiki/Secure\_Remote\
 
 This greatly simplifies user creation and login for the developer and users.
 
-## Classification Scheme
+## Vault
 
-The Meeco platform has a very flexible way to tag information. Instead of having a traditional simple flat list of tags the system can be configured to have multiple independent _**Classifications**_. Combinations of these _**Classifications**_ are called _**Classification Schemes**_.
+The Vault is where a User of the API-of-Me will store the Items they create and modify. In other words - storage for encrypted user data. 
 
-## Classification Node
+The User is the only actor that can decrypt their own data - that is to say, more importantly, that User data cannot be decrypted and read by anyone at Meeco. Your data is _your_ data. 
 
-A _**Classification Scheme**_ consists of a tree of _**Classification Nodes**_. A _**Classification Node**_
-
-* belongs to a _**Classification Scheme**_
-* has a parent _**Classification Node**_ unless it is the top node
-* has property `name`
-* has property `label`
-* has property `description`
-* has property `image`
-
-## Classification
-
-A _**Classification**_ is a link between a _**Classification Node**_ and a classified entity. The link to a classified entity is polymorphic, that is, many entities can be classified in the Meeco model.
-
+In the [Meeco Developer Portal](https://dev.meeco.me) the Vault is reachable through the `https://sandbox.meeco.me/vault` endpoint.
