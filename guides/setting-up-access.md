@@ -5,22 +5,21 @@ This guide contains step by step instructions on how to create user accounts for
 * The _**Keystore**_ is where a users stores their secrets and encryption keys.
 * The _**Vault**_ is where users store their encrypted user data. User data cannot be decrypted and read by anyone but the user.
 
-Once the user has been authenticated a mobile/web application interacts with the _**Vault**_ and _**Keystore**_ to securely store user's data and encryption keys. The mobile application and/or its backend will perform calls to the _**Vault**_ and _**Keystore**_. Generation of various keys, data encryption, and decryption will also happen on the client side. In order to simplify the client side cryptography Meeco has developed an open-source library which implements the required cryptographic routines. Currently there are two ports of this library:
+Once the user has been authenticated a mobile/web application interacts with the _**Vault**_ and _**Keystore**_ to securely store user's data and encryption keys. The mobile application and/or its backend will perform calls to the _**Vault**_ and _**Keystore**_. Generation of various keys, data encryption, and decryption will also happen on the client side. In order to simplify the client side cryptography Meeco has developed an open-source library which implements the required cryptographic routines.
 
-* Ruby [https://github.com/Meeco/cryppo](https://github.com/Meeco/cryppo)
-* Javascript \(Typescript\) [https://github.com/Meeco/cryppo-js](https://github.com/Meeco/cryppo-js)
+We've called it "Cryppo", and you can read about it and the languages it's available in on the [Cryppo page on this documentation site](../tools/cryppo.md)
 
-Encrypting of data and keys on the client side before it is sent up to the _**Keystore**_ or _**Vault**_ is an important part of the flow and infrastructure. By never sending unencrypted data to the services the layer of trust needed in a given service is greatly diminished and the likelihood of the data being decrypted by a nefarious entity should a data breach occur is extremely low.
+Encryption of data and keys on the client side before it is sent up to the _**Keystore**_ or _**Vault**_ is an important part of the flow and infrastructure. By never sending unencrypted data to the services the layer of trust needed in a given service is greatly diminished and the likelihood of the data being decrypted by a nefarious entity should a data breach occur is extremely low.
 
-For this guide, in order to emulate client behavior we will use the [Meeco-CLI](../tools/meeco-cli.md) to setup access to the _**Vault**_ and _**Keystore**_.
+For this guide, in order to emulate client behavior we will use the [Meeco-CLI](../tools/meeco-cli.md) to setup access to the _**Vault**_ and _**Keystore**_ and the [Cryppo-CLI](../tools/cryppo.md#cryppo-cli) to generate keys and encrypt/decrypt some data.
 
 By the end of this guide, after reading and executing the scripts you will learn about which cryptographic keys exist for a user, and how they are encrypted and stored safely in the _**Keystore**_. The guide also demonstrate how keys are encrypted and decrypted.
 
 ### Setting up
 
-Download the [Meeco-CLI](https://github.com/Meeco/cli) and the [Cryppo-CLI](../tools/cryppo.md#cryppo-cli) and follow the installation instructions for each tool. If you'd like to read more about the tools, you can find each description page in the "Tools" section on this site. 
+Download the [Meeco-CLI](https://github.com/Meeco/cli) and the [Cryppo-CLI](../tools/cryppo.md#cryppo-cli) and follow the installation instructions for each tool. If you'd like to read more about the tools, you can find each description page in the [Tools](https://docs.meeco.me/tools) section on this site.
 
-To explain what is required to access the Meeco _**Vault**_, we're going to look in detail at what the Meeco CLI does when you create a new user. 
+To explain what is required to access the Meeco _**Vault**_, we're going to look in detail at what the Meeco CLI does when you create a new user.
 
 The CLI uses [Secure Remote Password protocol](https://en.wikipedia.org/wiki/Secure_Remote_Password_protocol) - otherwise known as SRP - to generate all the required keys and tokens so that you can access the Meeco _**Vault**_.
 
@@ -38,13 +37,13 @@ The above command fires off a series of calls to the various Meeco APIs
 
 _'Generating username'_
 
-Firstly, we request a random username. It is a string that looks like `M9znjHbD5Xi` . 
+Firstly, we request a random username. It is a string that looks like `M9znjHbD5Xi`.
 
 We also need to generate a random "Secret Key" that looks like the following: `xQCSCK-8A1d6d-emUjx8-YVGDcT-UhctWy-2rfHyv-7JNAgh-9` . 
 
 We combine the username and the secret key, and prepend a version number to it. The resulting string is known as the "Secret" and takes the following form: `1.M9znjHbD5Xi.xQCSCK-8A1d6d-emUjx8-YVGDcT-UhctWy-2rfHyv-7JNAgh-9`
 
-Now that we have our secret, it's time to derive the credentials that we need in order to create our user. 
+Now that we have our secret, it's time to derive the credentials that we need in order to create our user.
 
 We use the user's password - `supersecretpassword` from the CLI command - and use the "Secret Key" as a salt to generate the "Passphrase Derived Key" \(PDK\). The PDK is later used to encrypt the "Key Encryption Key" \(KEK\). The passphrase derived key ends up looking like the following string: `24rdL_ugryujjDLcvwt00ARWWMCF4kk4gJETJy6yRjs=`
 
@@ -81,7 +80,6 @@ In order to restrict users from creating more than one user account in the _**Va
 This is how the CLI does this behind the scenes:
 
 ```bash
-
 curl -v -X GET "https://sandbox.meeco.me/keystore/external_admission_tokens"
 -H "Cache-Control: no-cache"
 -H "Meeco-Subscription-Key: DEV_PORTAL_SUBSCRIPTION_KEY"
@@ -104,24 +102,20 @@ _'Generate and store key encryption key'_
 
 The key encryption key \(_KEK_\) is a special encryption key which is used to encrypt all of the user’s other keys \(data encryption keys and keypairs\). There is only one _KEK_ per user.
 
-The CLI uses the `cryppo` library to generate a new random key, and then encrypt and serializes it with the _PDK_ from the earlier SRP login steps. 
+The CLI uses the `cryppo` library to generate a new random key, and then encrypt and serializes it with the _PDK_ from the earlier SRP login steps.
 
-The code that does this looks like this:
+To do this manually, you can use the `cryppo-cli` library by using the following command with the unencrypted KEK you can find in the user's YAML file that the CLI creates in the root of the CLI directory:
 
-```javascript
-        const kek = cryppo.generateRandomKey();
-        const encryptedKEK = await cryppo.encryptWithKey({
-            strategy: cryppo.CipherStrategy.AES_GCM,
-            key: derivedKey,
-            data: kek
-        });
+```bash
+➜ cryppo genkey
+
+URL-Safe Base64 encoded key:
+INUyR39qQcu43rqLeJtoTSMbzrB6NjlkSEujnM99ow4=
+
+➜ cryppo encrypt -v INUyR39qQcu43rqLeJtoTSMbzrB6NjlkSEujnM99ow4= -k {PASSPHRASE DERIVED KEY}
+
+Aes256Gcm.XKa_28KCjz_qUICv3XDi3x2SFSWCgVj3kkxvBg1QcfnG0Zkn7ooonHrnV48=.LS0tCml2OiAhYmluYXJ5IHwtCiAgek5Sa004M2lwRFYvd1hhegphdDogIWJpbmFyeSB8LQogIGpzb0pWbjBNNytLWWpoU3p0c2lpb1E9PQphZDogbm9uZQo=
 ```
-
- The _PDK_ is the `derivedKey`
-
-The _KEK_ gets serialized in the above step.
-
-To do this manually, you can use the `cryppo-cli` library by using the following command with the unencrypted KEK you can find in the user's YAML file that the CLI creates in the root of the CLI directory: `cryppo encrypt -k PASSPHRASE_DERIVED_KEY -v UNENCRYPTED_KEY` 
 
 The resulting encrypted _KEK_ looks like this: `Aes256Gcm.3EvCOUWD-zsHfe5hvrsMcppHx14SOMHXrEZC4Eyfw3s2JpvrIQRAH5Ydqcc=.LS0tCml2OiAhYmluYXJ5IHwtCiAgSVdjQ0M1ZC9FeHdRSVVFMAphdDogIWJpbmFyeSB8LQogIFN0L1o5QTZOMCswczBWQXgxcjQ0Rmc9PQphZDogbm9uZQo=`
 
@@ -169,13 +163,12 @@ To store a _DEK_ we need to encrypt it with the _Key Encryption Key_.
 
 This follows the same general form as generating and encrypting the _KEK_, but this time, we encrypt the _DEK_ with the _KEK_ instead of the _PDK_.
 
-```javascript
-const dek = cryppo.generateRandomKey();
-        const dekEncryptedWithKEK = await cryppo.encryptWithKey({
-            data: dek,
-            key: keyEncryptionKey,
-            strategy: cryppo.CipherStrategy.AES_GCM
-        });
+```bash
+➜ cryppo genkey
+URL-Safe Base64 encoded key:
+FOQSBUavGP23Fnrgo3mgIfYjk7bLMLpkWLVXEVwg9AU=
+
+➜ cryppo encrypt -v FOQSBUavGP23Fnrgo3mgIfYjk7bLMLpkWLVXEVwg9AU= -k {KEY_ENCRYPTION KEY}
 ```
 
 #### Storing The Encrypted Data Encryption Key
@@ -224,16 +217,15 @@ The CLI will do the following:
 3. Extract the public key
 4. Encrypt the private key with the KEK
 
-The code that does the above looks like this:
+The `cryppo-cli` code that does the above looks like this:
 
-```javascript
-const keyPair = await cryppo.generateRSAKeyPair();
+```bash
+➜ cryppo genkeypair -P pubKey -p privKey
+Wrote new key pair
 
-const privateKeyEncryptedWithKEK = await cryppo.encryptWithKey({
-            data: keyPair.privateKey,
-            key: keyEncryptionKey,
-            strategy: cryppo.CipherStrategy.AES_GCM
-        });
+➜ cryppo encrypt  -v "-----BEGIN RSA PRIVATE KEY-----
+{ ... }
+-----END RSA PRIVATE KEY-----" -k {KEY ENCRYPTION KEY}
 ```
 
 The CLI now has the encrypted Private Key ready to be uploaded to the _**Keystore**_
@@ -318,22 +310,19 @@ The response contains
 * ID of the user in the _**Vault**_
 * an encrypted session token
 
-To decrypt the encrypted session authentication token, the CLI feeds the private key and the encrypted session authentication token into `cryppo` :
+To decrypt the encrypted session authentication token, the CLI feeds the private key and the encrypted session authentication token into `cryppo`.
 
-```javascript
-const decryptedVaultSessionToken = await cryppo.decryptSerializedWithPrivateKey({
-            privateKeyPem: keyPair.privateKey,
-            serialized: vaultUser.encrypted_session_authentication_string
-        });
-        return {
-            user: vaultUser.user,
-            token: decryptedVaultSessionToken
-        };
+The Cryppo-CLI can do this for you with the following command.
+
+```bash
+➜ cryppo decrypt -s {encrypted_session_authentication_string} --privateKeyFile {PRIVATE KEY FILE FROM EARLIER KEYPAR GENERATION TO FILE}
 ```
+
+The output is then used in the next step for creation the encryption space for the new User. 
 
 _'Update Vault Encryption Space'_
 
-The final job for the CLI is to create a new encryption space for the user. This is a DEK identifier. 
+The final job for the CLI is to create a new encryption space for the user. This is a DEK identifier.
 
 ## Logging In Into The Vault
 
@@ -344,4 +333,3 @@ Once decrypted, encrypted session token can now be used with the `Authorization`
 The Login flow has been completed, and now you can use the token to try out the API calls in the _**Vault**_ at the [Meeco Developer Portal playground for the Vault](https://dev.meeco.me/api-details#api=meeco-vault-api)
 
 If you created a user in the CLI, you can use the tokens and keys in the metadata section of your `.user.yaml` files to try out more API requests.
-
