@@ -219,7 +219,162 @@ Here is a response with a created Item:
     "associations": [],
     "associations_to": []
 }
+
+
 ```
+## Creating a Custom Template and Item
+
+It is possible to create a Custom Template, and then call on this template later on.
+
+The minimum amount of information is quite small, but you can add as many slots as you like. Here, we've only added one slot and given the Template and Item a name.
+
+```bash
+curl -v -X POST "https://sandbox.meeco.me/vault/item_templates"
+-H "Content-Type: application/json"
+-H "Cache-Control: no-cache"
+-H "Meeco-Subscription-Key: a39e5fb966974c29a03930e8bb473198"
+-H "Authorization: Z1yHMPz6yAXF79QZedP6"
+--data-ascii "{
+  ^"name^": ^"example_custom_template^",
+  ^"label^": ^"Example Custom Template^",
+  ^"slots_attributes^": [
+    {
+      ^"label^": ^"An Example Slot^",
+      ^"slot_type_name^": ^"key_value^"
+    }
+  ]
+}"
+```
+The the successfully created template will look like this:
+
+```JSON
+{
+    "item_template": {
+        "id": "8326475a-65c2-4752-aba0-80396387612a",
+        "name": "example_custom_template",
+        "description": null,
+        "ordinal": 0,
+        "visible": true,
+        "user_id": "1788125e-3477-4633-8797-bebbf3b6e359",
+        "updated_at": "2020-06-24T06:31:09.549Z",
+        "template_type": "ItemTemplate",
+        "label": "Example Custom Template",
+        "slot_ids": ["2f007037-01d9-495f-9999-2a4cc259eac9", "23eea243-1d09-4000-9215-7c1bc534c141", "b57a5d9a-f124-4ddd-954f-18681b2360f1", "929ea8b9-9815-4389-99a9-163f9e0c8b15"],
+        "classification_node_ids": [],
+        "background_color": null,
+        "image": null
+    },
+    "slots": [{
+        "id": "2f007037-01d9-495f-9999-2a4cc259eac9",
+        "name": "an_example_slot",
+        "description": null,
+        "encrypted": false,
+        "ordinal": 0,
+        "visible": true,
+        "classification_node_ids": [],
+        "slotable_id": null,
+        "slotable_type": null,
+        "required": false,
+        "updated_at": "2020-06-24T06:31:09.528Z",
+        "created_at": "2020-06-24T06:31:09.498Z",
+        "config": null,
+        "slot_type_name": "key_value",
+        "creator": null,
+        "attachment_ids": [],
+        "label": "An Example Slot",
+        "image": null,
+        "encrypted_value": null
+    }, { ... }, { ... }, { ... }],
+    "classification_nodes": [],
+    "attachments": [],
+    "thumbnails": []
+}
+```
+
+Then, you will create an item from your new template:
+
+```bash
+curl -v -X POST "https://sandbox.meeco.me/vault/items"
+-H "Content-Type: application/json"
+-H "Cache-Control: no-cache"
+-H "Meeco-Subscription-Key: a39e5fb966974c29a03930e8bb473198"
+-H "Authorization: Z1yHMPz6yAXF79QZedP6"
+--data-ascii "  {
+    ^"item^": {
+      ^"label^": ^"An example item with custom template^",
+      ^"classification_nodes_attributes^": [
+      ],
+      ^"slots_attributes^": [
+      ]
+    },
+    ^"template_name^": ^"example_custom_template^"
+  }"
+```
+
+The created item comes back looking like the following (truncated) response, with a custom slot that was part of the template creation call.
+
+```JSON
+{
+    "item": {
+        "id": "945f5a3f-ea60-4556-b22c-7127332be319",
+        "name": "an_example_item_with_custom_template",
+        "label": "An example item with custom template",
+        "description": null,
+        "created_at": "2020-06-24T06:39:26.102Z",
+        "item_template_id": "8326475a-65c2-4752-aba0-80396387612a",
+        "ordinal": 1,
+        "visible": true,
+        "updated_at": "2020-06-24T06:39:26.457Z",
+        "item_template_label": "Example Custom Template",
+        "shareable": false,
+        "item_image": null,
+        "item_image_background_colour": null,
+        "slot_image": null,
+        "slot_image_background_colour": null,
+        "category_image": null,
+        "category_image_background_colour": null,
+        "category_label": null,
+        "image": null,
+        "image_background_colour": null,
+        "me": false,
+        "background_color": null,
+        "classification_node_ids": [],
+        "association_ids": [],
+        "associations_to_ids": [],
+        "slot_ids": ["7d565864-ea20-4029-b2fa-ce7d8041e883", "1dd85852-da16-4e37-acff-d598419c7f05", "5dd8ef08-c598-45b6-97f0-c2b8d98c8df0", "e142910d-ac0c-4b01-b99b-58aab60e63b9"]
+    },
+    "associations": [],
+    "associations_to": [],
+    "classification_nodes": [],
+    "slots": [{ ... },
+    {
+        "id": "e142910d-ac0c-4b01-b99b-58aab60e63b9",
+        "name": "an_example_slot",
+        "description": null,
+        "encrypted": false,
+        "ordinal": 0,
+        "visible": true,
+        "classification_node_ids": [],
+        "slotable_id": "945f5a3f-ea60-4556-b22c-7127332be319",
+        "slotable_type": "Item",
+        "required": false,
+        "updated_at": "2020-06-24T06:39:26.253Z",
+        "created_at": "2020-06-24T06:39:26.253Z",
+        "config": null,
+        "slot_type_name": "key_value",
+        "creator": "user",
+        "attachment_ids": [],
+        "label": "An Example Slot",
+        "image": null,
+        "encrypted_value": null
+    }],
+    "attachments": [],
+    "thumbnails": [],
+    "shares": []
+}
+```
+
+_Note - There currently isn't a way to share custom templates with other users._
 
 ## Data Encryption Of User Data In The Vault
 
