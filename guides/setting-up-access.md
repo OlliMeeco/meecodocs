@@ -2,6 +2,8 @@
 
 This guide contains step by step instructions on how to create user accounts for the _**Vault**_ and the _**Keystore**_.
 
+![Create User with SRP](../.gitbook/assets/srp_create_user.svg)
+
 * The _**Keystore**_ is where a users stores their secrets and encryption keys.
 * The _**Vault**_ is where users store their encrypted user data. User data cannot be decrypted and read by anyone but the user.
 
