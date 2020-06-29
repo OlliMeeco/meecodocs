@@ -2,10 +2,6 @@
 
 This guide contains step by step instructions on how to create user accounts for the _**Vault**_ and the _**Keystore**_.
 
-![](https://mermaid.ink/svg/eyJjb2RlIjoiZ3JhcGggVERcbkFbQ2hyaXN0bWFzXSAtLT58R2V0IG1vbmV5fCBCKEdvIHNob3BwaW5nKVxuQiAtLT4gQ3tMZXQgbWUgdGhpbmt9XG5DIC0tPnxPbmV8IERbTGFwdG9wXVxuQyAtLT58VHdvfCBFW2lQaG9uZV1cbkMgLS0-fFRocmVlfCBGW2ZhOmZhLWNhciBDYXJdXG4iLCJtZXJtYWlkIjp7InRoZW1lIjoiZGVmYXVsdCJ9fQ)
-
-
-
 * The _**Keystore**_ is where a users stores their secrets and encryption keys.
 * The _**Vault**_ is where users store their encrypted user data. User data cannot be decrypted and read by anyone but the user.
 
