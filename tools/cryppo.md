@@ -30,4 +30,3 @@ With the Cryppo CLI you can use the following functions:
 * Generate an RSA keypair
 * Sign a file with an RSA private key
 * Verify a file that has been signed with an RSA key
-

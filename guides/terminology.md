@@ -57,7 +57,7 @@ Public key cryptography is used for _**Connections**_ and shared between users. 
 
 ## Keystore
 
-Storage for secrets and keys. This is where the [_Data Encryption Keys_](terminology.md#data-encryption-key-dek)_, Private Keys_ that have been encrypted with the [_Key Encryption Key_](terminology.md#key-encryption-key-kek)_,_ and __the __[_Derivation Artefacts_](terminology.md#passphrase-derived-key-and-derivation-artefacts) are stored. 
+Storage for secrets and keys. This is where the [_Data Encryption Keys_](terminology.md#data-encryption-key-dek)_, Private Keys_ that have been encrypted with the [_Key Encryption Key_](terminology.md#key-encryption-key-kek)_,_ and **the** [_Derivation Artefacts_](terminology.md#passphrase-derived-key-and-derivation-artefacts) are stored.
 
 In the [Meeco Developer Portal](https://dev.meeco.me) the Keystore is reachable through the `https://sandbox.meeco.me/keystore` endpoint.
 
@@ -131,7 +131,7 @@ _**Slots**_ have the following example structure:
         },
 ```
 
-Once encrypted and serialized - you can use one of Meeco's [Cryppo](../tools/cryppo.md) family of encryption libraries -  a slot value of "BMW" would look something like this:
+Once encrypted and serialized - you can use one of Meeco's [Cryppo](../tools/cryppo.md) family of encryption libraries - a slot value of "BMW" would look something like this:
 
 ```bash
 "encrypted_value": "Aes256Gcm.2hDl.LS0tCml2OiAhYmluYXJ5IHwtCiAgQWQwSThDZk5qRnFycmFuMAphdDogIWJpbmFyeSB8LQogIDJXVklzbUxOSWVoOHZIVDB1ZzBtZVE9PQphZDogbm9uQQo="
@@ -139,20 +139,21 @@ Once encrypted and serialized - you can use one of Meeco's [Cryppo](../tools/cry
 
 _**Slot**_ values are always stored in an encrypted form and only the user can decrypt and read them.
 
-_**Slots**_ are able to be shared after two users have made a [_**Connection**_](terminology.md#connection) _****_with each other.
+_**Slots**_ are able to be shared after two users have made a [_**Connection**_](terminology.md#connection) \__\*\*_\_with each other.
 
 ## SRP - Secure Remote Password
 
 A type of password authenticated key exchange that we have adopted for signup and key handling.
 
-You can read more about it here - [https://en.wikipedia.org/wiki/Secure\_Remote\_Password\_protocol](https://en.wikipedia.org/wiki/Secure_Remote_Password_protocol) 
+You can read more about it here - [https://en.wikipedia.org/wiki/Secure\_Remote\_Password\_protocol](https://en.wikipedia.org/wiki/Secure_Remote_Password_protocol)
 
 This greatly simplifies user creation and login for the developer and users.
 
 ## Vault
 
-The Vault is where a User of the API-of-Me will store the Items they create and modify. In other words - storage for encrypted user data. 
+The Vault is where a User of the API-of-Me will store the Items they create and modify. In other words - storage for encrypted user data.
 
-The User is the only actor that can decrypt their own data - that is to say, more importantly, that User data cannot be decrypted and read by anyone at Meeco. Your data is _your_ data. 
+The User is the only actor that can decrypt their own data - that is to say, more importantly, that User data cannot be decrypted and read by anyone at Meeco. Your data is _your_ data.
 
 In the [Meeco Developer Portal](https://dev.meeco.me) the Vault is reachable through the `https://sandbox.meeco.me/vault` endpoint.
+
