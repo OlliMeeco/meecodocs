@@ -16,9 +16,17 @@ Visit [https://github.com/Meeco/cryppo](https://github.com/Meeco/cryppo) for the
 
 We'll be using the libraries to run through some of the more in-depth examples on this documentation site, so choose your preferred language and follow along.
 
-## Cryppo CLI
+# Cryppo CLI
 
 We've also created a simple CLI for Cryppo called `cryppo-cli` which can be found at [https://github.com/Meeco/cryppo-cli](https://github.com/Meeco/cryppo-cli)
 
 The intro page for this useful tool can be found [here](cryppo-cli.md) on the documentation site.
 
+With the Cryppo CLI you can use the following functions:
+
+* Encrypt a value
+* Decrypt a value
+* Generate a url-safe base64 key of variable length
+* Generate an RSA keypair
+* Sign a file with an RSA private key
+* Verify a file that has been signed with an RSA key
