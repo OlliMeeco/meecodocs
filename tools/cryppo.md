@@ -14,7 +14,13 @@ It comes in two flavours - Ruby and Javascript - but you can re-implement the ro
 
 Cryptography is hard, and the Cryppo libraries do all the heavy lifting in the creation of cryptographic key pairs, encrypting and decrypting data, and make it trivial to serialize the encrypted data in a way that makes it easy to store and retrieve from the Meeco Vault.
 
-Visit [https://github.com/Meeco/cryppo](https://github.com/Meeco/cryppo) for the Ruby version, and [https://github.com/Meeco/cryppo-js](https://github.com/Meeco/cryppo-js) for the Javascript library.
+The library is available for the following platforms
+
+| Language | URL |
+| :--- | :--- |
+| Elixir | [https://github.com/leikind/cryppo\_ex](https://github.com/leikind/cryppo_ex) |
+| Javascript | [https://github.com/Meeco/cryppo-js](https://github.com/Meeco/cryppo-js) |
+| Ruby | [https://github.com/Meeco/cryppo](https://github.com/Meeco/cryppo) |
 
 We'll be using the libraries to run through some of the more in-depth examples on this documentation site, so choose your preferred language and follow along.
 
