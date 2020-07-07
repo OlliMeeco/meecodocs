@@ -1,6 +1,6 @@
 # Items and Slots
 
-#### Basic Terms
+### Basic Terms
 
 * **Items** — An _Item_ is the basic container for all your encrypted data. Data can be strings, dates, numbers, but also binaries like images or documents. Read more about [Items in the Terminology section](terminology.md#item)
 * **Slot** — A _slot_ is the smallest data entity in the vault. A slot is a placeholder for a data value. An Item usually contains a number of slots. Each slot has a name, a label, and a value. Read more about [slots in the Terminology section](terminology.md#slot)
@@ -214,14 +214,13 @@ Here is a response with a created Item:
             "encrypted_value": null
         },
         ...
-        
+
     ],
     "associations": [],
     "associations_to": []
 }
-
-
 ```
+
 ## Creating a Custom Template and Item
 
 It is possible to create a Custom Template, and then call on this template later on.
@@ -245,9 +244,10 @@ curl -v -X POST "https://sandbox.meeco.me/vault/item_templates"
   ]
 }"
 ```
+
 The the successfully created template will look like this:
 
-```JSON
+```javascript
 {
     "item_template": {
         "id": "8326475a-65c2-4752-aba0-80396387612a",
@@ -311,9 +311,9 @@ curl -v -X POST "https://sandbox.meeco.me/vault/items"
   }"
 ```
 
-The created item comes back looking like the following (truncated) response, with a custom slot that was part of the template creation call.
+The created item comes back looking like the following \(truncated\) response, with a custom slot that was part of the template creation call.
 
-```JSON
+```javascript
 {
     "item": {
         "id": "945f5a3f-ea60-4556-b22c-7127332be319",
@@ -391,7 +391,7 @@ In the following example, we will use the Data Encryption Key \(DEK\) that the C
 * Reading a DEK from the Key Store
 * Decrypting it with the KEK
 
-If you followed the Meeco CLI guide, you will have already created a user with a DEK which you can find in the `.user.yaml` file. You can also generate a DEK by using the `cryppo-cli` and using the following command: 
+If you followed the Meeco CLI guide, you will have already created a user with a DEK which you can find in the `.user.yaml` file. You can also generate a DEK by using the `cryppo-cli` and using the following command:
 
 ```bash
 cryppo genkey

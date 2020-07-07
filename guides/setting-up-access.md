@@ -41,7 +41,7 @@ _'Generating username'_
 
 Firstly, we request a random username. It is a string that looks like `M9znjHbD5Xi`.
 
-We also need to generate a random "Secret Key" that looks like the following: `xQCSCK-8A1d6d-emUjx8-YVGDcT-UhctWy-2rfHyv-7JNAgh-9` . 
+We also need to generate a random "Secret Key" that looks like the following: `xQCSCK-8A1d6d-emUjx8-YVGDcT-UhctWy-2rfHyv-7JNAgh-9` .
 
 We combine the username and the secret key, and prepend a version number to it. The resulting string is known as the "Secret" and takes the following form: `1.M9znjHbD5Xi.xQCSCK-8A1d6d-emUjx8-YVGDcT-UhctWy-2rfHyv-7JNAgh-9`
 
@@ -51,7 +51,7 @@ We use the user's password - `supersecretpassword` from the CLI command - and us
 
 We also generate an "SRP Password" which uses the _reverse_ of the Secret Key as a salt.
 
-We're now ready to create a _**Keystore**_ account. 
+We're now ready to create a _**Keystore**_ account.
 
 ## Creating A Keystore User Account
 
@@ -320,7 +320,7 @@ The Cryppo-CLI can do this for you with the following command.
 ➜ cryppo decrypt -s {encrypted_session_authentication_string} --privateKeyFile {PRIVATE KEY FILE FROM EARLIER KEYPAR GENERATION TO FILE}
 ```
 
-The output is then used in the next step for creation the encryption space for the new User. 
+The output is then used in the next step for creation the encryption space for the new User.
 
 _'Update Vault Encryption Space'_
 
@@ -328,10 +328,11 @@ The final job for the CLI is to create a new encryption space for the user. This
 
 ## Logging In Into The Vault
 
-Once decrypted, encrypted session token can now be used with the `Authorization` header to work with the _**Vault**_. 
+Once decrypted, encrypted session token can now be used with the `Authorization` header to work with the _**Vault**_.
 
 ## Next Steps
 
 The Login flow has been completed, and now you can use the token to try out the API calls in the _**Vault**_ at the [Meeco Developer Portal playground for the Vault](https://dev.meeco.me/api-details#api=meeco-vault-api)
 
 If you created a user in the CLI, you can use the tokens and keys in the metadata section of your `.user.yaml` files to try out more API requests.
+
