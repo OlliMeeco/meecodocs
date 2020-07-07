@@ -30,7 +30,7 @@ We've also created a simple CLI for Cryppo called `cryppo-cli` which can be foun
 
 {% embed url="https://github.com/Meeco/cryppo" %}
 
-The intro page for this useful tool can be found [here](cryppo-cli.md) on the documentation site.
+The intro page for this useful tool can be found [here]() on the documentation site.
 
 With the Cryppo CLI you can use the following functions:
 
