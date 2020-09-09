@@ -316,7 +316,7 @@ The most important results after these two sections are as follows:
 
 Sharing and Ownership are concepts that co-exist but are very different when compared to each other. Traditionally, shares exist like below: 
 
-[](../.gitbook/assets/old_share.png)
+![](../.gitbook/assets/old_share.png)
 
 
 However, with version 2.0, there is a concept of on-sharing. This means that a shared item can be further shared with other users if the option is enabled for the item. The sharing diagram will now look something like below: 
