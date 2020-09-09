@@ -315,15 +315,14 @@ The most important results after these two sections are as follows:
 ### Differenciating Sharing and Ownership
 
 Sharing and Ownership are concepts that co-exist but are very different when compared to each other. Traditionally, shares exist like below: 
-<p align="center">
-![](../.gitbook/assets/old_share.png)
-</p>
+
+[](../.gitbook/assets/old_share.png)
+
 
 However, with version 2.0, there is a concept of on-sharing. This means that a shared item can be further shared with other users if the option is enabled for the item. The sharing diagram will now look something like below: 
 
-<p align="center">
 ![](../.gitbook/assets/new_share.png)
-</p>
+
 
 The item's owner remains constant, however, the item can be re-shared by a former receipient. 
 There are two different aspects of a share: 
@@ -378,9 +377,8 @@ The main results of these steps are as follows:
 * An Encryption Space in the Vault is a link between the connection and the Encryption Space in the Keystore
 
 The item and slots are created as below:
-<p align="center">
+
   ![](../.gitbook/assets/item_slot.png)
-</p>
 
 
 #### Creating a Share as Item Owner
@@ -498,9 +496,8 @@ The share record doesn't use the connection DEK anymore to encrypt share data, i
 
 The final share will have the following fields once created:
 
-<p align="center">
 ![](../.gitbook/assets/share_item.png)
-</p>
+
 
 ### Accepting the Share
 
