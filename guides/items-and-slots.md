@@ -231,8 +231,8 @@ The minimum amount of information is quite small, but you can add as many slots 
 curl -v -X POST "https://sandbox.meeco.me/vault/item_templates"
 -H "Content-Type: application/json"
 -H "Cache-Control: no-cache"
--H "Meeco-Subscription-Key: a39e5fb966974c29a03930e8bb473198"
--H "Authorization: Z1yHMPz6yAXF79QZedP6"
+-H "Meeco-Subscription-Key: DEV_PORTAL_SUBSCRIPTION_KEY"
+-H "authorization: Bearer VAULT_ACCESS_TOKEN_FROM_CLI_GENERATED_USER"
 --data-ascii "{
   ^"name^": ^"example_custom_template^",
   ^"label^": ^"Example Custom Template^",
@@ -297,8 +297,8 @@ Then, you will create an item from your new template:
 curl -v -X POST "https://sandbox.meeco.me/vault/items"
 -H "Content-Type: application/json"
 -H "Cache-Control: no-cache"
--H "Meeco-Subscription-Key: a39e5fb966974c29a03930e8bb473198"
--H "Authorization: Z1yHMPz6yAXF79QZedP6"
+-H "Meeco-Subscription-Key: DEV_PORTAL_SUBSCRIPTION_KEY"
+-H "authorization: Bearer VAULT_ACCESS_TOKEN_FROM_CLI_GENERATED_USER"
 --data-ascii "  {
     ^"item^": {
       ^"label^": ^"An example item with custom template^",
@@ -508,4 +508,3 @@ Response:
       ],
     }
 ```
-
