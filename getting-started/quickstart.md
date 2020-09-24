@@ -42,7 +42,7 @@ In the next calls, you'll see an argument added with `-a .alice.yaml`
 Items in the Meeco API require you to specify a template. This template can be seen as a contract with a number of predefined fields \(which we call slots\). To get all available templates execute the following command
 
 ```bash
-$ meeco templates:list -a .alice.yaml
+$ meeco templates:list -a .Alice.yaml
 Fetching available templates... done
 kind: Templates
 spec:
@@ -63,8 +63,33 @@ spec:
 
 Let's create a `vehicle` item. To prepare this we can run the create config command
 
+First, let's have a look at what kind of information the template holds. 
+
 ```bash
-$ meeco items:create-config vehicle -a .alice.yaml > vehicle.yaml
+$ meeco templates:info vehicle
+Fetching template 'vehicle'... done
+kind: Template
+spec:
+  id: 0c385f1d-8825-4932-a6ab-846178b816e4
+  name: vehicle
+  description: null
+  ordinal: 1
+  visible: true
+  user_id: null
+  updated_at: 2020-09-10T14:13:12.029Z
+  image: https://vault-stage.meeco.me/images/ff1c25e9-530a-4103-b649-986631bcb448
+  classification_node_ids:
+    - 8670d4c6-8d68-49a4-bd21-0fc8cefa705d
+  slot_ids: []
+  label: Vehicle
+  background_color: null
+  slots: []
+```
+
+Then, create the config file:
+
+```bash
+$ meeco items:create-config vehicle -a .Alice.yaml > vehicle.yaml
 ```
 
 The next step is to edit the file to contain some data.
@@ -95,7 +120,7 @@ spec:
 Based on this configuration, we can create a new vehicle in Alice's digital vault.
 
 ```bash
-$ meeco items:create -i vehicle.yaml -a .alice.yaml
+$ meeco items:create -i vehicle.yaml -a .Alice.yaml
 ```
 
 Congratulations, you have now created your first item in the _**Vault**_.

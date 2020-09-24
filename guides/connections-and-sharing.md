@@ -11,7 +11,7 @@ _Below the guide using the CLI we have a more in depth explanation of how sharin
 After successfully creating an item in your user's Vault from the [Quickstart section](../getting-started/quickstart.md), it's now time to create another user called Bob.
 
 ```bash
-meeco users:create -p supersecretpassword > .bob.yaml
+meeco users:create -p supersecretpassword > .Bob.yaml
 ```
 
 We used the same password as in the [Quickstart](../getting-started/quickstart.md) example, in case you were wondering.
@@ -19,7 +19,7 @@ We used the same password as in the [Quickstart](../getting-started/quickstart.m
 Using the CLI again, we're going to make a connection configuration file between _Alice_ and _Bob_
 
 ```bash
-meeco connections:create-config --from .alice.yaml --to .bob.yaml > .connection_config.yaml
+meeco connections:create-config --from .Alice.yaml --to .Bob.yaml > .connection_config.yaml
 ```
 
 This creates a file called `.connection_config.yaml` which we will open and edit the `fromName` and `toName` keys. Let's make it between Alice and Bob. Next, it's time to use the CLI again to create the connection between the two users.
@@ -80,10 +80,41 @@ spec:
       - 08471b2d-ac3f-44bc-8932-4faa81366178
 ```
 
-Once you have have the `id` of the item, add it to the following CLI command:
+Once you have have the `id` of the item, you're also going to need the `id` of the connection between Alice and Bob. Grab it like this:
 
 ```bash
-meeco shares:create-config --from .alice.yaml --to .bob.yaml -i ITEM_ID_TO_SHARE > .share_config.yaml
+$ meeco connections:list -a .Alice.yaml
+- name: Bob
+  connection:
+    own:
+      id: 326614d7-661d-4179-87cf-6457e196ba71
+      encrypted_recipient_name: Aes256Gcm.eKpo.QUAAAAAFaXYADAAAAACeBsQCvNOYxdbTrcIFYXQAEAAAAADqDBwkna5leso8mvM5Lq6BAmFkAAUAAABub25lAAA=
+      integration_data: "{}"
+      connection_type: null
+      user_image: null
+      user_type: human
+      user_public_key: "-----BEGIN PUBLIC KEY-----\r
+      ...
+      -----END PUBLIC KEY-----\r\n"
+      user_keypair_external_id: b9d112d7-c823-477a-9bea-36b22cb575ae
+    the_other_user:
+      id: 65165dbc-91e7-47c5-9721-5d155a35029a
+      integration_data: "{}"
+      connection_type: null
+      user_id: ce021e77-a66f-4fae-a150-d3a4a6e1a7f9
+      user_image: null
+      user_type: human
+      user_public_key: "-----BEGIN PUBLIC KEY-----\r
+      ...
+      -----END PUBLIC KEY-----\r\n"
+      user_keypair_external_id: f0ab31a1-c95d-463d-b6b1-1a72e1f56444
+      
+```
+
+So now you have the item `id` and the connection `id` - which we'll call the `connectionId` in the following command:
+
+```bash
+meeco shares:create-config --from .Alice.yaml --connectionId <ID_OF_CONNECTION> -i <ID_OF_ITEM> > .share_config.yaml
 ```
 
 After this configuration file is created, we can create the share between the two users:
@@ -92,57 +123,79 @@ After this configuration file is created, we can create the share between the tw
 meeco shares:create -c .share_config.yaml
 ```
 
-The CLI sets up a _private encryption space_ between Alice and Bob and then shares the item.
-
-We never created an item for the Bob, so we know that the following command will show the items that have been shared with Bob.
+The output is a new shares item:
 
 ```bash
-meeco shares:list -a .bob.yaml
+shares:
+  - id: 0f894916-852a-4682-bd49-0783ab58e1c0
+    owner_id: ab9f9fce-db0b-4384-a221-617efa80dba7
+    sender_id: ab9f9fce-db0b-4384-a221-617efa80dba7
+    recipient_id: ce021e77-a66f-4fae-a150-d3a4a6e1a7f9
+    acceptance_required: acceptance_not_required
+    item_id: bae62ab6-ea95-4037-8f6c-3708c81b2d77
+    slot_id: null
+    public_key: "-----BEGIN PUBLIC KEY-----\r
+    ...
+    -----END PUBLIC KEY-----\r\n"
+    ...
+    sharing_mode: owner
+    keypair_external_id: f0ab31a1-c95d-463d-b6b1-1a72e1f56444
+    encrypted_dek: Rsa4096.Jm9R1Ve2KcOLc4-HkZkjviB8HXBSlVQLfTlUJ-xcGRRklBp-Od-g2YjareSFwMorzVrtVDKWg8QWkB3iDAn_g9pG3c-kY1Le5Gb86VTO3hhx74jImf_iw29VUUcAsfRQH2u69X5byyYYlg827nMpT8CgN4P3USsMsMMsXrppu7ONGwk-xxItJtr8S3cONECp5L_4cbcR4IDbGBpVGZMdU5X6YU3ZZ7z-fi5wF5tRp6krR4V8rqbJOlyURY2xwj3ihoGtPc6Dbef_H6viFEgl00gyDegXKgJ8IisES_6_cyq7ooiGbux5oTgyg4tTIA40Lf65JLzVujosFC56EatRumR-YretG_Dkr61PQfuGN2zpTOGpZzypnc-HJc-GCHWGLU1wqwhcBY3NNoM1NvmdWGRQV2Vrtt3rhBCM2Nt-E7lCyQTX45qGXG-q-nL2b6l_DfCfp6O5s4hAYVoBQgDLCexl1YFb0reNm1Ol3rQ_hjpPn9LHAgE93Mdq7b04-sBmbNF54oLyrAneZu8NOle1-dioK13dLNooSm_O5MuRdnjyaJZH5zcsN-mEeSzsTHBymiMitet1-YOoZrenLDUaaFpWj6fCgwW6louU7u8PWq8U40TV15c8TndQAVFyRhfPav8HHLhOJmOCa1HaqdGZ8vuw1efJW3rtOU2ye31JQIw=.QQUAAAAA
+    terms: null
+    created_at: 2020-09-24T07:15:03.315Z
+    expires_at: null
 ```
 
-The above lists all the shares between the users:
+The CLI sets up a _private encryption space_ between Alice and Bob and then shares the item.
 
-```yaml
-kind: Shares
-spec:
-  - share_id: 1f4f9009-7a3a-43ee-b9f2-71d726919d5c
-    connection_id: 8c50ec41-acf4-4441-983f-cb8d6f21743c
-    item:
-      id: ed6ac62d-4f9e-4ec3-94f4-9bd1166942ce
-      name: delorean
-      label: DeLorean
-      description: null
-      created_at: "2020-03-25T09:31:19.959Z"
-      item_template_id: 61516c6f-81df-4c86-96df-8af915f0aec0
-      ordinal: 1
-      visible: true
-      updated_at: "2020-03-25T09:31:20.701Z"
-      item_template_label: Vehicle
-      shareable: false
-      me: false
-      background_color: null
-      image: https://api-sandbox.meeco.me/images/ef8ef92e-e4be-4f50-bfce-774a608098ca
-      image_background_colour: null
-      item_image: https://api-sandbox.meeco.me/images/ef8ef92e-e4be-4f50-bfce-774a608098ca
-      item_image_background_colour: null
-      slot_image: null
-      slot_image_background_colour: null
-      category_image: null
-      category_image_background_colour: null
-      classification_node_ids: []
-      category_label: null
-      association_ids: []
-      associations_to_ids: []
-      slot_ids:
-        - 00e99d0d-d1be-469c-aa91-71e9f47333b1
-        - 38d6b94c-a3da-4b82-942f-5b7941e0bd7d
-        - 94e422b9-b0fb-4b36-bfa9-f2234bf03d69
-        - ec6c3f97-b806-4bed-9da3-46a81635c0e3
-        - 2c833498-9dfa-4667-94cc-d39c719cab86
-        - b583b85e-4e98-49b5-adcd-185b31cc8d90
-        - bb1ff70c-6bf6-47ba-9a8a-d916740c55a6
-        - f24572c4-0d7b-404d-82f5-8fec593592fc
-        - 08471b2d-ac3f-44bc-8932-4faa81366178
+We never created an item for the Bob, so we know that the following command will show the item that has been shared with Bob.
+
+```bash
+$ meeco shares:get-incoming -a .Bob.yaml <SHARE_ID>
+```
+
+The following is the share information, as well as the item that was shared:
+
+```bash
+share:
+  id: 0f894916-852a-4682-bd49-0783ab58e1c0
+  owner_id: ab9f9fce-db0b-4384-a221-617efa80dba7
+  sender_id: ab9f9fce-db0b-4384-a221-617efa80dba7
+  recipient_id: ce021e77-a66f-4fae-a150-d3a4a6e1a7f9
+  acceptance_required: acceptance_not_required
+  item_id: bae62ab6-ea95-4037-8f6c-3708c81b2d77
+  slot_id: null
+  ...
+    sharing_mode: owner
+  keypair_external_id: f0ab31a1-c95d-463d-b6b1-1a72e1f56444
+  encrypted_dek: Rsa4096.Jm9R1Ve2KcOLc4-HkZkjviB8HXBSlVQLfTlUJ-xcGRRklBp-Od-g2YjareSFwMorzVrtVDKWg8QWkB3iDAn_g9pG3c-kY1Le5Gb86VTO3hhx74jImf_iw29VUUcAsfRQH2u69X5byyYYlg827nMpT8CgN4P3USsMsMMsXrppu7ONGwk-xxItJtr8S3cONECp5L_4cbcR4IDbGBpVGZMdU5X6YU3ZZ7z-fi5wF5tRp6krR4V8rqbJOlyURY2xwj3ihoGtPc6Dbef_H6viFEgl00gyDegXKgJ8IisES_6_cyq7ooiGbux5oTgyg4tTIA40Lf65JLzVujosFC56EatRumR-YretG_Dkr61PQfuGN2zpTOGpZzypnc-HJc-GCHWGLU1wqwhcBY3NNoM1NvmdWGRQV2Vrtt3rhBCM2Nt-E7lCyQTX45qGXG-q-nL2b6l_DfCfp6O5s4hAYVoBQgDLCexl1YFb0reNm1Ol3rQ_hjpPn9LHAgE93Mdq7b04-sBmbNF54oLyrAneZu8NOle1-dioK13dLNooSm_O5MuRdnjyaJZH5zcsN-mEeSzsTHBymiMitet1-YOoZrenLDUaaFpWj6fCgwW6louU7u8PWq8U40TV15c8TndQAVFyRhfPav8HHLhOJmOCa1HaqdGZ8vuw1efJW3rtOU2ye31JQIw=.QQUAAAAA
+  terms: null
+  created_at: 2020-09-24T07:15:03.315Z
+  expires_at: null
+associations_to: []
+associations: []
+attachments: []
+classification_nodes:
+  - id: 8670d4c6-8d68-49a4-bd21-0fc8cefa705d
+    name: vehicle
+    label: Vehicle
+    description: null
+    ordinal: 3
+    background_color: null
+    image: https://vault-stage.meeco.me/images/ff1c25e9-530a-4103-b649-986631bcAAAAA
+    scheme: meeco
+item:
+  id: a3f632c8-f80f-47aa-9e26-aab15ad9ed63
+  own: false
+  name: a_new_item
+  label: A New Item
+  description: null
+  created_at: 2020-09-24T07:15:03.452Z
+  item_template_id: 0c385f1d-8825-4932-a6ab-846178b816e4
+  ordinal: 0
+  visible: true
+  updated_at: 2020-09-24T07:15:03.493Z
+  ...
 ```
 
 We can then grab the `share_id` and use it in the next call:
