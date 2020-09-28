@@ -48,8 +48,10 @@
 ### Cryppo CLI v1.0.0
 
 * No functional changes, just updated to use new linked libraries.
-* File-Storage-Browser, File-Storage-Node v1.0.0
-* Initial release of these browser-js/node-js packages to upload the
+
+### File-Storage-Browser, File-Storage-Node v1.0.0
+
+* Initial release of these browser-js/node-js packages to upload files as chunks of encrypted data.
 
 ### Style-Kit v1.0.0
 
