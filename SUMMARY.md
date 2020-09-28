@@ -25,3 +25,6 @@
 * [Privacy](policies-1/privacy.md)
 * [Developer Policy](policies-1/developer-policy.md)
 
+---
+
+* [Releases](releases/releases.md)
