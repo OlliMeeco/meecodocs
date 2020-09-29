@@ -198,17 +198,21 @@ item:
   ...
 ```
 
-If you're looking for a way to delete the share, you can do that as either user with `meeco shares:delete -a .Alice.yaml <SHARE_ID>` or ``meeco shares:delete -a .Alice.yaml <SHARE_ID>`
+Running `meeco shares:list -a .Bob.yaml` will show all the shares information that Bob has received, even from other users. 
 
+`meeco shares:list -t outgoing -a .Alice.yaml` will show all the shares that are outgoing from Alice to other users.
+
+If you're looking for a way to delete the share, you can do that as either user with `meeco shares:delete -a .Alice.yaml <SHARE_ID>` or ``meeco shares:delete -a .Alice.yaml <SHARE_ID>`
+ 
 Well done - you've now created a connection between two users, and shared an item!
 
 ## Sharing Items Between Users - In Depth
 
 All user data stored in the Vault is encrypted and can only be decrypted and read by the user.
 
-Howerver, the Meeco platform makes it possible for one user to share cards with another user. We will cover this process and its steps in this guide.
+Howerver, the Meeco platform makes it possible for one user to share items with another user. We will cover this process and its steps in this guide.
 
-In summary, the sharer will generate a DEK \(data encryption key\) specifically for the purpose of this share and re-encrypt the shared card with this key. In order to share the DEK, Public Key cryptography is used: the sharer will encrypt the DEK with a Public Key of the share recipient, so only the share recipient can decrypt the DEK with their Private Key, and then use the DEK to decrypt the card.
+In summary, the sharer will generate a DEK \(data encryption key\) specifically for the purpose of this share and re-encrypt the shared item with this key. In order to share the DEK, Public Key cryptography is used: the sharer will encrypt the DEK with a Public Key of the share recipient, so only the share recipient can decrypt the DEK with their Private Key, and then use the DEK to decrypt the item.
 
 ![](../.gitbook/assets/section3.png)
 
@@ -255,7 +259,7 @@ The most important results after these two sections are as follows:
 
 ### Creating A Share
 
-In this section, to create a share, User 1 will generate a DEK dedicated to this share, re-encrypt a card and store it as a share, and share the DEK with User2, encrypted by the Public Key of User 2.
+In this section, to create a share, User 1 will generate a DEK dedicated to this share, re-encrypt a item and store it as a share, and share the DEK with User2, encrypted by the Public Key of User 2.
 
 The process of encryption and the key exchange is abstracted into something called _Encryption Space_. An encryption space exists both in the _**Keystore**_ and the _**Vault**_ and both records share the same ID. The function of the encryption space in the _**Keystore**_ is key exchange. The function of the encryption space in the _**Vault**_ is a way to point to the correct encryption space in the _**Keystore**_ for a given connection.
 
@@ -263,13 +267,13 @@ Creation of a share can be described in the following sequence diagram:
 
 ![](../.gitbook/assets/create_share_experian.png)
 
-At step 23 User 1 generates a DEK. This DEK will be used to encrypt the shared card. As we always do with DEKs, we encrypt it the Key Encryption Key \(step24\). But we also need to have the key readable by User 2, so at step 25 we encrypt the same KEK by the Public Key of User 2.
+At step 23 User 1 generates a DEK. This DEK will be used to encrypt the shared item. As we always do with DEKs, we encrypt it the Key Encryption Key \(step24\). But we also need to have the key readable by User 2, so at step 25 we encrypt the same KEK by the Public Key of User 2.
 
 At steps 26 and 27 an encryption space is created in the _**Keystore**_, containing two versions of the same DEK, one only readable by User 1, the other one only readable by User 2.
 
 In steps 28-29 an encryption space is created in the Vault with the same ID as the encryption space in the Keystore. The encryption space in the Vault is linked to the connection record.
 
-In steps 30-31 User 1 encrypts the card data with the shared DEK and creates a Share record.
+In steps 30-31 User 1 encrypts the item data with the shared DEK and creates a Share record.
 
 The main results of these steps are as follows:
 
