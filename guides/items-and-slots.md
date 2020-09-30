@@ -17,7 +17,7 @@ This guide describes creating Items and Item Templates using the Meeco API.
 Items are created from templates, so we begin by listing all available Item templates:
 
 ```bash
-curl --request GET 'https://vault-stage.meeco.me/item_templates' \
+curl --request GET 'https://sandbox.meeco.me/vault/item_templates' \
      -H "Authorization: Bearer $VAULT_ACCESS_TOKEN" \
      -H "Meeco-Subscription-Key: $API_SUBSCRIPTION_KEY"
 ```
@@ -280,7 +280,7 @@ It is possible to create a Custom Template which we can use to create our own It
 Only the `label` property is required, it will auto-generate a `name` (as described above). Since Item Templates are referenced by their name, the generated name must be unique. You can specify it separately if the label does not generate a unique name.
 
 ```bash
-    curl --request POST "https://vault-stage.meeco.me/item_templates" \
+    curl --request POST "https://sandbox.meeco.me/vault/item_templates" \
          -H "Content-Type: application/json" \
          -H "Meeco-Subscription-Key: $API_SUBSCRIPTION_KEY" \
          -H "authorization: Bearer $VAULT_ACCESS_TOKEN" \
@@ -355,7 +355,7 @@ The new Template will look like this:
 Then, you can create an item from your new template:
 
 ```bash
-  curl --request POST "https://vault-stage.meeco.me/items" \
+  curl --request POST "https://sandbox.meeco.me/vault/items" \
         -H "content-type: application/json" \
         -H "Authorization: Bearer $VAULT_ACCESS_TOKEN" \
         -H "Meeco-Subscription-Key: $API_SUBSCRIPTION_KEY" \
@@ -491,7 +491,7 @@ Slots are created either by cloning an Item Template, or via the `slots_attribut
 Slots are updated by calling `PUT /vault/items` with the new data in `slots_attributes`:
 
 ```bash
-curl --request PUT "https://vault-stage.meeco.me/items/bef961af-aa1f-4f1c-ac95-cdb41b3682db" \
+curl --request PUT "https://sandbox.meeco.me/vault/items/bef961af-aa1f-4f1c-ac95-cdb41b3682db" \
      -H "content-type: application/json" \
      -H "Authorization: Bearer $VAULT_ACCESS_TOKEN" \
      -H "Meeco-Subscription-Key: $API_SUBSCRIPTION_KEY" \
