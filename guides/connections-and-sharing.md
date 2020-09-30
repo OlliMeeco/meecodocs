@@ -182,7 +182,7 @@ classification_nodes:
     description: null
     ordinal: 3
     background_color: null
-    image: https://vault-stage.meeco.me/images/ff1c25e9-530a-4103-b649-986631bcAAAAA
+    image: https://sandbox.meeco.me/vault/images/ff1c25e9-530a-4103-b649-986631bcAAAAA
     scheme: meeco
 item:
   id: a3f632c8-f80f-47aa-9e26-aab15ad9ed63

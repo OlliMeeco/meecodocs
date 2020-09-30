@@ -71,7 +71,7 @@ spec:
   visible: true
   user_id: null
   updated_at: 2020-09-10T14:13:12.029Z
-  image: https://vault-stage.meeco.me/images/ff1c25e9-530a-4103-b649-986631bcb448
+  image: https://sandbox.meeco.me/vault/images/ff1c25e9-530a-4103-b649-986631bcb448
   classification_node_ids:
     - 8670d4c6-8d68-49a4-bd21-0fc8cefa705d
   slot_ids: []
