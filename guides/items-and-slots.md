@@ -510,9 +510,9 @@ curl --request PUT "https://vault-stage.meeco.me/items/bef961af-aa1f-4f1c-ac95-c
 
 As Slots are keyed by their names, names should be unique per Item.
 
-Slots can also be deleted by calling `DELETE /slot/id`
+Slots can also be deleted by calling `DELETE /slot/id`. This deletes the Slot (and it's data) from the parent Item.
 
-TODO what effect does this have?
+Slots in Item Templates cannot be deleted.
 
 
 ## Encryption of User Data
@@ -646,3 +646,28 @@ Response:
   ],
 }
 ```
+
+
+## Shared Items
+
+The page on [Connections and Sharing](connections-and-sharing.md) covers sharing Items. This section will just describe some properties of shared Items.
+
+
+### Receiving A Share
+
+You receive a shared item by calling `PUT https://sandbox.meeco.me/vault/incoming_shares/{share_id}/accept`. (This indicates you accept the share terms, if any). Next call `GET https://sandbox.meeco.me/vault/incoming_shares/{share_id}/item` and view the Item that has been created in your Vault. Note that `share.item_id` is the <span class="underline">original</span> Item's id, not the one in your Vault!
+
+
+### Owners
+
+An Item's owner is its original creator. The following table summarizes the how properties of an Item change when you are the owner, vs the receiver of a shared copy.
+
+| Property      | Owner Vaule | Receiver Value  |
+|------------- |----------- |--------------- |
+| `own`         | true        | false           |
+| `original_id` | null        | `share.item_id` |
+| `share_id`    | null        | `share.id`      |
+
+As a result, if `item.share_id` is non-null, then it is a share you received, and you can view the share via `GET https://sandbox.meeco.me/vault/incoming_shares/{item.share_id}`.
+
+Owners have the ability to push updates of shared data, and can share the Item with anyone. Receivers of a shared Item can only share that Item if `item.sharing_mode` is `anyone`.
