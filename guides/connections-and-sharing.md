@@ -11,7 +11,7 @@ _Below the guide using the CLI we have a more in depth explanation of how sharin
 After successfully creating an item in your user's Vault from the [Quickstart section](../getting-started/quickstart.md), it's now time to create another user called Bob.
 
 ```bash
-meeco users:create -p supersecretpassword > .Bob.yaml
+meeco users:create -p supersecretpassword > .bob.yaml
 ```
 
 We used the same password as in the [Quickstart](../getting-started/quickstart.md) example, in case you were wondering.
@@ -19,7 +19,7 @@ We used the same password as in the [Quickstart](../getting-started/quickstart.m
 Using the CLI again, we're going to make a connection configuration file between _Alice_ and _Bob_
 
 ```bash
-meeco connections:create-config --from .Alice.yaml --to .Bob.yaml > .connection_config.yaml
+meeco connections:create-config --from .alice.yaml --to .bob.yaml > .connection_config.yaml
 ```
 
 This creates a file called `.connection_config.yaml` which we will open and edit the `fromName` and `toName` keys. Let's make it between Alice and Bob. Next, it's time to use the CLI again to create the connection between the two users.
@@ -30,7 +30,7 @@ meeco connections:create -c .connection_config.yaml
 
 This generates the keypairs for the connection, creates and accepts the invitation for the two users.
 
-Now, we're ready to select an item from Alice's vault and share it with Bob. 
+Now, we're ready to select an item from Alice's vault and share it with Bob.
 
 First, we'll need to create the share template with the CLI. You can see the items Alice has by useing the `items:list` command:
 
@@ -83,7 +83,7 @@ spec:
 Once you have have the `id` of the item, you're also going to need the `id` of the connection between Alice and Bob. Grab it like this:
 
 ```bash
-$ meeco connections:list -a .Alice.yaml
+$ meeco connections:list -a .alice.yaml
 - name: Bob
   connection:
     own:
@@ -114,7 +114,7 @@ $ meeco connections:list -a .Alice.yaml
 So now you have the item `id` and the connection `id` - which we'll call the `connectionId` in the following command:
 
 ```bash
-meeco shares:create-config --from .Alice.yaml --connectionId <ID_OF_CONNECTION> -i <ID_OF_ITEM> > .share_config.yaml
+meeco shares:create-config --from .alice.yaml --connectionId <ID_OF_CONNECTION> -i <ID_OF_ITEM> > .share_config.yaml
 ```
 
 After this configuration file is created, we can create the share between the two users:
@@ -151,7 +151,7 @@ The CLI sets up a _private encryption space_ between Alice and Bob and then shar
 We never created an item for the Bob, so we know that the following command will show the item that has been shared with Bob.
 
 ```bash
-$ meeco shares:get-incoming -a .Bob.yaml <SHARE_ID>
+$ meeco shares:get-incoming -a .bob.yaml <SHARE_ID>
 ```
 
 The following is the share information, as well as the item that was shared:
@@ -198,11 +198,11 @@ item:
   ...
 ```
 
-Running `meeco shares:list -a .Bob.yaml` will show all the shares information that Bob has received, even from other users. 
+Running `meeco shares:list -a .bob.yaml` will show all the shares information that Bob has received, even from other users. 
 
-`meeco shares:list -t outgoing -a .Alice.yaml` will show all the shares that are outgoing from Alice to other users.
+`meeco shares:list -t outgoing -a .alice.yaml` will show all the shares that are outgoing from Alice to other users.
 
-If you're looking for a way to delete the share, you can do that as either user with `meeco shares:delete -a .Alice.yaml <SHARE_ID>` or ``meeco shares:delete -a .Alice.yaml <SHARE_ID>`
+If you're looking for a way to delete the share, you can do that as either user with `meeco shares:delete -a .alice.yaml <SHARE_ID>` or ``meeco shares:delete -a .alice.yaml <SHARE_ID>`
  
 Well done - you've now created a connection between two users, and shared an item!
 
@@ -210,7 +210,7 @@ Well done - you've now created a connection between two users, and shared an ite
 
 All user data stored in the Vault is encrypted and can only be decrypted and read by the user.
 
-Howerver, the Meeco platform makes it possible for one user to share items with another user. We will cover this process and its steps in this guide.
+However, the Meeco platform makes it possible for one user to share items with another user. We will cover this process and its steps in this guide.
 
 In summary, the sharer will generate a DEK \(data encryption key\) specifically for the purpose of this share and re-encrypt the shared item with this key. In order to share the DEK, Public Key cryptography is used: the sharer will encrypt the DEK with a Public Key of the share recipient, so only the share recipient can decrypt the DEK with their Private Key, and then use the DEK to decrypt the item.
 
@@ -224,7 +224,7 @@ Before anything can be shared, 2 Users need to establish a _**connection**_. In 
 
 The process can be described in the following sequence diagram:
 
-![](../.gitbook/assets/send_invitation_experian.png)
+![](../.gitbook/assets/send_invitation.png)
 
 At step \(1\) User 1 generates a Keypair which will be used for inviting another user, and later for the key exchange.
 
@@ -232,12 +232,12 @@ Steps 2-4 are part of the standard procedure used for storing Keypairs in the Ke
 
 In steps 5 and 6,
 
- stores the Public Key. In steps 7-9 User 1 creates an invitation using the following as input:
+ stores the Public Key. In steps 5-7 User 1 creates an invitation using the following as input:
 
 * email of the user that User 1 wants to connect to \(User 2\)
-* the ID of the Public Key stored in step 5
+* the Public Key
 
-In step 8 the Vault sends an invitation email to User 2.
+After step 7 the Vault sends an invitation email to User 2.
 
 ### Accepting Invitation
 
@@ -245,54 +245,43 @@ In this section we'll describe the scenario when User 2 accepts the invitation f
 
 This process can be described in the following sequence diagram:
 
-![](../.gitbook/assets/accept_invitation_experian.png)
+![](../.gitbook/assets/accept_invitation.png)
 
-Most of these steps are the the same steps of User 1 in the previous section: just like User 1, User 2 generates a Keypair for this connection \(step 11\), encrypts it and stores in the Keystore \(steps 12-14\), and publishes the Public Key in the Vault \(steps 15-16\).
+Most of these steps are the the same steps of User 1 in the previous section: just like User 1, User 2 generates a Keypair for this connection \(step 9\), encrypts it and stores in the Keystore \(steps 10-12\), and publishes the Public Key in the Vault \(steps 13-14\).
 
-The most important step is a call to create a connection as step 12. The parameters of the call are the invitation ID and the invitation token.
+The most important step is a call to create a connection as step 13. The parameters of the call are the invitation ID and the invitation token.
 
 The most important results after these two sections are as follows:
 
 * The connection between User 1 and User 2 has now been established
-* User 1 has access to the Public Key of User 2 via the connection record
-* User 2 has access to the Public Key of User 1 via the connection record
+* User 1 has access to the Public Key of User 2 on the connection record
+* User 2 has access to the Public Key of User 1 on the connection record
 
 ### Creating A Share
 
 In this section, to create a share, User 1 will generate a DEK dedicated to this share, re-encrypt a item and store it as a share, and share the DEK with User2, encrypted by the Public Key of User 2.
 
-The process of encryption and the key exchange is abstracted into something called _Encryption Space_. An encryption space exists both in the _**Keystore**_ and the _**Vault**_ and both records share the same ID. The function of the encryption space in the _**Keystore**_ is key exchange. The function of the encryption space in the _**Vault**_ is a way to point to the correct encryption space in the _**Keystore**_ for a given connection.
-
 Creation of a share can be described in the following sequence diagram:
 
-![](../.gitbook/assets/create_share_experian.png)
+![](../.gitbook/assets/create_share.png)
 
-At step 23 User 1 generates a DEK. This DEK will be used to encrypt the shared item. As we always do with DEKs, we encrypt it the Key Encryption Key \(step24\). But we also need to have the key readable by User 2, so at step 25 we encrypt the same KEK by the Public Key of User 2.
+At step 19 User 1 generates a DEK. This DEK will be used to encrypt the shared item. We also need to have the key readable by User 2, so at step 20 we encrypt the same DEK with the Public Key of User 2.
 
-At steps 26 and 27 an encryption space is created in the _**Keystore**_, containing two versions of the same DEK, one only readable by User 1, the other one only readable by User 2.
-
-In steps 28-29 an encryption space is created in the Vault with the same ID as the encryption space in the Keystore. The encryption space in the Vault is linked to the connection record.
-
-In steps 30-31 User 1 encrypts the item data with the shared DEK and creates a Share record.
+In steps 21-23 User 1 encrypts the item data with the shared DEK and creates a Share record.
 
 The main results of these steps are as follows:
 
-* A DEK has been created waiting to be claimed by User 2
-* This DEK is wrapped in an Encryption Space
-* A Share record has been created in the Vault, and it is linked to the connection between User 1 and User 2
-* An Encryption Space in the Vault is a link between the connection and the Encryption Space in the Keystore
+* A DEK has been created and encrypted with User 2's public key
+* A Share record has been created in the Vault with the encrypted DEK, and it is linked to the connection between User 1 and User 2
 
 ### Reading The Share
 
 Reading of the share can be described in the following sequence diagram:
 
-![](../.gitbook/assets/read_share_experian.png)
+![](../.gitbook/assets/read_share.png)
 
-First in step 33 User 2 retrieves a list of all incoming shares. Each share has a connection ID.
+First in step 24 User 2 retrieves a list of all items both his own and shared incoming.
 
-If there is a new share User 2 needs to decrypt and read, in step 35 User 2 requests the connection for the share.
+If there is a new share User 2 needs to decrypt and read, in step 26 User 2 requests the share details.
 
-Once the ID of the encryption space is known, User 2 retrieves the DEK in steps 37-38, decrypts it with their Private Key in step 39 and decrypts the share in step 43.
-
-As it is always done with keys, this DEK is encrypted with the Key Encryption Key \(KEK\) of User 2 and stored in the Keystore in steps 40-42
-
+User 2 also retrieves the DEK in steps 26-27, decrypts it with their Private Key in step 28 and decrypts the share in step 29.
