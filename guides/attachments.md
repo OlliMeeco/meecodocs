@@ -18,7 +18,7 @@ spec:
 Then run the cli command
 
 ```bash
-meeco connections:create -c attachment-config.yaml
+meeco items:attach-file -c attachment-config.yaml -a .alice.yaml
 ```
 
 You will get a response that looks like the following
