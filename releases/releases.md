@@ -15,7 +15,8 @@
 
 ### KeyStore API v2.0.0
 
-* No functional changes, just updated to use new linked libraries.
+* Remove the shared key endpoints as sharing keys for shares will now happen in the vault.
+* Removed the encryption_spaces endpoints in favor of just using the Date Encryption Key endpoints.
 
 ### SDK v1.0.0
 
