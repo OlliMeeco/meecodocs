@@ -29,7 +29,7 @@ You can read a more detailed explanation of _**Connections**_ and Sharing Items 
 
 _**Data Encryption Keys**_ are `AES256-GCM` keys used to encrypted and decrypt user data. _**Data Encryption Keys**_ are stored in the **Keystore** encrypted with the _**Key Encryption Key**_.
 
-A _**Data Encryption Key**_ is created for various functions of the API. For instance, a DEK is created when a user _**Shares**_ a _**Slot**_ with another user. When that user connects with another user, the first time they share another DEK is created.
+A _**Data Encryption Key**_ is created for various functions of the API. For instance, a user's private DEK is created for encrypting the data that is only ment for that user to read, also a DEK is created when a user _**Shares**_ a _**Slot**_ with another user.
 
 It is possible for a user to have multiple _**Data Encryption Keys**_
 
@@ -45,7 +45,7 @@ An _**Item Template**_ is a predefined list of empty _**Slots**_. Each _**Item**
 
 ## Key Encryption Key \(KEK\)
 
-The _**Key Encryption Key**_ which is used to encrypt all other keys \(data encryption keys and keypairs\) before they are stored in the _**Keystore**_. The _**Key Encryption Key**_ is encrypted with the _**Password Derived Key**_.
+The _**Key Encryption Key**_ which is used to encrypt all other keys \(data encryption keys and keypairs\) before they are stored in the _**Keystore**_. The _**Key Encryption Key**_ is encrypted with the _**Passphrase Derived Key**_.
 
 In the current implementation this is an [`AES256-GCM`](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) key, but the serialization format of encrypted data used in the Meeco platform allows for adding new encryption algorithms without breaking backwards compatibility.
 
@@ -53,7 +53,7 @@ There is one _**Key Encryption Key**_ per user.
 
 ## Keypair
 
-Public key cryptography is used for _**Connections**_ and shared between users. Private keys are stored in the _**Keystore**_ encrypted with the _**Key Encryption Key**_.
+Public key cryptography is used for exchanging DEKs when _**Connections**_ are created between users. Private keys are stored in the _**Keystore**_ encrypted with the _**Key Encryption Key**_.
 
 ## Keystore
 
@@ -69,11 +69,16 @@ A _**Passphrase Derived Key**_ is a [`PBKDF2`](https://en.wikipedia.org/wiki/PBK
 * Salt
 * Derived key length
 
+In the current iteration of our [_Secret Key_](terminology.md#secret-key) authentication and passphrase derivation the number of keys `Number of iterations` and `Derived key length` are static and the Salt is pulled from the Secret Key.
+
 Derivation artefacts are stored in the _**Keystore**_. Neither the _**Passphrase Derived Key**_ itself nor the passphrase are stored in the _**Keystore**_
 
 ## Secret Key
 
-The secret key is a component of the SRP flow, created on the client and stored \(securely\) by the user. The first character of the key denotes the version.
+The secret key is a component of the new authentication flow with the salt component created on the client and stored \(securely\) by the user. The first character of the key denotes the version. The salt is used for two things.
+
+1. To be used in generating an encryption key (PDK) with which to encrypt your Key Encryption Key (KEK).
+2. To be used in generating a password which along with the username component will be used for Secure Remote Password (SRP) authentication.
 
 The format for version 1 is as follows:
 
@@ -103,6 +108,7 @@ A _**Slot**_ in the smallest data entity in the _**Vault**_. An _**Item**_ is ma
 * `phone_number`
 * `email`
 * `password`
+* `attachment`
 
 _**Slots**_ have the following example structure:
 
@@ -143,17 +149,14 @@ _**Slots**_ are able to be shared after two users have made a [_**Connection**_]
 
 ## SRP - Secure Remote Password
 
-A type of password authenticated key exchange that we have adopted for signup and key handling.
+An authentication method which sends proof that a user knows their password without revealing the actual password to the server.
 
 You can read more about it here - [https://en.wikipedia.org/wiki/Secure\_Remote\_Password\_protocol](https://en.wikipedia.org/wiki/Secure_Remote_Password_protocol)
 
-This greatly simplifies user creation and login for the developer and users.
-
 ## Vault
 
-The Vault is where a User of the API-of-Me will store the Items they create and modify. In other words - storage for encrypted user data.
+The Vault is where a User of the API-of-Me will store and share the Items they create.
 
-The User is the only actor that can decrypt their own data - that is to say, more importantly, that User data cannot be decrypted and read by anyone at Meeco. Your data is _your_ data.
+The user's data is end-to-end encrypted, this means that the users data cannot be decrypted and read by anyone at Meeco. Your data is _your_ data.
 
 In the [Meeco Developer Portal](https://dev.meeco.me) the Vault is reachable through the `https://sandbox.meeco.me/vault` endpoint.
-
