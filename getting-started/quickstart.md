@@ -92,7 +92,7 @@ The next step is to edit the file to contain some data.
 ```bash
 kind: Item
 metadata:
-  template: vehicle
+  template_name: vehicle
 spec:
   label: "DeLorean"
   slots:
