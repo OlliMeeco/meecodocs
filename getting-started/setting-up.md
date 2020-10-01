@@ -10,9 +10,11 @@ Give your subscription a name, read through and agree to the Terms of Use, and s
 
 This will generate the Primary and Secondary keys that are required to make requests in the developer portal.
 
+**Please note that the keys need to be approved by us, and therefore may not be ready for immediate use**  
+
 The Primary key will be added to the `Meeco-Subscription-Key` header in all requests to the portal.
 
-Once the subscription keys have been activated, you can begin to use them to make requests.
+Once the subscription keys have been activated, (you will receive an email telling you once it is active) you can begin to use them to make requests.
 
 Now, jump into the [Quickstart section](quickstart.md) and follow along to create your first User and Vault item.
 

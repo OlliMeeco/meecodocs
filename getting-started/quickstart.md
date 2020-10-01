@@ -16,12 +16,6 @@ vault:
 keystore:
   url: https://sandbox.meeco.me/keystore
   subscription_key: DEV_PORTAL_SUBSCRIPTION_KEY
-downloader:
-  url: https://sandbox.meeco.me/downloader
-  subscription_key: DEV_PORTAL_SUBSCRIPTION_KEY
-passphrase:
-  url: https://sandbox.meeco.me/passphrasestore
-  subscription_key: DEV_PORTAL_SUBSCRIPTION_KEY
 ```
 {% endcode %}
 
@@ -62,6 +56,31 @@ spec:
 ```
 
 Let's create a `vehicle` item. To prepare this we can run the create config command
+
+First, let's have a look at what kind of information the template holds. 
+
+```bash
+$ meeco templates:info vehicle -a .alice.yaml
+Fetching template 'vehicle'... done
+kind: Template
+spec:
+  id: 0c385f1d-8825-4932-a6ab-846178b816e4
+  name: vehicle
+  description: null
+  ordinal: 1
+  visible: true
+  user_id: null
+  updated_at: 2020-09-10T14:13:12.029Z
+  image: https://sandbox.meeco.me/vault/images/ff1c25e9-530a-4103-b649-986631bcb448
+  classification_node_ids:
+    - 8670d4c6-8d68-49a4-bd21-0fc8cefa705d
+  slot_ids: []
+  label: Vehicle
+  background_color: null
+  slots: []
+```
+
+Then, create the config file:
 
 ```bash
 $ meeco items:create-config vehicle -a .alice.yaml > vehicle.yaml

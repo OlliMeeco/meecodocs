@@ -34,10 +34,11 @@ In short, it can:
 * Connect Users
 * Create Items and Templates
 * Share Items between Connected Users
+* Create and Manage Organisations
 
 You can use the keys and tokens that the Meeco CLI has generated in combination with the [Cryppo-CLI](cryppo.md) tool to get a feel for the encryption and decryption flows.
 
-Feed this data back to the Meeco-CLI to store it against a Meeco User and then Share it! You can read more about [Sharing and Connections](https://github.com/Meeco/docs/tree/a51d5dab879d301c3c763a4884f89ee47862caa3/guides/connections-and-sharing-1.md) and [Items](../guides/items-and-slots.md) in the Guides section of this documentation site.
+Feed this data back to the Meeco-CLI to store it against a Meeco User and then Share it! You can read more about [Sharing and Connections](../guides/connections-and-sharing.md) and [Items](../guides/items-and-slots.md) in the Guides section of this documentation site.
 
 The Typescript CLI and SDK Github repos reside below in the downloads section.
 

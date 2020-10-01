@@ -4,6 +4,8 @@ The Meeco platform has a very flexible way to tag information. Instead of having
 
 _To complete some of the following steps, please download the `jq` command line JSON processor tool from_ [_https://stedolan.github.io/jq/download/_](https://stedolan.github.io/jq/download/)\_\_
 
+The Access tokens can be grabbed from the user file you created in the "Quickstart" guide.
+
 All classification nodes can be queried by `GET /vault/classification_nodes`:
 
 ```bash
@@ -67,6 +69,8 @@ Response:
   "scheme": "tag",
 ```
 
+**** 
+
 It is possible to query only nodes belonging to a certain classification scheme:
 
 ```bash
@@ -74,7 +78,7 @@ curl -X GET \
     'https://sandbox.meeco.me/vault/classification_nodes?scheme_name=esafe_tags' \
   -H 'authorization: Bearer VAULT_ACCESS_TOKEN_FROM_CLI_GENERATED_USER' \
   -H 'Meeco-Subscription-Key: DEV_PORTAL_SUBSCRIPTION_KEY'
-    -H 'Content-Type: application/json' | jq | grep scheme | sort | uniq
+    -H 'Content-Type: application/json' | jq | grep name | sort | uniq
 ```
 
 Response:
