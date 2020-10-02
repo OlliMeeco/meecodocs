@@ -1,8 +1,8 @@
 # Releases
 
-## UNRELEASED October 2020, Release Notes
+## October 2020, Release Notes
 
-### Vault API v4.0.0
+### Vault API v16.0.1
 
 * On-sharing - the ability to allow other users to share an item that has been shared with you if the item’s owner allows it. This includes a verification step to make sure the on-sharer has not modified the data.
 * Organizations - you can now create an account for your organisation and add members and services.
@@ -13,7 +13,7 @@
 * Re-encrypting of shared data to cut down on the number of Encryption Keys needed to be stored/managed indefinitely.
 * Updated to use latest BSON serialization format from Cryppo.
 
-### KeyStore API v2.0.0
+### KeyStore API v3.0.0
 
 * Remove the shared key endpoints as sharing keys for shares will now happen in the vault.
 * Removed the encryption_spaces endpoints in favor of just using the Date Encryption Key endpoints.
@@ -46,11 +46,11 @@
 * Update to use BSON serialization.
 * Added Checking of the Client Task Queue after updating an item to see if shares need to be updated.
 
-### Cryppo CLI v1.0.0
+### Cryppo CLI v1.0.1
 
 * No functional changes, just updated to use new linked libraries.
 
-### File-Storage-Browser, File-Storage-Node v1.0.0
+### File-Storage-Browser, File-Storage-Node v2.0.0
 
 * Initial release of these browser-js/node-js packages to upload files as chunks of encrypted data.
 
