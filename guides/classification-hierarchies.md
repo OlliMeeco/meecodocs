@@ -7,16 +7,15 @@ Classification Nodes are a lot like tags, but are grouped into Schemes. Schemes 
 A Classification Node is structured like
 
 | Property    | Type   | Description                                 |
-|----------- |------ |------------------------------------------- |
+|-------------|--------|---------------------------------------------|
 | name        | string | Machine-readable name                       |
 | label       | string | Human-readable name                         |
 | description | string | Explains what the classification represents |
-| scheme      | string | See [1.2](#org44a5002)                      |
-
+| scheme      | string | See [Schemes](#schemes)                     |
 
 ## Browsing Classification Nodes
 
-The Access tokens can be grabbed from the user file you created in the "Quickstart" guide.
+The `$VAULT_ACCESS_TOKEN` can be grabbed from the user file you created in the [Quickstart](../getting-started/quickstart.md) guide.
 
 All classification nodes can be queried by `GET /vault/classification_nodes`:
 
@@ -27,15 +26,13 @@ curl --request GET \
   -H "Meeco-Subscription-Key: $API_SUBSCRIPTION_KEY"
 ```
 
-[API Docs](<https://dev.meeco.me/api-details#api=meeco-vault-api&operation=get-classification_nodes>)
+[API Docs](https://dev.meeco.me/api-details#api=meeco-vault-api&operation=get-classification_nodes)
 
 You can modify the request with the following query parameters:
 
 -   `scheme_name`, see below
 -   `by_name` - a "LIKE" search which will return results for partial matches - i.e. 'fin' will return 'financial'
 
-
-<a id="org44a5002"></a>
 
 ## Schemes
 
@@ -71,7 +68,7 @@ You can create a Classification node as follows
 }'
 ```
 
-[API Docs](<https://dev.meeco.me/api-details#api=meeco-vault-api&operation=post-classification_nodes>)
+[API Docs](https://dev.meeco.me/api-details#api=meeco-vault-api&operation=post-classification_nodes)
 
 ```json
 {
