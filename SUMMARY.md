@@ -20,6 +20,7 @@
 * [Connections and Sharing](guides/connections-and-sharing.md)
 * [Classification Hierarchies](guides/classification-hierarchies.md)
 * [Attachments](guides/attachments.md)
+* [On-sharing & Client Tasks](guides/on-sharing-and-client-tasks.md)
 
 ## Policies <a id="policies-1"></a>
 
