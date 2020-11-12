@@ -144,7 +144,7 @@ spec:
 Next we create the service using that config file.
 
 ```bash
-meeco organization-services:create -a .alice.yaml .organization-service-config.yaml cc656956-6fb3-4bd1-a906-81c85dd6cb7e > .organization-service.yaml
+Ameeco organization-services:create -a .alice.yaml -c .organization-service-config.yaml cc656956-6fb3-4bd1-a906-81c85dd6cb7e > .organization-service.yaml
 # meeco organization-services:create -a <USER_AUTH_YAML> -c <ORGANIZATION_SERVICE_CONFIG_FILE> <ORGANIZATION_ID> > <OUTPUT_FILE>
 ```
 
@@ -179,6 +179,7 @@ command. The `metadata.privateKey` here should be saved as configuration for you
 
 ```bash
 meeco organization-services:get -a .alice.yaml cc656956-6fb3-4bd1-a906-81c85dd6cb7e c213d93e-32a5-4e1d-96bb-0816e7eb6c74
+# meeco organization-services:get -a .alice.yaml <ORGANIZATION_ID> <SERVICE_ID>
 ```
 
 The result should be something like the following, if the list is empty it means the service has not yet been validated.
@@ -220,7 +221,9 @@ spec: {}
 
 The `metadata.vault_access_token` should be saved as configuration for your organization service application. So from now
 your application has a `vault_access_token` and a `private_key`, these should be set as configuration variables. But how
-do we use them.  
+do we use them.
+
+## Connecting your Organization to Users
   
 Your organization first needs to connect to a user through it's organization service. To do that it will first create
 an invitation.  
@@ -230,24 +233,138 @@ some cases you may wish to use a unique public key for each user connection, in 
 key somewhere with reference to the user who you are connecting to.  
   
 The `encrypted_recipient_name` is a record to be used by your organization only, it should identify in some way who
-the invitation has been created for but we recommend not exposing any user information or an internal identifier here.
+the invitation has been created for. It should encrypted and serialized using a Cryppo serialization format (see
+https://github.com/Meeco/cryppo-js for more details).
+
+The `public_key` here can be unique per connection but in this case we are just going th use the keypair from the organization
+service.
 
 ```bash
-IFS='' read -r -d '' String <<EOM
+# first part here just writes the json to a file removing all whitespace and newlines
+cat <<'EOF' |  tr -d '\040\011\012\015' > data.json
   {
     "public_key": {
       "keypair_external_id": "string",
-      "public_key": "-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAsaPIYzlg/LApaPHHF+pw\n0R6r0zHGkRJWQypJuABSAVDfFq/eTn6q+LByt1HO5FYCHXv6O7Zt6NhaahL8sDqQ\nWPQJPENj5ktIWdjJCdY6TjTJmbDz9ICTu8y8SUWuzMH4UHBZvzA0GXN0zeC0waKc\n55FOyQNtXqxIqH5gMiZEwQ3uUc9fmAfu6XthKPNmHokTauCsI3Pi6Z31aO8Qvbyp\nFiT4a0kzHzpdtIS7Hs60bYg/hhvyB3cPytbqLFpgeGS/AZJ0e1H1Ca2b4eLUUz63\nae0sQGGFxWraw/Jnut8gYjwTlYPbJ+hRrQNrQ55jboV7fcGGgN5nR2rDDailMRMo\nPC79UZr7gJFy8VzbbJeY/TbpbLRRYeB9NR+Syi/S3W/aPnbU/+yyNcZaPqgdvQ0Y\n8voCZWbrBCTMw4Dfctoqnken0QlUj3yRmQWyeNBQ3hCefFpo9mR5fbiwUQzozLHL\nierN8LhcZj8xeH4r18ifjBV57Xeo72rtrnx6uF5blCzebv21ZZ6MqHhPaO2KoV+f\neKzaMP+ll66mEKLI311FmcoZoQwYZcUEiVrJRbOemvvE8AqSU5qFaODFdxzg8bQ/\n4PIdg6h1qWzUPw7V+PQEqF9fIsp0JJStV+YDlb6Xi+riX+XKszXYbDZ2js0aeXcX\nnCnWypargitdR558sFZ751ECAwEAAQ==\n-----END PUBLIC KEY-----\n"
+      "public_key": "-----BEGIN PUBLIC KEY-----\rMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAzao4lCviLTEg2ze8jmts\ry6iG6iKX3TGIdlcHJbFBAs0oCVp29jhlOXVfwuxX6gqplLT44rpSnYcsvKYao7ol\rt7ZadkQg/j1xm+Sw/FTyLKhNyHznclnTUXPnnvY6sHwpfaC0NBIAy1XRI8r3gqiu\rngOx4afC+PeZnrCvhjsnmR1cd/FXTWQuH8GfrqdDbH3K8ObAv4r3VT2RcUvgUEVg\r6Yg29fAF5B9Wmcwl9Kr53nryp04412QvNjlJZlilbNsmvXYnPfu4bM8kRV56iBeE\rL1OOBu65oZcBvXym3Gtd057J+0kDqGp4t76qB9DNy8n3SikvY8hyZHQsx54QBecy\rKxPETEGVWGMFHI5+UIriMr0PEF4AUE9KZWVt3bAhQPyby3Fm9dju01q9nV2qt5Cy\rZnsNui2VZ7EGDxoJPH74fsnrXX7cX8VPFgg2pxmpzmI12X1YBKdymKvCRsa+5I5S\rF2/g5pwJznx1babFSCSenmPr8eIz6Y1iJSigwr4tsUAbE1C6Vn6PEBrsmzMFhe3M\rA7YwqJvNjOZZb3Yocaf08Xn8/oISCd1ItU5W6mLW/uwRSB4cGs/D7E5mNj0bvE+1\rG94RFHSDCzIYyPtb/8dFKlwSJ3Jm2HytiN7c2dVv61KrQFRyktPHPLVR/V6r8XcB\rFR6qZSfofTNCs7HI+VAIKV8CAwEAAQ==\r-----END PUBLIC KEY-----\r\n"
     },
     "invitation": {
-      "encrypted_recipient_name": "user_id_12345"
+      "encrypted_recipient_name": "Aes256Gcm.J9YhaGdIUBKa2dULbMU=.LS0tCml2OiAhYmluYXJ5IHwtCiAgd1JGK2QrRjYzRHJhbDRmdgphdDogIWJpbmFyeSB8LQogIGllS3JnK05iV0JVY2N3L3VVS2N6Rnc9PQphZDogbm9uZQo="
     }
   }
-EOM
+EOF
+# second part here actually makes the request
 curl -X POST "https://sandbox.meeco.me/vault/invitations" \
-  -d $DATA \
+  -d @data.json \
   -H "Accept: application/json" \
   -H "Meeco-Subscription-Key: Q7dFWQDGSsAE6tUo1G93Mlhn4SCOBrJe" \
   -H "Authorization: ANDJk1gJpFKmwrCjNyd7" \
-  -H "Content-Type: application/json"
+  -H "Content-Type: application/json" \
+  | json_pp \
+  > invitation.json
 ```
+
+The `invitation.json` file should have output that looks something like.
+
+```json
+{
+   "invitation" : {
+      "keypair_external_id" : "string",
+      "token" : "cPWV4CwpWTHxhqaJGG9MRkVWxKojGhMPGs4oTuoBdTU",
+      "message" : null,
+      "user_image" : null,
+      "integration_data" : {
+         "organization_id" : "cc656956-6fb3-4bd1-a906-81c85dd6cb7e",
+         "intent" : "service",
+         "service_id" : "c213d93e-32a5-4e1d-96bb-0816e7eb6c74"
+      },
+      "id" : "62b54a86-66db-4e88-8e3d-3ce4457a2e97",
+      "user_name" : null,
+      "invited_user_id" : null,
+      "outgoing" : true,
+      "encrypted_recipient_name" : "Aes256Gcm.J9YhaGdIUBKa2dULbMU=.LS0tCml2OiAhYmluYXJ5IHwtCiAgd1JGK2QrRjYzRHJhbDRmdgphdDogIWJpbmFyeSB8LQogIGllS3JnK05iV0JVY2N3L3VVS2N6Rnc9PQphZDogbm9uZQo=",
+      "sent_at" : null
+   }
+}
+```
+
+The invitation has been created so lets make an unrelated user to accept this connection invitation.
+
+```bash
+meeco users:create -p supersecretpassword > .dave.yaml
+```
+
+Then for bob to accept this invitaion (and create the connection).
+
+We should have a new keypair and `public_key` somewhere that we can use for this connection for Dave, dave might use the
+meeco keystore to manage this but in this case lets forget about the keystore for now to keep it simple.  
+  
+Again the `keypair_external_id` would be a reference for Dave to retrieve the appropriate keypair (when using the keystore
+this would be the id of the key record) but we can just put the name of the organization service in there for this reference.
+
+The `invitation_token` here would be `.invitation.token` from the `invitation.json` file.  
+  
+The `Authorization` here should be Dave's authorization token (from `.dave.yaml`).
+
+```bash
+# first part here just writes the json to a file removing all whitespace and newlines
+cat <<'EOF' |  tr -d '\040\011\012\015' > data.json
+  {
+    "public_key": {
+      "keypair_external_id": "DataSharingService",
+      "public_key": "-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAqMILz56KuEsGlsEpML3h\nPN7OUf7HrLTtWkazwbNIkK3RLWtNI5X8bd0ISUuwgXQVzZuWyC6wXPiWSDwXILAf\nJPusVT6Kh0EmXhJtBRCkF64fXKz54rI/2kYpuP4HZbNStj8OIRv/ECV7glDf+4Yq\nWDdLmh2vHDHF7bIRQnuWwV3ZL10Gkuh671aJkkVRdApUZUNcDfz1VK/SDMLxuxMg\n8D78u+d0WgThXzEwlcHtRitLA4QekNjVNPkoZoRIJSWLWqwkaOd0+YAhPNso3t9Y\nwaLT0/hDe4qBRuWpkoCIIUxE1JPuUbv3ePwsvyX9ksKNwQ6zVyOBXJwjspjac3mS\nH2DXS8dwU/ObKI3v9c/aY0i4iV6xJIkDxV2V8HclMOm1cLmgoc9YMU9YuM2LZ1GX\n707XBrdRD1v/FNQa/HJjFSapXcztN03etswrJcYFxVxDWZ84uMO2TNHOsSbOgop9\nmF5hRLQ+PT45v+mNNmbJa62yRaVkIV4VvsHgBVsz6TWsZGxu+IsNLKT/OYju/zzn\nvQSig5Ue7BAZqMOlibWiB6gX8vM336okrOWASnvWZNe+a7QpQdYYbHbH/leFZFCA\nht20DXUHLXYAKk9gvdqKycYnVsaRb2dnaSdUez+AUsIme0gWPscwSf3XpARUDc5i\nEKfIKQZzxyj4Y7W6eGwAfCMCAwEAAQ==\n-----END PUBLIC KEY-----\n"
+    },
+    "connection": {
+      "encrypted_recipient_name": "Aes256Gcm.SjlZaGFHZElVQkthMmRVTGJNVQ==.LS0tCml2OiAhYmluYXJ5IHwtCiAgd1JGK2QrRjYzRHJhbDRmdgphdDogIWJpbmFyeSB8LQogIGllS3JnK05iV0JVY2N3L3VVS2N6Rnc9PQphZDogbm9uZQo=",
+      "invitation_token": "cPWV4CwpWTHxhqaJGG9MRkVWxKojGhMPGs4oTuoBdTU"
+    }
+  }
+EOF
+# second part here actually makes the request
+curl -X POST "https://sandbox.meeco.me/vault/connections" \
+  -d @data.json \
+  -H "Accept: application/json" \
+  -H "Meeco-Subscription-Key: Q7dFWQDGSsAE6tUo1G93Mlhn4SCOBrJe" \
+  -H "Authorization: hZwx4XPj6MZJcPHPKHqc" \
+  -H "Content-Type: application/json" \
+  | json_pp \
+  > connection.json
+```
+
+The connection will have been created and the output in `connection.json` will look something like.
+
+```json
+{
+   "connection" : {
+      "own" : {
+         "connection_type" : "service",
+         "integration_data" : {
+            "intent" : "service",
+            "service_id" : "c213d93e-32a5-4e1d-96bb-0816e7eb6c74",
+            "organization_id" : "cc656956-6fb3-4bd1-a906-81c85dd6cb7e"
+         },
+         "user_id" : "d62d37f8-9f53-4be2-9df3-af7541d08316",
+         "id" : "c76b28f6-ab27-4b41-a8db-3184d17b8fbc",
+         "user_public_key" : "-----BEGINPUBLICKEY----- ... -----ENDPUBLICKEY-----\n",
+         "user_type" : "human",
+         "user_keypair_external_id" : "DataSharingService",
+         "encrypted_recipient_name" : "Aes256Gcm.SjlZaGFHZElVQkthMmRVTGJNVQ==.LS0tCml2OiAhYmluYXJ5IHwtCiAgd1JGK2QrRjYzRHJhbDRmdgphdDogIWJpbmFyeSB8LQogIGllS3JnK05iV0JVY2N3L3VVS2N6Rnc9PQphZDogbm9uZQo="
+      },
+      "the_other_user" : {
+         "connection_type" : "service",
+         "id" : "359486bb-e998-4699-9eed-5e7194987565",
+         "user_id" : "c3482646-f6cf-48a2-877c-04857802d4de",
+         "integration_data" : {
+            "organization_id" : "cc656956-6fb3-4bd1-a906-81c85dd6cb7e",
+            "service_id" : "c213d93e-32a5-4e1d-96bb-0816e7eb6c74",
+            "intent" : "service"
+         },
+         "user_keypair_external_id" : "string",
+         "user_type" : "service_agent",
+         "user_public_key" : "-----BEGINPUBLICKEY----- ... -----ENDPUBLICKEY-----\n",
+      }
+   }
+}
+
+```
+
+The `OrganizationService` has now made it's first connection with a user.
