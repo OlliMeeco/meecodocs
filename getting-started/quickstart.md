@@ -16,12 +16,6 @@ vault:
 keystore:
   url: https://sandbox.meeco.me/keystore
   subscription_key: DEV_PORTAL_SUBSCRIPTION_KEY
-downloader:
-  url: https://sandbox.meeco.me/downloader
-  subscription_key: DEV_PORTAL_SUBSCRIPTION_KEY
-passphrase:
-  url: https://sandbox.meeco.me/passphrasestore
-  subscription_key: DEV_PORTAL_SUBSCRIPTION_KEY
 ```
 {% endcode %}
 
@@ -36,6 +30,22 @@ $ meeco users:create -p supersecretpassword > .alice.yaml
 The command above does a lot, if you want to learn what happens behind the scenes look at the guide about [Setting up Access](../guides/setting-up-access.md). The end result is captured in a file `.alice.yaml` that holds the necessary information about the user that allows us to talk to the API in the next steps.
 
 In the next calls, you'll see an argument added with `-a .alice.yaml`
+
+### Login as a User
+
+You can use the following command to login as the user you just created or if you are returning to a session. This command will re-create the tokens if they are expired. It outputs an Authorization config file for use with future commands.
+
+```bash
+meeco users:login -a .alice.yaml
+```
+
+### Get info about a User
+
+You can also get the information about a user by using the following command. This command will return the user's id and other user info like their dek. 
+
+```bash
+meeco users:get -a .alice.yaml
+```
 
 ## Creating an Item
 
@@ -63,6 +73,31 @@ spec:
 
 Let's create a `vehicle` item. To prepare this we can run the create config command
 
+First, let's have a look at what kind of information the template holds. 
+
+```bash
+$ meeco templates:info vehicle -a .alice.yaml
+Fetching template 'vehicle'... done
+kind: Template
+spec:
+  id: 0c385f1d-8825-4932-a6ab-846178b816e4
+  name: vehicle
+  description: null
+  ordinal: 1
+  visible: true
+  user_id: null
+  updated_at: 2020-09-10T14:13:12.029Z
+  image: https://sandbox.meeco.me/vault/images/ff1c25e9-530a-4103-b649-986631bcb448
+  classification_node_ids:
+    - 8670d4c6-8d68-49a4-bd21-0fc8cefa705d
+  slot_ids: []
+  label: Vehicle
+  background_color: null
+  slots: []
+```
+
+Then, create the config file:
+
 ```bash
 $ meeco items:create-config vehicle -a .alice.yaml > vehicle.yaml
 ```
@@ -73,7 +108,7 @@ The next step is to edit the file to contain some data.
 ```bash
 kind: Item
 metadata:
-  template: vehicle
+  template_name: vehicle
 spec:
   label: "DeLorean"
   slots:
