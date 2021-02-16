@@ -4,11 +4,11 @@
 
 When sharing an item, a block of text can be added to the share, there is no required structure for these terms but something like the following should give you some idea of how it might be used.
 
-> I have allowed on-sharing on this item but before any on-sharing takes place call me on my phone to confirm it with me.  
+> I have allowed on-sharing on this item but before any on-sharing takes place call me on my phone to confirm it with me.
 
 or
 
-> This information on this item is being shared for the express purpose of applying for a home loan, it is not to be shared with anyone for the purposes of marketing or analysis.  
+> This information on this item is being shared for the express purpose of applying for a home loan, it is not to be shared with anyone for the purposes of marketing or analysis.
 
 or
 
@@ -16,7 +16,7 @@ or
 
 ## Share Acceptance
 
-When creating a share there is an option to set whether acceptance of the terms and share is required, the settings allowed are `acceptance_required` and  `acceptance_not_required`. Before the recipient of the share can view the data they must explicitly accept the share and it's terms via a second API call.
+When creating a share there is an option to set whether acceptance of the terms and share is required, the settings allowed are `acceptance_required` and `acceptance_not_required`. Before the recipient of the share can view the data they must explicitly accept the share and it's terms via a second API call.
 
 ## Sharing Mode
 
@@ -24,7 +24,7 @@ When a user shares an item with another user there is an option to allow or dis-
 
 ## Client Tasks
 
-Due to use of e2e (end to end) encryption the client (client application) is the only place where data can be decrypted and re-encrypted. Sometimes there are tasks that do not need to happen right away when an action takes place but they will need to be done on the client at some point. An example of this is updating shares, for example...  
+Due to use of e2e (end to end) encryption the client (client application) is the only place where data can be decrypted and re-encrypted. Sometimes there are tasks that do not need to happen right away when an action takes place but they will need to be done on the client at some point. An example of this is updating shares, for example...
 
 If a Alice has shared an item with Bob and some time later Alice changes the data in the shared item the share will also need to be updated.  
 The data in Alice's items is encrypted with a DEK (data encryption key) that only Alice has access to, this means the server can not re-encrypt the data with a shared DEK on behalf of Alice, instead the server creates a `ClientTask`.  
@@ -33,7 +33,7 @@ Alice's client will pick up the `ClientTask` of type `update_shares` which will 
 
 ## Example of On-sharing and Executing Client Tasks
 
-(it's recommended to complete the getting-started/quickstart guide before follwing this example)  
+(it's recommended to complete the getting-started/quickstart guide before follwing this example)
 
 (NOTE: each user will see the shared item as different `item_id`, when referencing the item by id be sure to use the `item_id` applicable to the user making the request)
 
@@ -103,12 +103,12 @@ spec:
     ...
 ```
 
-Note the share_id from above.  
+Note the share_id from above.
 
 Next Bob will accept the share from Alice.
 
 ```bash
-meeco shares:accept $EXISTING_SHARE_ID -a .bob.yaml
+meeco shares:accept -y $EXISTING_SHARE_ID -a .bob.yaml
 ```
 
 Now Bob can share this item with Carlos.
@@ -160,6 +160,8 @@ meeco shares:accept $EXISTING_SHARE2_ID -a .carlos.yaml
 And view it.
 
 ```bash
+meeco items:get-incoming $CARLOS_SHARED_INCOMING_SHARE_ID -a .carlos.yaml
+or
 meeco items:get $CARLOS_SHARED_INCOMING_ITEM_ID -a .carlos.yaml
 ```
 
@@ -204,7 +206,7 @@ spec:
   ...
 ```
 
-So now we have an Item on-shared from Alice to Bob to Carlos. What if Alice now wants to update the item and get Bob and Carlos the updated data?  
+So now we have an Item on-shared from Alice to Bob to Carlos. What if Alice now wants to update the item and get Bob and Carlos the updated data?
 
 First Alice updates the item.
 
@@ -242,7 +244,7 @@ spec:
     created_at: 2020-10-13T06:02:55.028Z
 ```
 
-What we need to do next is re-encrypt all the new data with a new DEK to share with both Bob and Carlos.  
+What we need to do next is re-encrypt all the new data with a new DEK to share with both Bob and Carlos.
 
 We can do this by running the command.
 
@@ -268,7 +270,12 @@ failedTasks: []
 Now Carlos and Bob have the updated shared data, you can check that by running the commands.
 
 ```bash
+meeco items:get-incoming $BOB_SHARED_INCOMING_SHARE_ID -a .carlos.yaml
+or
 meeco items:get $BOB_SHARED_INCOMING_ITEM_ID -a .bob.yaml
+
+meeco items:get-incoming $CARLOS_SHARED_INCOMING_SHARE_ID -a .carlos.yaml
+or
 meeco items:get $CARLOS_SHARED_INCOMING_ITEM_ID -a .carlos.yaml
 ```
 
