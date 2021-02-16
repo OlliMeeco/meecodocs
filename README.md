@@ -2,7 +2,7 @@
 
 The getting started section is our primary source for people new to the platform. Everyone should be able to follow the [Quickstart](getting-started/quickstart.md) guide as it teaches the basics. Next step is to read the guides available in the _**Guides**_ section and we highly recommend following along with the code samples that we provide.
 
-In the guides, the following topics are covered
+In the guides, some of the topics covered are
 
 * Introduction to the data model and terminology
 * Setting up a user with the necessary encryption artefacts

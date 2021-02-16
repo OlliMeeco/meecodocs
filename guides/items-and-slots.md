@@ -135,6 +135,7 @@ curl --request GET 'https://sandbox.meeco.me/vault/item_templates?like=SEARCH_TE
 
 [API docs](<https://dev.meeco.me/api-details#api=meeco-vault-api&operation=get-item_templates-id>)
 
+
 ## Creating an Item
 
 The example below creates an Item from the `vehicle` Template.
@@ -237,14 +238,15 @@ Notice that Slots are created according to the Item Template, but are left empty
 Items can also be classified, that is described in [another page](classification-hierarchies.md).
 
 
-
 ### Item Names
 
 An Item's `name` is auto-generated from its label. Names are all lower-case, have no non-alphanumeric characters, and have whitespace replaced with underscores. For example, label `A strange &8Label` would become `a_strange_8label`.
 
 Any user specified names (for Slots and Items) are sanitized to this format.
 
+
 Item names and labels do not have to be unique, unlike Item Template names.
+
 
 
 ### Extra Slots
@@ -488,6 +490,7 @@ As the Vault cannot inspect the data, it is just a suggestion to the user. Type 
 
 Slots are created either by cloning an Item Template, or via the `slots_attributes` property when creating an Item. Since they are keyed by `name`, either `label` or `name` must be non-empty on creation.
 
+
 Slots are updated by calling `PUT /vault/items` with the new data in `slots_attributes`:
 
 ```bash
@@ -531,6 +534,7 @@ In the real world this process would involve a few more steps:
 -   Decrypting it with the Password Derived Key \(PDK\)
 -   Reading a DEK from the Key Store
 -   Decrypting it with the KEK
+
 
 If you do not have a DEK already, you can also generate one using the \`cryppo-cli\` and the following command:
 
