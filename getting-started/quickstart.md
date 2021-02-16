@@ -31,6 +31,22 @@ The command above does a lot, if you want to learn what happens behind the scene
 
 In the next calls, you'll see an argument added with `-a .alice.yaml`
 
+### Login as a User
+
+You can use the following command to login as the user you just created or if you are returning to a session. This command will re-create the tokens if they are expired. It outputs an Authorization config file for use with future commands.
+
+```bash
+meeco users:login -a .alice.yaml
+```
+
+### Get info about a User
+
+You can also get the information about a user by using the following command. This command will return the user's id and other user info like their dek. 
+
+```bash
+meeco users:get -a .alice.yaml
+```
+
 ## Creating an Item
 
 Items in the Meeco API require you to specify a template. This template can be seen as a contract with a number of predefined fields \(which we call slots\). To get all available templates execute the following command

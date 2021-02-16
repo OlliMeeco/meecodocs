@@ -114,7 +114,7 @@ $ meeco connections:list -a .alice.yaml
 So now you have the item `id` and the connection `id` - which we'll call the `connectionId` in the following command:
 
 ```bash
-meeco shares:create-config --from .alice.yaml --connectionId <ID_OF_CONNECTION> -i <ID_OF_ITEM> > .share_config.yaml
+meeco shares:create-config --from .alice.yaml -c .connection_config.yaml -i .item-config.yaml > .share_config.yaml
 ```
 
 After this configuration file is created, we can create the share between the two users:
