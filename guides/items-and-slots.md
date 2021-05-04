@@ -244,7 +244,9 @@ An Item's `name` is auto-generated from its label. Names are all lower-case, hav
 
 Any user specified names (for Slots and Items) are sanitized to this format.
 
+
 Item names and labels do not have to be unique, unlike Item Template names.
+
 
 
 ### Extra Slots
@@ -488,6 +490,7 @@ As the Vault cannot inspect the data, it is just a suggestion to the user. Type 
 
 Slots are created either by cloning an Item Template, or via the `slots_attributes` property when creating an Item. Since they are keyed by `name`, either `label` or `name` must be non-empty on creation.
 
+
 Slots are updated by calling `PUT /vault/items` with the new data in `slots_attributes`:
 
 ```bash
@@ -532,6 +535,7 @@ In the real world this process would involve a few more steps:
 -   Reading a DEK from the Key Store
 -   Decrypting it with the KEK
 
+
 If you do not have a DEK already, you can also generate one using the \`cryppo-cli\` and the following command:
 
 ```bash
@@ -574,13 +578,22 @@ The Meeco platform uses the serialization format of Cryppo. If no derived key is
 
 If you are feeling adventurous you are welcome to dig into the [Cryppo-CLI](<https://github.com/Meeco/cryppo-cli>)
 
-The Meeco CLI automates this process:
+
+The example below creates an Item config file. We need to provide a template name to create an item config file.
 
 ```bash
-meeco items:create new_item.yaml
+meeco items:create-config TEMPLATENAME > .item_config.yaml
 ```
 
-will create the Item encrypting the Slots described in `new_item.yaml` using the current user's keys.
+This command will create the config file for the item to be created in the next step. The TEMPLATENAME can be any template from the list above.
+
+The Meeco CLI can then create the item by the following command:
+
+```bash
+meeco items:create .item_config.yaml 
+```
+
+will create the Item encrypting the Slots described in `.item_config.yaml` using the current user's keys.
 
 You can also integrate this flow into your app using the Meeco SDK's `UserService`.
 
