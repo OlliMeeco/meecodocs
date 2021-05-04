@@ -25,7 +25,7 @@ meeco connections:create-config --from .alice.yaml --to .bob.yaml > .connection_
 This creates a file called `.connection_config.yaml` which we will open and edit the `fromName` and `toName` keys. Let's make it between Alice and Bob. Next, it's time to use the CLI again to create the connection between the two users.
 
 ```bash
-meeco connections:create -c .connection_config.yaml
+meeco connections:create -c .connection_config.yaml > .connection.yaml
 ```
 
 This generates the keypairs for the connection, creates and accepts the invitation for the two users.
@@ -114,13 +114,13 @@ $ meeco connections:list -a .alice.yaml
 So now you have the item `id` and the connection `id` - which we'll call the `connectionId` in the following command:
 
 ```bash
-meeco shares:create-config --from .alice.yaml -c .connection_config.yaml -i .item-config.yaml > .share_config.yaml
+meeco shares:create-config --from .alice.yaml -c .connection.yaml -i .item.yaml > .share_config.yaml
 ```
 
 After this configuration file is created, we can create the share between the two users:
 
 ```bash
-meeco shares:create -c .share_config.yaml
+meeco shares:create -c .share_config.yaml > .share.yaml
 ```
 
 The output is a new shares item:
@@ -202,7 +202,7 @@ Running `meeco shares:list -a .bob.yaml` will show all the shares information th
 
 `meeco shares:list -t outgoing -a .alice.yaml` will show all the shares that are outgoing from Alice to other users.
 
-If you're looking for a way to delete the share, you can do that as either user with `meeco shares:delete -a .alice.yaml <SHARE_ID>` or ``meeco shares:delete -a .alice.yaml <SHARE_ID>`
+If you're looking for a way to delete the share, you can do that as either user with `meeco shares:delete -a .alice.yaml <SHARE_ID>` or `meeco shares:delete -a .bob.yaml <SHARE_ID>`
  
 Well done - you've now created a connection between two users, and shared an item!
 

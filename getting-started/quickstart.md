@@ -99,7 +99,7 @@ spec:
 Then, create the config file:
 
 ```bash
-$ meeco items:create-config vehicle -a .alice.yaml > vehicle.yaml
+$ meeco items:create-config vehicle -a .alice.yaml > .item-config.yaml
 ```
 
 The next step is to edit the file to contain some data.
@@ -130,7 +130,7 @@ spec:
 Based on this configuration, we can create a new vehicle in Alice's digital vault.
 
 ```bash
-$ meeco items:create -i vehicle.yaml -a .alice.yaml
+$ meeco items:create -i .item-config.yaml -a .alice.yaml > .item.yaml
 ```
 
 Congratulations, you have now created your first item in the _**Vault**_.
