@@ -59,21 +59,21 @@ key from the encrypted_value of the slot (as mentioned above).
 To download run the following
 
 ```bash
-meeco items:get-attachment e8670e6c-8a95-43ff-a8d1-08805f612250 67b2a8c2-4a4b-4a53-9b2f-5411cd63576b -o ./output/
-# meeco items:get-attachment <item id> <slot id> -o <file download path>
+meeco items:get-attachment e8670e6c-8a95-43ff-a8d1-08805f612250 67b2a8c2-4a4b-4a53-9b2f-5411cd63576b -o ./output/ -a .alice.yaml
+# meeco items:get-attachment <item id> <slot id> -o <file download path> -a <authorization>
 ```
 
 ## Sharing and receiving the attachment
 
 Sharing an attachment simply works the same way you would share any other slot. First you will need to have a connection to another
 user, see the directions in the "Connections and Sharing" page to set up a connection first. Assuming you have a connection set up
-already and have the second user's info in a user2.yaml file...
+already and have the second user's info in a .bob.yaml file...
 
 Run the command
 
 ```bash
-meeco shares:create-config -i e8670e6c-8a95-43ff-a8d1-08805f612250 -f .user.yaml -c 843bbece-b8bc-4816-a581-f32230059c88 > share-config.yaml
-# meeco shares:create-config -i <item id> -f .user.yaml -c <connection id> > share-config.yaml
+meeco shares:create-config -i e8670e6c-8a95-43ff-a8d1-08805f612250 -f .alice.yaml -c 843bbece-b8bc-4816-a581-f32230059c88 > share-config.yaml
+# meeco shares:create-config -i <item id> -f .alice.yaml -c <connection id> > share-config.yaml
 ```
 
 To create the share config then to create the share itself
@@ -97,10 +97,10 @@ shares:
     ...
 ```
 
-to see the incoming shared item first make a request for items as user2 run
+to see the incoming shared item first make a request for items as bob run
 
 ```bash
-meeco items:list -a user2.yaml
+meeco items:list -a .bob.yaml
 ```
 
 you will see something like the following as output
@@ -125,8 +125,8 @@ spec:
 Notice how the `share_id` matches the share output from the previous command. We can then request the item itself.
 
 ```bash
-meeco items:get fce07d6a-0c6d-4615-acef-46beee08bb5f -a user2.yaml
-# meeco items:get <item id> -a user2.yaml
+meeco items:get fce07d6a-0c6d-4615-acef-46beee08bb5f -a .bob.yaml
+# meeco items:get <item id> -a .bob.yaml
 ```
 
 Returning
@@ -165,7 +165,7 @@ spec:
 Now we have all the information we need to be able to download the attached file
 
 ```bash
-meeco items:get-attachment fce07d6a-0c6d-4615-acef-46beee08bb5f 9ddaa9f7-b928-4727-a0ee-6dfb487ca0c8 -a user2.yaml -o ./output/
+meeco items:get-attachment fce07d6a-0c6d-4615-acef-46beee08bb5f 9ddaa9f7-b928-4727-a0ee-6dfb487ca0c8 -a .bob.yaml -o ./output/
 # meeco items:get-attachment <item id> <slot id> -a <user auth> -o <file download output directory>
 ```
 
