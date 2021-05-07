@@ -181,8 +181,8 @@ The above flow is a great start to understanding how everything works however fo
 are likely to be more useful so please head to the following links and check out the README.md files there.  
 
 file-storage-browser  
-<https://github.com/Meeco/js-sdk/tree/releases/file-storage/1.0.1/packages/file-storage-browser>  
+<https://github.com/Meeco/js-sdk/tree/releases/file-storage/latest/packages/file-storage-browser>  
 
 file-storage-node  
-<https://github.com/Meeco/js-sdk/tree/releases/file-storage/1.0.1/packages/file-storage-node>  
+<https://github.com/Meeco/js-sdk/tree/releases/file-storage/latest/packages/file-storage-node>  
 
