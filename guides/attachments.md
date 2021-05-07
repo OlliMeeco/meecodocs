@@ -4,12 +4,18 @@
 
 Every `item` in the meeco vault has the capability of having multiple files attached to it. The attachments are always attached
 to the `item` via a `slot` with the `slot_type` `attachment`. Assuming you have created an item already (such as the one you may
-have created in the getting-started page) the next step is to create an `attachment-config.yaml` file with the following content.
+have created in the getting-started page) and have the `.item.config` file still, lets create another item with that same config so as not to conflict with other steps later on in this guide.
+
+```bash
+meeco items:create -i .item-config.yaml -a .alice.yaml > .item2.yaml
+```
+
+the next step is to create an `attachment-config.yaml` file with the following content.
 
 ```yaml
 kind: FileAttachment
 metadata:
-  item_id: e8670e6c-8a95-43ff-a8d1-08805f612250 # (target item id)
+  item_id: e8670e6c-8a95-43ff-a8d1-08805f612250 # (target item id from .item2.yaml)
 spec:
   label: 'Secret test webm video'
   file: './test.webm'
@@ -18,10 +24,10 @@ spec:
 Then run the cli command
 
 ```bash
-meeco items:attach-file -c attachment-config.yaml -a .alice.yaml
+meeco items:attach-file -c attachment-config.yaml -a .alice.yaml > .attach-response.yaml
 ```
 
-You will get a response that looks like the following
+You will get a response in the `attach-response.yaml` file that looks like the following
 
 ```yaml
 attachment:
@@ -54,7 +60,7 @@ used for sharing.
 ## Downloading the Attached File
 
 To download an attached file the CLI needs to know the item's id and the slot's id, this is so the CLI can decrypt the data encryption
-key from the encrypted_value of the slot (as mentioned above).
+key from the encrypted_value of the slot (as mentioned above). Both of these values can be found in the `.attach-response.yaml` file under `slots[0].id` and `slots[0].item_id`.
 
 To download run the following
 
@@ -72,17 +78,17 @@ already and have the second user's info in a .bob.yaml file...
 Run the command
 
 ```bash
-meeco shares:create-config -i e8670e6c-8a95-43ff-a8d1-08805f612250 -f .alice.yaml -c 843bbece-b8bc-4816-a581-f32230059c88 > share-config.yaml
+meeco shares:create-config -i .item2.yaml -f .alice.yaml -c .connection.yaml > share-config2.yaml
 # meeco shares:create-config -i <item id> -f .alice.yaml -c <connection id> > share-config.yaml
 ```
 
 To create the share config then to create the share itself
 
 ```bash
-meeco shares:create -c share-config.yaml
+meeco shares:create -c share-config2.yaml > .create-shares-response.yaml
 ```
 
-You should see some output like
+You should see some output like the following in the `.create-shares-response.yaml` file.
 
 ```yaml
 shares:
