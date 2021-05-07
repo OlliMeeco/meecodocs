@@ -83,7 +83,7 @@ spec:
 Once you have have the `id` of the item, you're also going to need the `id` of the connection between Alice and Bob. Grab it like this:
 
 ```bash
-$ meeco connections:list -a .alice.yaml
+meeco connections:list -a .alice.yaml
 - name: Bob
   connection:
     own:
@@ -151,7 +151,7 @@ The CLI sets up a _private encryption space_ between Alice and Bob and then shar
 We never created an item for the Bob, so we know that the following command will show the item that has been shared with Bob.
 
 ```bash
-$ meeco shares:get-incoming -a .bob.yaml <SHARE_ID>
+meeco shares:get-incoming -a .bob.yaml <SHARE_ID>
 ```
 
 The following is the share information, as well as the item that was shared:

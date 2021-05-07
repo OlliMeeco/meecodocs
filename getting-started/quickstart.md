@@ -24,7 +24,7 @@ keystore:
 Create your first user - let's call them "Alice".
 
 ```bash
-$ meeco users:create -p supersecretpassword > .alice.yaml
+meeco users:create -p supersecretpassword > .alice.yaml
 ```
 
 The command above does a lot, if you want to learn what happens behind the scenes look at the guide about [Setting up Access](../guides/setting-up-access.md). The end result is captured in a file `.alice.yaml` that holds the necessary information about the user that allows us to talk to the API in the next steps.
@@ -52,7 +52,7 @@ meeco users:get -a .alice.yaml
 Items in the Meeco API require you to specify a template. This template can be seen as a contract with a number of predefined fields \(which we call slots\). To get all available templates execute the following command
 
 ```bash
-$ meeco templates:list -a .alice.yaml
+meeco templates:list -a .alice.yaml
 Fetching available templates... done
 kind: Templates
 spec:
@@ -76,7 +76,7 @@ Let's create a `vehicle` item. To prepare this we can run the create config comm
 First, let's have a look at what kind of information the template holds. 
 
 ```bash
-$ meeco templates:info vehicle -a .alice.yaml
+meeco templates:info vehicle -a .alice.yaml
 Fetching template 'vehicle'... done
 kind: Template
 spec:
@@ -99,7 +99,7 @@ spec:
 Then, create the config file:
 
 ```bash
-$ meeco items:create-config vehicle -a .alice.yaml > .item-config.yaml
+meeco items:create-config vehicle -a .alice.yaml > .item-config.yaml
 ```
 
 The next step is to edit the file to contain some data.
@@ -130,7 +130,7 @@ spec:
 Based on this configuration, we can create a new vehicle in Alice's digital vault.
 
 ```bash
-$ meeco items:create -i .item-config.yaml -a .alice.yaml > .item.yaml
+meeco items:create -i .item-config.yaml -a .alice.yaml > .item.yaml
 ```
 
 Congratulations, you have now created your first item in the _**Vault**_.
