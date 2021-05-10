@@ -149,7 +149,7 @@ spec:
 Next we create the service using that config file.
 
 ```bash
-Ameeco organization-services:create -a .alice.yaml -c .organization-service-config.yaml cc656956-6fb3-4bd1-a906-81c85dd6cb7e > .organization-service.yaml
+meeco organization-services:create -a .alice.yaml -c .organization-service-config.yaml cc656956-6fb3-4bd1-a906-81c85dd6cb7e > .organization-service.yaml
 # meeco organization-services:create -a <USER_AUTH_YAML> -c <ORGANIZATION_SERVICE_CONFIG_FILE> <ORGANIZATION_ID> > <OUTPUT_FILE>
 ```
 
@@ -177,17 +177,40 @@ spec:
   created_at: 2020-11-03T03:43:03.751Z
 ```
 
-At this stage the Organization service has been requested and has the status `requested`. The meeco Team will again
-review this OrganizationService, reach out to you via email if needed, and validate your service. Once this is done
-we will notify you via email and you will be able to confirm that the organization service is now validated with the
-command. The `metadata.privateKey` here should be saved as configuration for your organization service application.
+At this stage the Organization service has been requested and has the status `requested`. The `metadata.privateKey` here should be saved as configuration for your organization service application.  
+
+Before the validation of the organization service you can check on the pending services by running the command.
+
+```bash
+meeco organization-services:list -a .alice.yaml cc656956-6fb3-4bd1-a906-81c85dd6cb7e
+# meeco organization-services:list -a .alice.yaml <ORGANIZATION_ID>
+```
+
+You should see some output like the following.
+
+```bash
+kind: OrganizationServices
+spec:
+  - id: c213d93e-32a5-4e1d-96bb-0816e7eb6c74
+    name: Data Sharing Service
+    description: This service is for outgoing shared data from application X
+    contract: null
+    status: requested
+    organization_id: cc656956-6fb3-4bd1-a906-81c85dd6cb7e
+    validated_by_id: null
+    agent_id: null
+    validated_at: null
+    created_at: 2021-05-10T06:14:18.968Z
+```
+
+The meeco Team will again review this OrganizationService, reach out to you via email if needed, and validate your service. Once this is done we will notify you via email and you will be able to confirm that the organization service is now validated with the command.
 
 ```bash
 meeco organization-services:get -a .alice.yaml cc656956-6fb3-4bd1-a906-81c85dd6cb7e c213d93e-32a5-4e1d-96bb-0816e7eb6c74
 # meeco organization-services:get -a .alice.yaml <ORGANIZATION_ID> <SERVICE_ID>
 ```
 
-The result should be something like the following, if the list is empty it means the service has not yet been validated.
+The result should be something like the following, if the service is not found (404) it means the service has not been validated yet.
 
 ```yaml
 kind: OrganizationService
@@ -204,7 +227,7 @@ spec:
   created_at: 2020-11-03T04:27:16.784Z
 ```
 
-Now we have created our organization service we can request an authentication token for it.
+Now we have created our organization service we can request an authentication token for it. (NOTE: your organization service will need to be validated before you can login as it)
 
 ```bash
 meeco organization-services:login -a .alice.yaml -s .organization-service.yaml > .organization_service_auth.yaml
