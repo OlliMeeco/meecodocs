@@ -14,10 +14,10 @@ company's systems.
 
 Assuming you have followed the guide from the quickstart section [Quickstart section](../getting-started/quickstart.md)
 you should have a file for your user `.alice.yaml`. For the purposes of this example let's also create a second user
-`.bob.yaml`.
+`.carol.yaml`.
 
 ```bash
-meeco users:create -p supersecretpassword > .bob.yaml
+meeco users:create -p supersecretpassword > .carol.yaml
 ```
   
 The next thing you are going to want to do is create the organization. Create a file called `.organization-config.yaml`
@@ -70,7 +70,7 @@ via the email provided. At this stage only you and the team at Meeco can see the
 You can check organization was created and in requested state waiting for approval with the following
 command.
 
-```yaml
+```bash
 meeco organizations:list -m requested -a .alice.yaml
 ```
 
@@ -101,17 +101,22 @@ spec:
   ...
 ```
 
-Start adding members to your organization. To invite a user to your organization first we create an
-invitation using the following command.
+To start adding members to your organization you must first authenticate as the organization.
 
 ```bash
-meeco organization-members:create-invitation -o .organization.yaml -a .alice.yaml > .org-invitation.yaml
+meeco organizations:login -o .organization.yaml -a .alice.yaml > .organization-auth.yaml
 ```
 
-Next lets have user Bob accept this invitation to become a member of the organization.
+Next we have to create an invitation to become a member of the organization as the organization.
 
 ```bash
-meeco organization-members:accept-invitation -i .org-invitation.yaml -a .bob.yaml > .bob-org-membership.yaml
+meeco organization-members:create-invitation -o .organization.yaml -a .organization-auth.yaml > .org-invitation.yaml
+```
+
+Next lets have user Carol accept this invitation to become a member of the organization.
+
+```bash
+meeco organization-members:accept-invitation -i .org-invitation.yaml -a .carol.yaml > .carol-org-membership.yaml
 ```
 
 You can see the list of members in the organization with the command.
@@ -293,7 +298,7 @@ The invitation has been created so lets make an unrelated user to accept this co
 meeco users:create -p supersecretpassword > .dave.yaml
 ```
 
-Then for bob to accept this invitaion (and create the connection).
+Then for carol to accept this invitaion (and create the connection).
 
 We should have a new keypair and `public_key` somewhere that we can use for this connection for Dave, dave might use the
 meeco keystore to manage this but in this case lets forget about the keystore for now to keep it simple.  
