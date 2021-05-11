@@ -306,7 +306,7 @@ The `invitation.json` file should have output that looks something like.
       "user_name" : null,
       "invited_user_id" : null,
       "outgoing" : true,
-      "encrypted_recipient_name" : "Aes256Gcm.J9YhaGdIUBKa2dULbMU=.LS0tCml2OiAhYmluYXJ5IHwtCiAgd1JGK2QrRjYzRHJhbDRmdgphdDogIWJpbmFyeSB8LQogIGllS3JnK05iV0JVY2N3L3VVS2N6Rnc9PQphZDogbm9uZQo=",
+      "encrypted_recipient_name" : "Aes256Gcm.faHlODQ4Q3i11r6H-A8=.QUAAAAAFaXYADAAAAAD_GSnEC8ep0yiX7HYFYXQAEAAAAADUbHZ-1Bg6ZqmZkmo3t7JlAmFkAAUAAABub25lAAA=",
       "sent_at" : null
    }
 }
@@ -318,7 +318,7 @@ The invitation has been created so lets make an unrelated user to accept this co
 meeco users:create -p supersecretpassword > .dave.yaml
 ```
 
-Then for carol to accept this invitaion (and create the connection).
+Then for dave to accept this invitaion (and create the connection).
 
 We should have a new keypair and `public_key` somewhere that we can use for this connection for Dave, dave might use the
 meeco keystore to manage this but in this case lets forget about the keystore for now to keep it simple.  
@@ -332,14 +332,14 @@ The `Authorization` here should be Dave's authorization token (from `.dave.yaml`
 
 ```bash
 # first part here just writes the json to a file removing all whitespace and newlines
-cat <<'EOF' |  tr -d '\040\011\012\015' > data.json
+cat <<'EOF' |  tr -d '\n' | tr -s ' ' > data.json
   {
     "public_key": {
       "keypair_external_id": "DataSharingService",
       "public_key": "-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAqMILz56KuEsGlsEpML3h\nPN7OUf7HrLTtWkazwbNIkK3RLWtNI5X8bd0ISUuwgXQVzZuWyC6wXPiWSDwXILAf\nJPusVT6Kh0EmXhJtBRCkF64fXKz54rI/2kYpuP4HZbNStj8OIRv/ECV7glDf+4Yq\nWDdLmh2vHDHF7bIRQnuWwV3ZL10Gkuh671aJkkVRdApUZUNcDfz1VK/SDMLxuxMg\n8D78u+d0WgThXzEwlcHtRitLA4QekNjVNPkoZoRIJSWLWqwkaOd0+YAhPNso3t9Y\nwaLT0/hDe4qBRuWpkoCIIUxE1JPuUbv3ePwsvyX9ksKNwQ6zVyOBXJwjspjac3mS\nH2DXS8dwU/ObKI3v9c/aY0i4iV6xJIkDxV2V8HclMOm1cLmgoc9YMU9YuM2LZ1GX\n707XBrdRD1v/FNQa/HJjFSapXcztN03etswrJcYFxVxDWZ84uMO2TNHOsSbOgop9\nmF5hRLQ+PT45v+mNNmbJa62yRaVkIV4VvsHgBVsz6TWsZGxu+IsNLKT/OYju/zzn\nvQSig5Ue7BAZqMOlibWiB6gX8vM336okrOWASnvWZNe+a7QpQdYYbHbH/leFZFCA\nht20DXUHLXYAKk9gvdqKycYnVsaRb2dnaSdUez+AUsIme0gWPscwSf3XpARUDc5i\nEKfIKQZzxyj4Y7W6eGwAfCMCAwEAAQ==\n-----END PUBLIC KEY-----\n"
     },
     "connection": {
-      "encrypted_recipient_name": "Aes256Gcm.SjlZaGFHZElVQkthMmRVTGJNVQ==.LS0tCml2OiAhYmluYXJ5IHwtCiAgd1JGK2QrRjYzRHJhbDRmdgphdDogIWJpbmFyeSB8LQogIGllS3JnK05iV0JVY2N3L3VVS2N6Rnc9PQphZDogbm9uZQo=",
+      "encrypted_recipient_name": "Aes256Gcm.eDfbJAx9qhRZvjy1NnE=.QUAAAAAFaXYADAAAAAAPXFAVfuk4dKCl4VEFYXQAEAAAAACIVxZUFNld30Dy39K-DeZKAmFkAAUAAABub25lAAA=",
       "invitation_token": "cPWV4CwpWTHxhqaJGG9MRkVWxKojGhMPGs4oTuoBdTU"
     }
   }
