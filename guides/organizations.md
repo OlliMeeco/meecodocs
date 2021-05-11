@@ -369,10 +369,10 @@ The connection will have been created and the output in `connection.json` will l
          },
          "user_id" : "d62d37f8-9f53-4be2-9df3-af7541d08316",
          "id" : "c76b28f6-ab27-4b41-a8db-3184d17b8fbc",
-         "user_public_key" : "-----BEGINPUBLICKEY----- ... -----ENDPUBLICKEY-----\n",
+         "user_public_key" : "-----BEGIN PUBLIC KEY----- ... -----END PUBLIC KEY-----\n",
          "user_type" : "human",
          "user_keypair_external_id" : "DataSharingService",
-         "encrypted_recipient_name" : "Aes256Gcm.SjlZaGFHZElVQkthMmRVTGJNVQ==.LS0tCml2OiAhYmluYXJ5IHwtCiAgd1JGK2QrRjYzRHJhbDRmdgphdDogIWJpbmFyeSB8LQogIGllS3JnK05iV0JVY2N3L3VVS2N6Rnc9PQphZDogbm9uZQo="
+         "encrypted_recipient_name" : "Aes256Gcm.eDfbJAx9qhRZvjy1NnE=.QUAAAAAFaXYADAAAAAAPXFAVfuk4dKCl4VEFYXQAEAAAAACIVxZUFNld30Dy39K-DeZKAmFkAAUAAABub25lAAA="
       },
       "the_other_user" : {
          "connection_type" : "service",
@@ -385,7 +385,7 @@ The connection will have been created and the output in `connection.json` will l
          },
          "user_keypair_external_id" : "string",
          "user_type" : "service_agent",
-         "user_public_key" : "-----BEGINPUBLICKEY----- ... -----ENDPUBLICKEY-----\n",
+         "user_public_key" : "-----BEGIN PUBLIC KEY----- ... -----END PUBLIC KEY-----\n",
       }
    }
 }
