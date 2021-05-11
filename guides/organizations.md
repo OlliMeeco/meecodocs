@@ -230,10 +230,10 @@ spec:
 Now we have created our organization service we can request an authentication token for it. (NOTE: your organization service will need to be validated before you can login as it)
 
 ```bash
-meeco organization-services:login -a .alice.yaml -s .organization-service.yaml > .organization_service_auth.yaml
+meeco organization-services:login -a .alice.yaml -s .organization-service.yaml > .organization-service-auth.yaml
 ```
 
-The `.organization_service_auth.yaml` should look like the following.
+The `.organization-service-auth.yaml` should look like the following.
 
 ```yaml
 kind: Authentication
@@ -262,16 +262,18 @@ https://github.com/Meeco/cryppo-js for more details).
 The `public_key` here can be unique per connection but in this case we are just going th use the keypair from the organization
 service.
 
+The `Authorization` header here should be the `vault_access_token` from the .`organization-service-auth.yaml` from above. To convert the `public_key` into the format needed for betlow you can use `yq` (https://mikefarah.gitbook.io/yq/) like so `cat .organization-service.yaml | yq -j eval`.
+
 ```bash
 # first part here just writes the json to a file removing all whitespace and newlines
-cat <<'EOF' |  tr -d '\040\011\012\015' > data.json
+cat <<'EOF' |  tr -d '\n' | tr -s ' ' > data.json
   {
     "public_key": {
       "keypair_external_id": "string",
       "public_key": "-----BEGIN PUBLIC KEY-----\rMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAzao4lCviLTEg2ze8jmts\ry6iG6iKX3TGIdlcHJbFBAs0oCVp29jhlOXVfwuxX6gqplLT44rpSnYcsvKYao7ol\rt7ZadkQg/j1xm+Sw/FTyLKhNyHznclnTUXPnnvY6sHwpfaC0NBIAy1XRI8r3gqiu\rngOx4afC+PeZnrCvhjsnmR1cd/FXTWQuH8GfrqdDbH3K8ObAv4r3VT2RcUvgUEVg\r6Yg29fAF5B9Wmcwl9Kr53nryp04412QvNjlJZlilbNsmvXYnPfu4bM8kRV56iBeE\rL1OOBu65oZcBvXym3Gtd057J+0kDqGp4t76qB9DNy8n3SikvY8hyZHQsx54QBecy\rKxPETEGVWGMFHI5+UIriMr0PEF4AUE9KZWVt3bAhQPyby3Fm9dju01q9nV2qt5Cy\rZnsNui2VZ7EGDxoJPH74fsnrXX7cX8VPFgg2pxmpzmI12X1YBKdymKvCRsa+5I5S\rF2/g5pwJznx1babFSCSenmPr8eIz6Y1iJSigwr4tsUAbE1C6Vn6PEBrsmzMFhe3M\rA7YwqJvNjOZZb3Yocaf08Xn8/oISCd1ItU5W6mLW/uwRSB4cGs/D7E5mNj0bvE+1\rG94RFHSDCzIYyPtb/8dFKlwSJ3Jm2HytiN7c2dVv61KrQFRyktPHPLVR/V6r8XcB\rFR6qZSfofTNCs7HI+VAIKV8CAwEAAQ==\r-----END PUBLIC KEY-----\r\n"
     },
     "invitation": {
-      "encrypted_recipient_name": "Aes256Gcm.J9YhaGdIUBKa2dULbMU=.LS0tCml2OiAhYmluYXJ5IHwtCiAgd1JGK2QrRjYzRHJhbDRmdgphdDogIWJpbmFyeSB8LQogIGllS3JnK05iV0JVY2N3L3VVS2N6Rnc9PQphZDogbm9uZQo="
+      "encrypted_recipient_name": "Aes256Gcm.faHlODQ4Q3i11r6H-A8=.QUAAAAAFaXYADAAAAAD_GSnEC8ep0yiX7HYFYXQAEAAAAADUbHZ-1Bg6ZqmZkmo3t7JlAmFkAAUAAABub25lAAA="
     }
   }
 EOF
