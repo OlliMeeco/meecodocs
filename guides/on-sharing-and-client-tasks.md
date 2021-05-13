@@ -16,11 +16,11 @@ or
 
 ## Share Acceptance
 
-When creating a share there is an option to set whether acceptance of the terms and share is required, the settings allowed are `acceptance_required` and `acceptance_not_required`. Before the recipient of the share can view the data they must explicitly accept the share and it's terms via a second API call.
+When creating a share there is an option to set whether acceptance of the terms and share is required, the settings allowed are `acceptance_required` and `acceptance_not_required`. Before the recipient of the share can view the data they must explicitly accept the share and it's terms via a second API call. For convenience when using the cli we have automatically set this feild to `acceptance_required` when any terms are specified.
 
 ## Sharing Mode
 
-When a user shares an item with another user there is an option to allow or dis-allow sharing of that item with another person, this is called the "sharing mode". The sharing mode currently has two options available on it, either `owner` or `everyone`. The `owner` sharing mode means the share can not be on-shared to another user. The `anyone` option means that the item can be on-shared to anyone. While the system will allow any on-sharing to happen when the sharing mode is set to `anyone` it is also important to check the `terms` that have set on the share.
+When a user shares an item with another user there is an option to allow or dis-allow sharing of that item with another person, this is called the "sharing mode". The sharing mode currently has two options available on it, either `owner` or `anyone`. The `owner` sharing mode means the share can not be on-shared to another user. The `anyone` option means that the item can be on-shared to anyone. While the system will allow any on-sharing to happen when the sharing mode is set to `anyone` it is also important to check the `terms` that have set on the share. For convenience in the cli we have added the flag `--onshare` which will set the `sharing_mode` to `anyone` if it is present and set it to `owner` if it is not present.
 
 ## Client Tasks
 
@@ -65,12 +65,11 @@ meeco items:create -i .vehicle_config.yaml -a .alice.yaml > .vehicle.yaml
 Share that item from Alice to Bob, with some share `terms`, `acceptance_required`, and sharing mode of `anyone`.
 
 ```bash
-meeco shares:create-config -i $VEHICLE_ITEM_ID -f .alice.yaml -c $CONNECTION_1_FROM_USER_ID > .share1-config.yaml
+meeco shares:create-config -i .vehicle.yaml -f .alice.yaml -c .connection1.yaml > .share1-config.yaml
 meeco shares:create \
     --config .share1-config.yaml \
-    --sharing_mode="anyone" \
+    --onshare \
     --terms="You may not use this information for advertising" \
-    --acceptance_required="acceptance_required" \
     > .share1.yaml
 ```
 
@@ -105,21 +104,34 @@ spec:
 
 Note the share_id from above.
 
+Bob can have a look at the details and specifically the `terms` of the share by getting the share's details with the command.
+
+```bash
+meeco shares:get-incoming -a .bob.yaml $EXISTING_SHARE_ID
+```
+
+Note that the item slot details are not available to Bob until he accepts the share and it's terms.
+
 Next Bob will accept the share from Alice.
 
 ```bash
 meeco shares:accept -y $EXISTING_SHARE_ID -a .bob.yaml
 ```
 
+Bob can now pull down the item's details. (Note: the item id must come from the item when performing the items:list command, the item_id in the shares:accept command will not work).
+
+```bash
+meeco items:get 8e26d96f-7c15-444d-97a5-30e39b418c9d -a .bob.yaml > .shared-to-bob-item.yaml
+# meeco items:get <item id> -a <auth file>
+```
+
 Now Bob can share this item with Carlos.
 
 ```bash
-meeco shares:create-config -o $EXISTING_SHARE_ID -f .bob.yaml -c $CONNECTION_2_FROM_USER_ID > .share2-config.yaml
+meeco shares:create-config -i .shared-to-bob-item.yaml -f .bob.yaml -c .connection2.yaml > .share2-config.yaml
 meeco shares:create \
     --config .share2-config.yaml \
-    --sharing_mode="anyone" \
     --terms="You may not use this information for advertising" \
-    --acceptance_required="acceptance_required" \
     > .share2.yaml
 ```
 
@@ -160,8 +172,8 @@ meeco shares:accept $EXISTING_SHARE2_ID -a .carlos.yaml
 And view it.
 
 ```bash
-meeco items:get-incoming $CARLOS_SHARED_INCOMING_SHARE_ID -a .carlos.yaml
-or
+meeco shares:get-incoming $CARLOS_SHARED_INCOMING_SHARE_ID -a .carlos.yaml
+# or
 meeco items:get $CARLOS_SHARED_INCOMING_ITEM_ID -a .carlos.yaml
 ```
 
@@ -219,7 +231,7 @@ meeco items:update -i .existing_vehicle_item.yaml -a .alice.yaml
 Ok, the item has been updated at this stage but not the shares.
 Note that the last line of the `items:update` command showed a comment saying
 
-```yaml
+```bash
 # Item updated. There are 1 outstanding client tasks. Todo: 1 & InProgress: 0
 ```
 
@@ -270,11 +282,11 @@ failedTasks: []
 Now Carlos and Bob have the updated shared data, you can check that by running the commands.
 
 ```bash
-meeco items:get-incoming $BOB_SHARED_INCOMING_SHARE_ID -a .carlos.yaml
+meeco shares:get-incoming $BOB_SHARED_INCOMING_SHARE_ID -a .carlos.yaml
 or
 meeco items:get $BOB_SHARED_INCOMING_ITEM_ID -a .bob.yaml
 
-meeco items:get-incoming $CARLOS_SHARED_INCOMING_SHARE_ID -a .carlos.yaml
+meeco shares:get-incoming $CARLOS_SHARED_INCOMING_SHARE_ID -a .carlos.yaml
 or
 meeco items:get $CARLOS_SHARED_INCOMING_ITEM_ID -a .carlos.yaml
 ```
