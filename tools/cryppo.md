@@ -28,9 +28,7 @@ We'll be using the libraries to run through some of the more in-depth examples o
 
 We've also created a simple CLI for Cryppo called `cryppo-cli` which can be found at:
 
-{% embed url="https://github.com/Meeco/cryppo" %}
-
-The intro page for this useful tool can be found [here]() on the documentation site.
+{% embed url="https://github.com/Meeco/cryppo-cli" %}
 
 With the Cryppo CLI you can use the following functions:
 
