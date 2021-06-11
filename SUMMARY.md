@@ -23,6 +23,10 @@
 - [Organizations](guides/organizations.md)
 - [On-sharing & Client Tasks](guides/on-sharing-and-client-tasks.md)
 
+## Secure Value Exchange
+
+- [Quickstart](secure-value-exchange/quickstart.md)
+
 ## Policies <a id="policies-1"></a>
 
 - [Privacy](policies-1/privacy.md)
