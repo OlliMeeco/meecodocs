@@ -1,31 +1,39 @@
 # Releases
 
-## Jun 2021
+## 2021-Q2
 
-### Vault v32.1.1
+### Vault v32.4.1
 
-* New parameters to GET /items: it is now possible to fetch only
-  items with a certain name: GET /items?name=foo
-* Share intents:
+* Added support multiple JWT issuers for OpenIDConnect Authentication flow.
+* Added support seamless identity transition on OpenIDConnect identity provider change.
+  * This feature requires OpenIDConnect JWT to enclose a special claim `extension_meecoUserId` 
+    with value reference to the previous Meeco user identity.
+* Added parameters for `GET /connections`:
+  * `delegation=granted_to_the_other_user`; the current user has granted delegation to other users 
+  * `delegation=granted_to_me`; the current user has received delegation from other users
+* Changed `GET /session` shows:
+  * the type of the session (`oidc` or `token`)
+  * if the type of the session is `token`, the access token will be shown
+* Added parameters to `GET /items`: it is now possible to fetch only items with a certain name via `?name=foo`
+* Added Share intents:
   * POST /invitations/{invitation_id}/share_intents to create a share intent
   * DELETE /share_intents/:id,
   * GET /share_intents/:id
   * GET /share_intents
   * Models Invitation and PublicInvitation have new field `shares_to_be_created`
   * response to POST /connections contains a new element: a report on the created connections
-* New parameters `valid_for` added to `POST /sessions`. `valid_for` defines the number of
+* Changed parameters `valid_for` added to `POST /sessions`. `valid_for` defines the number of
   seconds the token is going to be valid
-* better handling of errors in `POST /items/shares`: field `extra_info` contains
+* Changed handling of errors in `POST /items/shares`: field `extra_info` contains
   a subset of incoming parameters with the error.
-* Image and background color removed for the Item model (removed fields `image_background_colour`, `background_color` which are realted)
-* Remove Item flag `me` from items.
-* User field `verified_at` is hidden
-* Remove legacy `messages` feature which was not being used and would need to be upgraded if it were to be used.
-* Changed the POST /thumbnails endpoint request structure to be nested under a `thumbnail` object
-* Update documentation on classifications in the swagger file
-* Improve performance on the POST /items endpoint
-* Minor changes in classification parameters for POST /items and PUT /items endpoints
-* Changed POST /classification_nodes to only be used for user managed schemes (tags)
+* Removed image and background color for the Item model (removed fields `image_background_colour`, `background_color` which are realted)
+* Removed Item flag `me` from items.
+* Changed User field `verified_at` so is hidden.
+* Removed legacy `messages` feature which was not being used and would need to be upgraded if it were to be used.
+* Changed the `POST /thumbnails` endpoint request structure to be nested under a `thumbnail` object
+* Fixed performance on the `POST /items` endpoint
+* Changed classification parameters for `POST /items` and `PUT /items` endpoints
+* Changed `POST /classification_nodes` to only be used for user managed schemes (tags)
 * In order to be consistent with slot and item classifications in POST /items,
 * POST /classification_nodes is now only for user managed schemes (tags)
 * Improved error messages on POST /items endpoint
@@ -49,7 +57,7 @@
   * `User.user_type`
 * Updateding a slot in the PUT /items endpoint has been removed, you must now specifiy the slot's id to
   update it, any slot sent up without an id will be treated as a new slot
-* simplified the flow of downloading attachments so fewer API calls are needed (see newly released cli/sdk implementation for examply usage)
+* Simplified the flow of downloading attachments so fewer API calls are needed (see newly released cli/sdk implementation for examply usage)
 * Removed fields `is_app_logging_enabled`, `unconfirmed_email`, `share_terms` from model `User`
 * Removed UserAccessToken fields `name`, `device_push_token`, `push_token_platform`
 * Added `item_ids` parameter to retrieve multiple specific items at once. e.g.  `GET /items?item_ids=abc,xyz,foo,bar`
@@ -76,24 +84,29 @@
   Slots and attachments folders
   * To attach an existing attachments folder use property `attachments_folder_id`, see model `NestedSlotAttributes`
   * To access a attachments folders data use `GET /slots/:slot_id/attachments_folder`
-* 2 new parameters for `GET /items`:
+* Added new parameters for `GET /items`:
   * `own` boolean, if true adds constraint `items.user_id = items.owner_id`, if false adds
     constraint `items.user_id != items.owner_id`
   * `owner_id`, if present, adds constraint `items.owner_id = 'parameter goes here'`
-* Field `encrypted` in `Slot` removed
-* Fields `cloudname`, `key_store_admission_token`, `key_store_id`,
-  `key_store_url`, `key_store_username` in `User` removed
+* Removed Field `encrypted` in `Slot`
+* Removed fields `cloudname`, `key_store_admission_token`, `key_store_id`,
+  `key_store_url`, `key_store_username` in `User`
 
-### KeyStore API v5.6.1
+### KeyStore API v5.8.1
 
-* Added endpoint POST /session/limited_in_time
-* New parameters `valid_for` added to `POST /sessions`, `POST /sessions/with_login_key`,
+* Added support multiple JWT issuers for OpenIDConnect Authentication flow.
+* Added support seamless identity transition on OpenIDConnect identity provider change.
+  * This feature requires OpenIDConnect JWT to enclose a special claim `extension_meecoUserId` 
+    with value reference to the previous Meeco user identity.
+* Changed `GET /session` shows the validity of the current session
+* Added endpoint `POST /session/limited_in_time`
+* Added new parameters `valid_for` added to `POST /sessions`, `POST /sessions/with_login_key`,
   and `POST /srp/sessions`. `valid_for` defines the number of seconds the token is going
   to be valid
-* Authorizations in the swagger file (userAuthToken, oidc2UserAuthToken,
-  subscriptionKey, meecoDelegationId]) reviewed and fixed
-* new mandatory parameter in `POST /child_users`: `delegation_token`
-* `private_dek_external_id` is added to the response of `POST /child_users`
+* Fixed Authorizations in the swagger file (userAuthToken, oidc2UserAuthToken,
+  subscriptionKey, meecoDelegationId])
+* Added new mandatory parameter in `POST /child_users`: `delegation_token`
+* Added `private_dek_external_id` to the response of `POST /child_users`
 
 ### StyleKit v2.0.0
 
