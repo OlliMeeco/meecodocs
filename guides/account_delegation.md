@@ -33,3 +33,9 @@ meeco delegations:accept-invitation -a .homer.yaml -c .delegation-invitation.yam
 
 # meeco items:list --delegationId <USER_ID_OF_DELEGATE_CONNECTION> -a .homer.yaml
 meeco items:list --delegationId 07d5acf5-451f-40db-9aa0-86561d4084cb -a .homer.yaml
+
+# meeco delegations:share-kek <CONNECTION_OTHER_USER_ID> -a .riker.yaml
+meeco delegations:share-kek 1285708b-1650-44f8-875b-7f8aa64fa7cf -a .riker.yaml
+
+# meeco delegations:accept-kek <CONNECTION_OWN_ID> -a .homer.yaml
+meeco delegations:accept-kek 4db49b3b-ade1-48c7-be98-03eefc1093c8 -a .homer.yaml
