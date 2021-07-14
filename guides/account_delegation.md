@@ -70,7 +70,7 @@ Next Homer can list out the Riker's items.
 
 ```bash
 # meeco items:list --delegationId <USER_ID_OF_OTHER_USER_CONNECTION> -a .homer.yaml
-meeco items:list --delegationId c0181886-20de-45de-b4b5-b614f92f2440 -a .homer.yaml
+meeco items:list --delegationId c0181886-20de-45de-b4b5-b614f92f2440 -a .homer-with-riker-delegation.yaml
 ```
 
 Then, taking note of the item id from the items:list command, finally Homer can view the item Riker created earlier.
