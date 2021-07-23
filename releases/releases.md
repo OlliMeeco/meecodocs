@@ -2,8 +2,11 @@
 
 ## 2021-Q2
 
-### Vault v32.4.1
+### Vault v32.4.3
 
+* Fixed delegate user role for to access user's DEK
+* Removed conversations and messages endpoints
+* Added client task for re-encrypting the account owners KEK during delegation setup
 * Added support multiple JWT issuers for OpenIDConnect Authentication flow.
 * Added support seamless identity transition on OpenIDConnect identity provider change.
   * This feature requires OpenIDConnect JWT to enclose a special claim `extension_meecoUserId` 
