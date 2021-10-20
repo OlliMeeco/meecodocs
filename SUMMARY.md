@@ -27,6 +27,7 @@
 ## Secure Value Exchange
 
 - [Quickstart](secure-value-exchange/quickstart.md)
+- [Verifier Flow Setup](secure-value-exchange/verifier-flow.md)
 
 ## Policies <a id="policies-1"></a>
 
