@@ -27,7 +27,7 @@ The CLI uses a Secret Key in combination with your user entered passphrase to ge
 
 Below is a diagram that explains the flow.
 
-![](../.gitbook/assets/how_the_secret_key_is_built.png)
+![](../.gitbook/assets/hwo_the_secret_key_is_built.png)
 
 ### Creating a User with the Secret Key Flow
 
