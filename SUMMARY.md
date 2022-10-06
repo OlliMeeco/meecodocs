@@ -23,6 +23,7 @@
 - [Organizations](guides/organizations.md)
 - [On-sharing & Client Tasks](guides/on-sharing-and-client-tasks.md)
 - [Account Delegation](guides/account_delegation.md)
+- [DID Create](guides/did-create.md)
 
 ## Secure Value Exchange
 
