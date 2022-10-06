@@ -28,7 +28,7 @@ Call Crete DID API with following payload to create new DID KEY
 _Request with above generated pubkey base64url string_
 
 ```bash
-curl -H "Authorization: Bearer JWT" \
+curl -H "Authorization: Bearer TOKEN" \
      -X POST "https://identity-network-dev.meeco.me/did/create?method=key" \
      -H "Content-Type: application/json" \
      -d '{
@@ -125,12 +125,12 @@ Convert DID controller public key to base58:
 cat pubkey| tail -c +13| base58
 ```
 
-Call Crete DID API with following payload to create new DID KEY
+Call Crete DID API with following payload to create new DID WEB
 
-_Request with above generated pubkey base64url string_
+_Request with above generated pubkey base58 string_
 
 ```bash
-curl -H "Authorization: Bearer JWT" \
+curl -H "Authorization: Bearer TOKEN" \
      -X POST "https://identity-network-dev.meeco.me/did/create?method=web" \
      -H "Content-Type: application/json" \
      -d '{
@@ -217,6 +217,241 @@ did.didDocument.service = [
     serviceEndpoint: 'meeco.me',
   },
 ];
+const generatedDID = await api.create({}, did);
+console.log(generatedDID);
+```
+
+Resolve DID
+
+```js
+const result = await api.resolve({}, identifier);
+console.log(result);
+```
+
+# Create DID Indy
+
+## Meeco API
+
+_Guide using the Meeco API_
+
+### Generate Keypair for DID Indy
+
+Create a new DID controller keypair (Ed25519) using openssl:
+
+```bash
+openssl genpkey -algorithm ed25519 -outform DER >privkey
+openssl pkey -in privkey -pubout -out pubkey -inform DER -outform DER
+```
+
+Convert DID controller public key to base58:
+
+```bash
+cat pubkey| tail -c +13| base58
+```
+
+Call Crete DID API with following payload to create new DID Indy
+
+### Step 1
+
+_Request with above generated pubkey base58 string & ledger network danube_
+
+```bash
+curl -H "Authorization: Bearer TOKEN" \
+     -X POST "https://identity-network-dev.meeco.me/did/create?method=indy" \
+     -H "Content-Type: application/json" \
+     -d '{
+           "options": {
+             "clientSecretMode": true,
+             "network": "danube"
+           },
+           "secret": { },
+           "didDocument": {
+             "@context": ["https//www.w3.org/ns/did/v1"],
+             "verificationMethod": [{
+               "id": "#key-1",
+               "type": "Ed25519VerificationKey2018",
+               "publicKeyBase58": "{Replace_With_Above_Generated_Base58_String}"
+             }],
+             "service": [{
+               "id": "#testServiceId",
+               "type": "LinkedDomains",
+               "serviceEndpoint": "https://meeco.me/"
+             }]
+           }
+         }'
+
+```
+
+_Response with action signPayload - signing Request Nym [Transaction on Ledger]_
+
+```bash
+{
+    "jobId": "{JOB_ID}",
+    "didState": {
+        "state": "action",
+        "action": "signPayload",
+        "signingRequest": {
+            "signingRequestNym": {
+                "kid": "#key-1",
+                "alg": "EdDSA",
+                "purpose": "authentication",
+                "payload": { ... },
+                "serializedPayload": "<-- base 64 encoded -->"
+            }
+        }
+    },
+    "didRegistrationMetadata": { ... },
+    "didDocumentMetadata": { ... }
+}
+
+```
+
+### Step 2
+
+_decode base64 serializedPayload payload from above resonse_
+
+```bash
+echo "<-- base64 encoded -->"|base64 -d >payload
+```
+
+_sign payload with Transaction Endorser private key_
+
+```bash
+openssl pkeyutl -sign -rawin -in payload -inkey privkey -keyform DER| base64| tr -d '\n' >signature
+```
+
+```bash
+curl -H "Authorization: Bearer TOKEN" \
+     -X POST "https://identity-network-dev.meeco.me/did/create?method=indy" \
+     -H "Content-Type: application/json" \
+     -d '{
+           "jobId": "{JOB_ID_From_Previous_Response}",
+           "options": {
+             "clientSecretMode": true
+            },
+           "secret": {
+             "signingResponse": {
+               "signingRequestNym": {
+                 "signature": "<-- base64 encoded signature-->"
+               }
+             }
+           },
+           "didDocument": { }
+         }'
+
+```
+
+_Response with action signPayload - signing Request Attribute_
+
+```bash
+{
+    "jobId": "{JOB_ID}",
+    "didState": {
+        "state": "action",
+        "action": "signPayload",
+        "signingRequest": {
+            "signingRequestAttrib": {
+                "kid": "#key-1",
+                "alg": "EdDSA",
+                "purpose": "authentication",
+                "payload": { ... },
+                "serializedPayload": "<-- base 64 encoded -->"
+            }
+        }
+    },
+    "didRegistrationMetadata": { ... },
+    "didDocumentMetadata": { ... }
+}
+
+```
+
+### Step 3
+
+_decode base64 serializedPayload payload from above resonse_
+
+```bash
+echo "<-- base64 encoded -->"|base64 -d >payload
+```
+
+_sign payload with Transaction Endorser private key_
+
+```bash
+openssl pkeyutl -sign -rawin -in payload -inkey privkey -keyform DER| base64| tr -d '\n' >signature
+```
+
+_sign payload with DID controller private key_
+
+```bash
+openssl pkeyutl -sign -rawin -in payload -inkey privkey -keyform DER| base64| tr -d '\n' >signature
+```
+
+```bash
+curl -H "Authorization: Bearer TOKEN" \
+     -X POST "https://identity-network-dev.meeco.me/did/create?method=indy" \
+     -H "Content-Type: application/json" \
+     -d '{
+           "jobId": "{JOB_ID_From_Previous_Response}",
+           "options": {
+             "clientSecretMode": true
+            },
+           "secret": {
+             "signingResponse": {
+               "signingRequestAttrib": {
+                 "signature": "<-- base64 encoded -->"
+               }
+             }
+           },
+           "didDocument": { }
+         }'
+
+```
+
+_final response_
+
+```bash
+....
+  "didState": {
+    "state": "finished",
+    "did": "{DID_WEB_Identifier}",
+....
+```
+
+Resolve DID
+
+```bash
+curl -X 'GET' \
+  'https://identity-network-dev.meeco.me/did/{Replace_With_DID_WEB_Identifier}' \
+  -H 'accept: application/json'
+```
+
+## Meeco JS SDK
+
+_Guide using the Meeco JS SDK_
+
+### For SDK installation & basic usage, visit SDK-Demo sample application [SDK-JS-DEMO](https://github.com/Meeco/js-sdk/blob/develop/packages/sdk-demo/src/did-management/index.ts)
+
+Create a new DID controller keypair (Ed25519)
+
+```js
+const array = new Uint8Array(32);
+const secret = self.crypto.getRandomValues(array);
+const keyPair = new Ed25519(secret);
+console.log(`public key hex: ${keyPair.getPublicKeyHex()}`);
+console.log(`private key hex: ${keyPair.keyPair.getSecret('hex')}`);
+```
+
+Create new DID KEY
+
+```js
+const did = new DIDIndy(keyPair);
+did.didDocument.service = [
+  {
+    type: 'LinkedDomains',
+    serviceEndpoint: 'meeco.me',
+  },
+];
+const generatedDID = await api.create({}, did);
+console.log(generatedDID);
 ```
 
 Resolve DID
