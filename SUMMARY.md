@@ -24,6 +24,8 @@
 - [On-sharing & Client Tasks](guides/on-sharing-and-client-tasks.md)
 - [Account Delegation](guides/account_delegation.md)
 - [DID Create](guides/did-create.md)
+- [DID Deactivate](guides/did-deactivate.md)
+- [DID update](guides/did-update.md)
 
 ## Secure Value Exchange
 

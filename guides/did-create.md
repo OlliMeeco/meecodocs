@@ -12,6 +12,8 @@ _Guide using the Meeco API_
 
 Create a new DID controller keypair (Ed25519) using openssl:
 
+\*\*NOTE: make sure you have openssl & GNU coreutils installed and avalible on command line (e.g. brew install coreutils)
+
 ```bash
 openssl genpkey -algorithm ed25519 -outform DER >privkey
 openssl pkey -in privkey -pubout -out pubkey -inform DER -outform DER
@@ -23,7 +25,9 @@ Convert DID controller public key to Base64URL:
 cat pubkey| tail -c +13| basenc --base64url
 ```
 
-Call Crete DID API with following payload to create new DID KEY
+### API request
+
+Call DID Create API with following payload to create new DID KEY
 
 _Request with above generated pubkey base64url string_
 
@@ -69,7 +73,7 @@ Resolve DID
 ```bash
 curl -X 'GET' \
   'https://identity-network-dev.meeco.me/did/{Replace_With_DID_KEY_Identifier}' \
-  -H 'accept: application/json'
+  -H 'accept: application/ld+json;profile="https://w3id.org/did-resolution"'
 ```
 
 ## Meeco JS SDK
@@ -92,8 +96,27 @@ Create new DID KEY
 
 ```js
 let did: DIDBase = new DIDKey(keyPair);
+
+const environment = new Environment({
+  vault: {
+    url: '',
+    subscription_key: '',
+  },
+  keystore: {
+    url: '',
+    subscription_key: '',
+    provider_api_key: '',
+  },
+  identityNetwork: {
+    url: '{identity-network-url}',
+    subscription_key: '{subsription-key}',
+  },
+});
 const api = new DIDManagementService(environment);
-const generatedDID = await api.create({}, did);
+const generatedDID = await api.create(
+  { identity_network_access_token: '{access-token}' },
+  did
+);
 console.log(generatedDID);
 ```
 
@@ -113,6 +136,7 @@ _Guide using the Meeco API_
 ### Generate Keypair for DID WEB
 
 Create a new DID controller keypair (Ed25519) using openssl:
+\*\*NOTE: make sure you have openssl & GNU coreutils installed and avalible on command line (e.g. brew install coreutils)
 
 ```bash
 openssl genpkey -algorithm ed25519 -outform DER >privkey
@@ -125,7 +149,9 @@ Convert DID controller public key to base58:
 cat pubkey| tail -c +13| base58
 ```
 
-Call Crete DID API with following payload to create new DID WEB
+### API request
+
+Call DID Create API with following payload to create new DID WEB
 
 _Request with above generated pubkey base58 string_
 
@@ -183,7 +209,7 @@ Resolve DID
 ```bash
 curl -X 'GET' \
   'https://identity-network-dev.meeco.me/did/{Replace_With_DID_WEB_Identifier}' \
-  -H 'accept: application/json'
+  -H 'accept: application/ld+json;profile="https://w3id.org/did-resolution"'
 ```
 
 ## Meeco JS SDK
@@ -217,14 +243,37 @@ did.didDocument.service = [
     serviceEndpoint: 'meeco.me',
   },
 ];
-const generatedDID = await api.create({}, did);
+
+const environment = new Environment({
+  vault: {
+    url: '',
+    subscription_key: '',
+  },
+  keystore: {
+    url: '',
+    subscription_key: '',
+    provider_api_key: '',
+  },
+  identityNetwork: {
+    url: '{identity-network-url}',
+    subscription_key: '{subsription-key}',
+  },
+});
+const api = new DIDManagementService(environment);
+const generatedDID = await api.create(
+  { identity_network_access_token: '{access-token}' },
+  did
+);
 console.log(generatedDID);
 ```
 
 Resolve DID
 
 ```js
-const result = await api.resolve({}, identifier);
+const result = await api.resolve(
+  { identity_network_access_token: '{access-token}' },
+  identifier
+);
 console.log(result);
 ```
 
@@ -249,7 +298,9 @@ Convert DID controller public key to base58:
 cat pubkey| tail -c +13| base58
 ```
 
-Call Crete DID API with following payload to create new DID Indy
+### API request
+
+Call DID Create API with following payload to create new DID Indy
 
 ### Step 1
 
@@ -373,12 +424,6 @@ _decode base64 serializedPayload payload from above resonse_
 echo "<-- base64 encoded -->"|base64 -d >payload
 ```
 
-_sign payload with Transaction Endorser private key_
-
-```bash
-openssl pkeyutl -sign -rawin -in payload -inkey privkey -keyform DER| base64| tr -d '\n' >signature
-```
-
 _sign payload with DID controller private key_
 
 ```bash
@@ -421,7 +466,7 @@ Resolve DID
 ```bash
 curl -X 'GET' \
   'https://identity-network-dev.meeco.me/did/{Replace_With_DID_WEB_Identifier}' \
-  -H 'accept: application/json'
+  -H 'accept: application/ld+json;profile="https://w3id.org/did-resolution"'
 ```
 
 ## Meeco JS SDK
@@ -450,13 +495,36 @@ did.didDocument.service = [
     serviceEndpoint: 'meeco.me',
   },
 ];
-const generatedDID = await api.create({}, did);
+
+const environment = new Environment({
+  vault: {
+    url: '',
+    subscription_key: '',
+  },
+  keystore: {
+    url: '',
+    subscription_key: '',
+    provider_api_key: '',
+  },
+  identityNetwork: {
+    url: '{identity-network-url}',
+    subscription_key: '{subsription-key}',
+  },
+});
+const api = new DIDManagementService(environment);
+const generatedDID = await api.create(
+  { identity_network_access_token: '{access-token}' },
+  did
+);
 console.log(generatedDID);
 ```
 
 Resolve DID
 
 ```js
-const result = await api.resolve({}, identifier);
+const result = await api.resolve(
+  { identity_network_access_token: '{access-token}' },
+  identifier
+);
 console.log(result);
 ```
