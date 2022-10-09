@@ -137,19 +137,13 @@ const environment = new Environment({
   },
 });
 const api = new DIDManagementService(environment);
-const UpdatedDIDResult = await api.update(
-  { identity_network_access_token: '{access-token}' },
-  did
-);
+const UpdatedDIDResult = await api.update({}, did);
 ```
 
 Try Resolving Updated DID
 
 ```js
-const result = await api.resolve(
-  { identity_network_access_token: '{access-token}' },
-  identifier
-);
+const result = await api.resolve({}, identifier);
 console.log(result);
 ```
 
@@ -330,18 +324,12 @@ const environment = new Environment({
   },
 });
 const api = new DIDManagementService(environment);
-const UpdatedDIDResult = await api.update(
-  { identity_network_access_token: '{access-token}' },
-  did
-);
+const UpdatedDIDResult = await api.update({}, did);
 ```
 
 Try Resolving Updated DID
 
 ```js
-const result = await api.resolve(
-  { identity_network_access_token: '{access-token}' },
-  identifier
-);
+const result = await api.resolve({}, identifier);
 console.log(result);
 ```

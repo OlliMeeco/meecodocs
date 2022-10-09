@@ -88,19 +88,13 @@ const environment = new Environment({
   },
 });
 const api = new DIDManagementService(environment);
-const deactivatedDIDResult = await api.deactivate(
-  { identity_network_access_token: '{access-token}' },
-  did
-);
+const deactivatedDIDResult = await api.deactivate({}, did);
 ```
 
 Try Resolving Deactivated DID
 
 ```js
-const result = await api.resolve(
-  { identity_network_access_token: '{access-token}' },
-  identifier
-);
+const result = await api.resolve({}, identifier);
 console.log(result);
 ```
 
@@ -252,18 +246,12 @@ const environment = new Environment({
   },
 });
 const api = new DIDManagementService(environment);
-const deactivatedDIDResult = await api.deactivate(
-  { identity_network_access_token: '{access-token}' },
-  did
-);
+const deactivatedDIDResult = await api.deactivate({}, did);
 ```
 
 Try Resolving Deactivated DID
 
 ```js
-const result = await api.resolve(
-  { identity_network_access_token: '{access-token}' },
-  identifier
-);
+const result = await api.resolve({}, identifier);
 console.log(result);
 ```
