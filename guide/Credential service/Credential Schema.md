@@ -23,7 +23,7 @@ All the attributes in the example are required, but values could be different, e
 
  
 
-### Example credential schema
+### Example credential JSON schema
 
 ```bash
 { 
@@ -47,7 +47,7 @@ All the attributes in the example are required, but values could be different, e
 ```bash
 POST/schemas
 ```
-**Example Value**
+**Example Payload**
 ```bash
 {
   "schema": {
