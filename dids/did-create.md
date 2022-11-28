@@ -22,7 +22,7 @@ openssl pkey -in privkey -pubout -out pubkey -inform DER -outform DER
 Convert DID controller public key to Base64URL:
 
 ```bash
-cat pubkey| tail -c +13| basenc --base64url
+cat pubkey | tail -c +13 | basenc --base64url
 ```
 
 ### API request
