@@ -1,13 +1,13 @@
 # Introduction
-Within the SVX Platform, credential schemas are used to form the basis of a verifiable credential. They structure a set of claims about a Holder and determine the logic behind how the claims are used. Without credential schemas, verifiable credentials would not be able to be issued. 
+Within the SVX Platform, credential schemas are used to form the basis of a verifiable credential. They structure a set of claims about a Holder and determine the logic behind how the claims are used. Without credential schemas, verifiable credentials would not be able to be issued.
 
- 
+
 # What you need before starting
 The schema file (typically a JSON Schema)
 
 
 # Additional considerations
-Each Credential Schema consists of the following mandatory attributes:
+Each JSON Schema consists of the following mandatory attributes:
 
 * type (e.g. JsonSchemaValidator2018). The specific type definition determines the content of each data schema.
 
@@ -17,76 +17,51 @@ Credential schema upload is available to Tenant Administrators and must comply w
 
 * A plain JSON object.
 
-* The structure is later checked based on the specification: JSON Schema 
+* The structure is later checked based on the specification: JSON Schema
 
 All the attributes in the example are required, but values could be different, e.g. URL address of Schema, name, description etc.
 
- 
+
 
 ### Example credential JSON schema
 
 ```bash
-{ 
+{
   "$schema": "https://json-schema.org/draft/2019-09/schema",
   "name": "Example",
-  "description": "Example", 
-  "type": "object", 
-  "properties": { 
+  "description": "Example",
+  "type": "object",
+  "properties": {
 
-    "id": { 
-      "type": "string", 
-    } 
-  }, 
-  "required": ["id"], 
-  "additionalProperties": false, 
+    "id": {
+      "type": "string",
+    }
+  },
+  "required": ["id"],
+  "additionalProperties": false,
 }
 ```
-## Create schemas
+## Create Credential Schema
+
+**Endpoint**
+
+```bash
+POST /schemas
+```
+
 **Request**
 
-```bash
-POST/schemas
-```
-**Example Payload**
-```bash
-{
-  "schema": {
-    "name": "Schema name",
-    "schema_json": {
-      "$schema": "https://json-schema.org/draft/2019-09/schema",
-      "description": "Basic schema description",
-      "name": "Basic schema name",
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "id",
-        "name"
-      ],
-      "additionalProperties": false
-    },
-    "organization_ids": [
-      "9322c384-fd8e-4a13-80cd-1cbd1ef95ba8",
-      "986dcaf4-c1ea-4218-b6b4-e4fd95a3c28e"
-    ]
-  }
-}
-```
+- Name – name of the credential schema
+- JSON Schema
+- List organisations
+
 **Responses**
 
-```bash
-201 - Schema created
-400 - Error + see the explanations in console 
- ```
+The credential schema object that is created.
 
 ## View Credential Schemas
-All created schemas are stored in a list and can be retrieved using the API.
+
+Retrieve a list of credential schemas.
 
 **Request**
 
@@ -94,13 +69,21 @@ All created schemas are stored in a list and can be retrieved using the API.
 GET /schemas
  ```
 
+**Request**
+
+- Organisation
+
+**Responses**
+
+List of credential schema objects
+
 The endpoint works for a Tenant and Organisation user based on the X-Meeco-Organisation-ID header.
 
 Returns a list of schemas available to the caller.
 
 In the context of an organisation, entering organization_ids `organization_ids` list always contains only one item - caller organisation ID.
 
- 
+
 
 ## Associate Organisations with Credential Schemas
 When an Organisation Administrator creates a Credential Template, they will need to select the required Credential Schema. In this case, we would need to fetch data using the following API call:
@@ -131,6 +114,7 @@ PUT /schemas/{id} - apply all changes
  ```
 
 ## Archive Credential Schemas
+
 It is possible for a Tenant Administrator to archive Credential Schemas, but if the schema is used in other operations such as issuing a credential or forming a verification template, the schema can be flagged as archived:true.
 
 **Request**
