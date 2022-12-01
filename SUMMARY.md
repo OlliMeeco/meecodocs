@@ -24,15 +24,14 @@
 
 ## DIDs
 
-- [DID Resolver](dids/did-resolver.md)
+- [DID Resolver](dids/did-resolution.md)
 - [DID Registrar](dids/did-registrar.md)
 - [DID Methods](dids/did-methods.md)
   - [did:key](dids/methods/did-key.md)
   - [did:web](dids/methods/did-web.md)
+  - [did:ebsi](dids/methods/did-ebsi.md)
+  - [did:indy](dids/methods/did-indy.md)
 - [DID Controller Keypair](dids/did-controller-keypair.md)
-- [DID Create](dids/did-create.md)
-- [DID Deactivate](dids/did-deactivate.md)
-- [DID Update](dids/did-update.md)
 
 ## Secure Value Exchange
 

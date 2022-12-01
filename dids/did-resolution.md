@@ -6,6 +6,8 @@ description: Resolving & dereferencing supported DID methods
 
 DID resolution, also referred to as the "Read" operation, is a function that takes a DID (and some metadata) as input and returns a DID document (and some metadata) as output.
 
+Resolution is performed as defined in the [DID Core](https://www.w3.org/TR/did-core/) and [DID Resolution](https://w3c-ccg.github.io/did-resolution/) specifications. The implementation is based on the [Universal Registrar](https://github.com/decentralized-identity/universal-resolver/) project.
+
 Supported output is
 
 - DID document and metadata in JSON-LD
