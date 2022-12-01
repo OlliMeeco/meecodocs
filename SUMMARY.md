@@ -25,7 +25,7 @@
 ## DIDs
 
 - [DID Resolver](dids/did-resolution.md)
-- [DID Registrar](dids/did-registrar.md)
+- [DID Registrar](dids/did-registration.md)
 - [DID Methods](dids/did-methods.md)
   - [did:key](dids/methods/did-key.md)
   - [did:web](dids/methods/did-web.md)
