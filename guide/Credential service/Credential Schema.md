@@ -86,7 +86,7 @@ In the context of an organisation, entering organization_ids `organization_ids` 
 
 
 ## Associate Organisations with Credential Schemas
-# Credential Template
+### Credential Template
 When an Organisation Administrator creates a Credential Template, they will need to select the required Credential Schema. In this case, we would need to fetch data using the following API call:
 
 **Endpoint**
@@ -103,7 +103,7 @@ GET /schemas/{id}
 
 * Selected Credential Schema
 
-# Issue Credentila
+### Issue Credentila
 
 We need to use the same endpoint during Issue Credential process, because based on the properties of the associated Credential Schema, we will need to fill in the information for the Credential. 
 
