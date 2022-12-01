@@ -51,9 +51,9 @@ POST /schemas
 
 **Request**
 
-- Name – name of the credential schema
-- JSON Schema
-- List organisations
+* Name – name of the credential schema
+* JSON Schema
+* List organisations
 
 **Responses**
 
@@ -71,11 +71,11 @@ GET /schemas
 
 **Request**
 
-- Organisation
+* Organisation (header)
 
 **Responses**
 
-List of credential schema objects
+* List of credential schema objects
 
 The endpoint works for a Tenant and Organisation user based on the X-Meeco-Organisation-ID header.
 
@@ -86,39 +86,80 @@ In the context of an organisation, entering organization_ids `organization_ids` 
 
 
 ## Associate Organisations with Credential Schemas
+# Credential Template
 When an Organisation Administrator creates a Credential Template, they will need to select the required Credential Schema. In this case, we would need to fetch data using the following API call:
 
-**Request**
+**Endpoint**
 
 ```bash
 GET /schemas/{id}
 ```
-The same happens when an Organisation Administrator issues credentials:
+**Request**
+
+* ID of Credential Schema
+* Organisation (header)
+
+**Responses**
+
+* Selected Credential Schema
+
+# Issue Credentila
+
+We need to use the same endpoint during Issue Credential process, because based on the properties of the associated Credential Schema, we will need to fill in the information for the Credential. 
 
 **Requests**
 
 ```bash
-GET /schemas - list in dropdown is opened
-GET /schemas/{id} - fetch the selected schema for this credential
+GET /schemas/{id} - fetch the selected credential schema for credential
  ```
 
 ## Edit Credential Schemas
-When a Tenant Administrator edits a Credential Schema they need to perform the following steps:
+We need to use the following endpoint for editing Credential Schema:
 
-**Requests:**
+**Endpoint:**
 
 ```bash
-GET /schemas - Open page with lits of schemas
-GET /schemas/{id} - open particular schemas
 PUT /schemas/{id} - apply all changes
  ```
+**Request**
+
+* ID of Credential Schema
+
+**Responses**
+
+* Edited Credential Schema (only name or available organisations can be edited)
+
 
 ## Archive Credential Schemas
 
 It is possible for a Tenant Administrator to archive Credential Schemas, but if the schema is used in other operations such as issuing a credential or forming a verification template, the schema can be flagged as archived:true.
 
-**Request**
+**Endpoint**
 
 ```bash
 DELETE /schemas/{id}
 ```
+**Request**
+
+* ID of Credential Schema
+
+**Responses**
+
+* Credential Schema deleted
+
+## Retrieve Credential Schema definition 
+
+**Endpoint**
+
+```bash
+GET /schemas/{id}/{version}/schema.json
+```
+
+**Request**
+
+* ID of Credential Schema
+* version
+
+**Responses**
+
+* Schema json retrived
