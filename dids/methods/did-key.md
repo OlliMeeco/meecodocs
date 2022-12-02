@@ -3,7 +3,7 @@ This page describes how to perform the following operations for `did:key` using 
 - Resolve
 - Create
 
-### Resolve
+## Resolve
 
 ```bash
 curl -H "Authorization: Bearer TOKEN" \
@@ -11,9 +11,9 @@ curl -H "Authorization: Bearer TOKEN" \
      -X GET "https://svx-api.meeco.me/did/{did:key identifier}"
 ```
 
-### Create
+## Create
 
-#### Generate Keypair
+### Generate Keypair
 
 [Create your DID controller keypair](../did-controller-keypair.md)
 
@@ -24,7 +24,7 @@ cat pubkey | tail -c +13 | basenc --base64url
 # e.g. YeAEwLNEJfHRVMSOs-Fr0C5mW9OFt3GACXtM5A7q7fo=
 ```
 
-#### Create DID
+### Create DID
 
 Call DID Create API to create the new DID and return the associated DID document. Use the Base64URL representation of the public key from previous step.
 

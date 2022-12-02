@@ -20,9 +20,9 @@ Depending on the method, the public key is encoded in either
 - Base64 URL (`base64url`)
 - Base58 (`base58`)
 
-### FAQ
+## FAQ
 
-### I don't know how to get `base58` app on OS X.
+### How do I install `base58` app (on OS X).
 There are two ways to install it. If one app doesn't work, try the other one.
 
 ```bash
@@ -30,5 +30,5 @@ There are two ways to install it. If one app doesn't work, try the other one.
 brew install base58
 # using cargo (requires rust tooling to be installed)
 cargo install bs58-cli
-## hint latter works best by symlinking: ln -s source target_in_path
+## hint latter works best by symlinking: ln -s source_path target_in_path/base58
 ```

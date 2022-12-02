@@ -5,7 +5,7 @@ This page describes how to perform the following operations for `did:web` using 
 - Update
 - Deactivate
 
-### Resolve
+## Resolve
 
 ```bash
 curl -H "Authorization: Bearer TOKEN" \
@@ -13,9 +13,9 @@ curl -H "Authorization: Bearer TOKEN" \
      -X GET "https://svx-api.meeco.me/did/{did:web identifier}"
 ```
 
-### Create
+## Create
 
-#### Generate Keypair
+### Generate Keypair
 
 [Create your DID controller keypair](../did-controller-keypair.md)
 
@@ -99,7 +99,7 @@ curl -H "Authorization: Bearer TOKEN" \
 # }
 ```
 
-#### Update DID
+## Update
 
 Call the DID Update API to update an existing `did:web` and return the associated DID document.
 
@@ -175,7 +175,7 @@ curl -H "Authorization: Bearer TOKEN" \
 # }
 ```
 
-### Deactivate DID
+## Deactivate
 
 Call DID Deactivate API to deactivate an existing `did:web`.
 
