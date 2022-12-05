@@ -2,8 +2,11 @@
 Within the SVX Platform, credential schemas are used to form the basis of a verifiable credential. They structure a set of claims about a Holder and determine the logic behind how the claims are used. Without credential schemas, verifiable credentials would not be able to be issued.
 
 
-# What you need before starting
-The schema file (typically a JSON Schema)
+## Inputs
+JSON credential schema file
+
+## Outputs
+Uploaded/updated credential schema on server and is ready for the next use.
 
 
 # Additional considerations
@@ -52,8 +55,8 @@ POST /schemas
 **Request**
 
 * Name – name of the credential schema
-* JSON Schema
-* List organisations
+* JSON Schema - json-file with the Credential Schema created based on the requiremenes
+* List of organisations - consists of organisations where this credential schema can be used. optional parametr, can be completed later
 
 **Responses**
 
@@ -83,36 +86,6 @@ Returns a list of schemas available to the caller.
 
 In the context of an organisation, entering organization_ids `organization_ids` list always contains only one item - caller organisation ID.
 
-
-
-## Associate Organisations with Credential Schemas
-### Credential Template
-When an Organisation Administrator creates a Credential Template, they will need to select the required Credential Schema. In this case, we would need to fetch data using the following API call:
-
-**Endpoint**
-
-```bash
-GET /schemas/{id}
-```
-**Request**
-
-* ID of Credential Schema
-* Organisation (header)
-
-**Responses**
-
-* Selected Credential Schema
-
-### Issue Credentila
-
-We need to use the same endpoint during Issue Credential process, because based on the properties of the associated Credential Schema, we will need to fill in the information for the Credential. 
-
-**Requests**
-
-```bash
-GET /schemas/{id} - fetch the selected credential schema for credential
- ```
-
 ## Edit Credential Schemas
 We need to use the following endpoint for editing Credential Schema:
 
@@ -129,23 +102,6 @@ PUT /schemas/{id} - apply all changes
 
 * Edited Credential Schema (only name or available organisations can be edited)
 
-
-## Archive Credential Schemas
-
-It is possible for a Tenant Administrator to archive Credential Schemas, but if the schema is used in other operations such as issuing a credential or forming a verification template, the schema can be flagged as archived:true.
-
-**Endpoint**
-
-```bash
-DELETE /schemas/{id}
-```
-**Request**
-
-* ID of Credential Schema
-
-**Responses**
-
-* Credential Schema deleted
 
 ## Retrieve Credential Schema definition 
 
