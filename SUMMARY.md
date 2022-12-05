@@ -16,7 +16,7 @@
 ## Guides
 
 - Credentials
-  - [Credential Schema](guides/credentials/credential_schema.md)
+  - [Credential Schema](guides/credentials/credential-schema.md)
 
 - DIDs
   - [DID Resolver](guides/dids/did-resolution.md)
@@ -35,7 +35,7 @@
   - [Classification Hierarchies](guides/vault/classification-hierarchies.md)
   - [Attachments](guides/vault/attachments.md)
   - [On-sharing & Client Tasks](guides/vault/on-sharing-and-client-tasks.md)
-  - [Account Delegation](guides/vault/account_delegation.md)
+  - [Account Delegation](guides/vault/account-delegation.md)
 
 ## Tools
 
