@@ -6,6 +6,7 @@
 
 - [Setting Up](getting-started/setting-up.md)
 - [Quickstart](getting-started/quickstart.md)
+- [Terminology](/concepts/terminology.md)
 
 ## Platform
 
@@ -28,6 +29,8 @@
     - [did:ebsi](guides/dids/methods/did-ebsi.md)
     - [did:indy](guides/dids/methods/did-indy.md)
   - [DID Controller Keypair](guides/dids/did-controller-keypair.md)
+
+- [Presentations](guides/presentations.md)
 
 - Vault
   - [Setting up Access](guides/vault/setting-up-access.md)
