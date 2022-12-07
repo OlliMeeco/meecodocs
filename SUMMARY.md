@@ -15,7 +15,7 @@
 
 ## Guides
 
-- [Credential Schema](guides/credentials/credential-schema.md)
+- [Credential Schema](guides/credential-schemas.md)
 - Credentials
 
 - DIDs

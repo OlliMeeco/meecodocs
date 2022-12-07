@@ -1,4 +1,4 @@
-# Credential Schema
+# Credential Schemas
 
 Credential schemas are used to define the structure for the claims of a verifiable credential. It uses the [Data Schema](https://www.w3.org/TR/vc-data-model/#data-schemas) property of a credential. Schemas use the [Verifiable Credentials JSON Schema 2022](https://w3c-ccg.github.io/vc-json-schemas/) specification, published by the W3C Credentials WG.
 
