@@ -8,12 +8,12 @@ Enterprise refers to any entity, for example a company, a government, or a club.
 
 The key functionalities of an Enterprise Vault are as follows:
 
--	Items, Slots, Connections, Sharing, Classifications, Attachments as per an end-user Vault.
--	The Organisation that manages an Enterprise Vault can have one or more Administrators (Admins), who are authorised to invite and manage other Admins and deploy Services. The (Organisation) Admins and Services all have access to Items in the Enterprise Vault.
--	Admins can be assigned fine grained permissions (see ATOM > Security Rights), in line with the roles within the authorised Organisation, to allow different access rights to Items within the Vault.
--	An Organisation can connect to any user or other organisation Vaults to provide services.
--	Fined-grained consent to manage the sharing of data with end users.
--	The Organisation Admin also has the ability to on-board third-party services, associated with the Organisation, to act on behalf of that Organisation and access Items, Connections and Shares in the Enterprise Vault.
+- Items, Slots, Connections, Sharing, Classifications, Attachments as per an end-user Vault.
+- The Organisation that manages an Enterprise Vault can have one or more Administrators (Admins), who are authorised to invite and manage other Admins and deploy Services. The (Organisation) Admins and Services all have access to Items in the Enterprise Vault.
+- Admins can be assigned fine grained permissions (see ATOM > Security Rights), in line with the roles within the authorised Organisation, to allow different access rights to Items within the Vault.
+- An Organisation can connect to any user or other organisation Vaults to provide services.
+- Fined-grained consent to manage the sharing of data with end users.
+- The Organisation Admin also has the ability to on-board third-party services, associated with the Organisation, to act on behalf of that Organisation and access Items, Connections and Shares in the Enterprise Vault.
 
 ## Services
 
