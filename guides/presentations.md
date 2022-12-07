@@ -6,8 +6,8 @@ The data format used for the presentation is [vp-jwt](https://www.w3.org/TR/vc-d
 
 ## Prerequisites
 
-- [DID](dids)
-- [Credentials](credentials)
+- [DID](dids/did-methods.md)
+- Credentials
 
 ## Who can use this?
 
