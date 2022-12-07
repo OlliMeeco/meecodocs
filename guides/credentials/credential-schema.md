@@ -27,7 +27,7 @@ Credential schema upload is available to Tenant Administrators and must comply w
 
 All the attributes in the example are required, but values could be different, e.g. URL address of Schema, name, description etc.
 
-### Example credential JSON schema
+Below is an example JSON schema.
 
 ```bash
 {
