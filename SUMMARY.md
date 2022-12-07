@@ -41,10 +41,10 @@
 
 - [Meeco SDK & CLI](tools/meeco-cli.md)
 - [Cryppo SDK & CLI](tools/cryppo.md)
-## Policies <a id="policies-1"></a>
+## Policies <a id="policies"></a>
 
-- [Privacy](policies-1/privacy.md)
-- [Developer Policy](policies-1/developer-policy.md)
+- [Privacy](policies/privacy.md)
+- [Developer Policy](policies/developer-policy.md)
 
 ---
 
