@@ -1,30 +1,32 @@
-# Issue a Credential
+# Issue Credentials
 SVX allows you to generate, issue and revoke credentials following the [W3C data model](
 https://www.w3.org/TR/vc-data-model/)
 
-To issue a credential, an entity needs to control a did and keypair.  creates a credential and and signs it with its private key. The result is a JSON formatted verifiable credential with a unique id and a credentialStatus.
+To issue a credential, an entity needs to control a did and keypair. A VC issuance performs 2 calls which can also be consumed separately: 
+* generating a credential
+* signing it with the entity's private key
+
+The response is a JSON formatted verifiable credential with a unique id.
 
 ## Prerequisite
 * Credential Schema 
 * Credential Type
 * Holder Wallet DID
 * Data required as defined in credential schema/type. Typically:
-  * Claims about the subject
   * Subject DID
-  * Issue / Expiration data
+  * Claims about the subject
+  * Issuance Date
 
 ## Who can use this?
 An onboarded organisation in the tenacy with apropriate issuing rights set up by the tenant.
 
 ## Additional considerations
-VC ids are stored in a Verifiable Data Registry which acts as an inventory of identifiers and schemas. The  registry 'StatusList2021' allows to store the status of the credential (active, revoked, suspended). 
+VC ids are stored in a Verifiable Data Registry which acts as an inventory of identifiers and schemas. The  registry 'StatusList2021' allows to write and read the status of the credential (ie. revoked, suspended). 
 
 Other examples of verifiable data registries include trusted databases, decentralized databases, government ID databases, and distributed ledgers.
 
 ## Generate a Credential
-Generating a credential requires metadata about the credential (type,issue date, issuer, subject) and its subject (subject DID, claims) to be structured following the [W3C VC-Core standard](
-https://www.w3.org/TR/vc-data-model/#core-data-model)
- and respect the structure of the chosen credential schema. The endpoint will fit the data into the schema and performs a number of coherency checks. The result is a JSON ready to be signed.
+Generating a credential requires metadata about the credential (type, issue date, issuer) and its subject (subject DID, claims) to be structured following the datamodel [W3C VC-Core](https://www.w3.org/TR/vc-data-model/#core-data-model) and respect the structure of the chosen credential schema. The endpoint will fit the data into the schema and performs a number of coherency checks. The result is a JSON ready to be signed.
 
 **Endpoint**
 
@@ -42,7 +44,7 @@ POST	/credentials/generate
 
 An unsigned credential in JSON format with 
 * id (of the credential)
-* credentialStatus (initiatlly set to active)
+* credentialStatus
 * type 
 * issuanceDate
 
@@ -74,8 +76,8 @@ An unsigned credential in JSON format with
 }
 ```
 
-## Issue a Credential
-By Issuing a credential an entity adds proof to a generated credential, and thus the entity becomes the 'issuer' of the crendential. This allows another entity (the 'verifier') to trust it (or not) as it can check the provenance of the crendential. The proof is established by signing the hash of the VC with the issuer's private key.
+## Sign a Credential
+By signing a credential an entity adds proof to a generated credential, and thus the entity becomes the 'issuer' of the crendential. This allows another entity (the 'verifier') to trust the provenance of the crendential. The proof is established by signing a hash of the VC with the issuer's private key.
 
 **Endpoint**
 
@@ -86,10 +88,10 @@ POST	/credentials/sign
 **Request**
 
 * type – Encryption algorythm
-* private key - from the contolled assymetic keypair
+* private key - from the issuers's contolled assymetic keypair
 
 **Responses**
-A signed credential JSON format with:
+A signed credential JSON format including:
 * created – timestamp of the signature
 * verificationMethod - location of the public key
 * signature data - the value that can be verified using the public key
