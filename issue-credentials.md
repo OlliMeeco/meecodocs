@@ -113,21 +113,3 @@ A signed credential JSON format including:
   }
 }
 ```
-
-## Revoke a Credential
-When an issuer no longer wants to underwrite the validity of a crendential, the issuer can revoke or suspend it by updating its status. The statusses of  credentials are maintained in a publically available registry that allows entities to consult it when verifying a credential.
-
-**Endpoint**
-
-```bash
-POST	/credentials/status
-```
-
-**Request**
-
-* id - the id of the VC
-* statusListIndex - The id of the associated status in the statuslist
-
-**Responses**
-
-The status list is updated with the new status associated to the crendential id.
