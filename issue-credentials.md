@@ -1,24 +1,19 @@
 # Issue Credentials
-SVX allows you to generate, issue and revoke credentials following the [W3C data model](
-https://www.w3.org/TR/vc-data-model/)
+Issue credential is the first operation in the lifecycle of a [Verifiable Credential](https://www.w3.org/TR/vc-data-model/#lifecycle-details). It assists the Issuer in creating the credential so it can be delivered to the subject of the credential.
+The supported modes are:
+* Generating credential – generates an (unsigned) credential that requires signing.
+* Issuing credential – credential is generated and signed with keys managed on the platform.
 
-To issue a credential, an entity needs to control a did and keypair. A VC issuance performs 2 calls which can also be consumed separately: 
-* generating a credential
-* signing it with the entity's private key
-
-The response is a JSON formatted verifiable credential with a unique id.
+The response is a JSON formatted verifiable credential with a system-generated unique id and issuance date.
 
 ## Prerequisite
-* Credential Schema 
-* Credential Type
-* Holder Wallet DID
-* Data required as defined in credential schema/type. Typically:
-  * Subject DID
-  * Claims about the subject
-  * Issuance Date
+* [Credential Schema](credential-schemas.md)
+* [Credential Type](credential-types.md)
+* [DID](dids/methods/did-web/md)
+* Data as defined in the [Credential Schema](credential-schemas.md) and [Credential Type](credential-types.md)
 
 ## Who can use this?
-An onboarded organisation in the tenacy with apropriate issuing rights set up by the tenant.
+An onboarded organisation in the tenacy set up as issuer by the tenant.
 
 ## Additional considerations
 VC ids are stored in a Verifiable Data Registry which acts as an inventory of identifiers and schemas. The  registry 'StatusList2021' allows to write and read the status of the credential (ie. revoked, suspended). 
@@ -36,9 +31,9 @@ POST	/credentials/generate
 
 **Request**
 
-* Issuer DID
 * Subject DID
 * Claims about the Subject
+* Expiration date
 
 **Responses**
 
@@ -55,17 +50,11 @@ An unsigned credential in JSON format with
     "https://www.w3.org/2018/credentials/examples/v1"
   ], 
   "id": "http://meeco.me/credentials/1332",
-  
   "type": ["VerifiableCredential", "MeecoCredential"],
-  
   "issuer": "https://meeco.me/issuers/533041",
-  
   "issuanceDate": "2022-04-01T03:23:24",
-  
   "credentialSubject": {
-    
     "id": "did:example:1c276e12ec21ebfeb1f712ebc6f",
-    
     "UserOf": {
       "id": "did:example:ec21ebfebc276e121f712ebc6f1",
       "name": [{
@@ -82,7 +71,7 @@ By signing a credential an entity adds proof to a generated credential, and thus
 **Endpoint**
 
 ```bash
-POST	/credentials/sign
+POST	/credentials/issue
 ```
 
 **Request**
@@ -103,17 +92,11 @@ A signed credential JSON format including:
     "https://www.w3.org/2018/credentials/examples/v1"
   ], 
   "id": "http://meeco.me/credentials/1332",
-  
   "type": ["VerifiableCredential", "MeecoCredential"],
-  
   "issuer": "https://meeco.me/issuers/533041",
-  
   "issuanceDate": "2022-04-01T03:23:24Z",
-  
   "credentialSubject": {
-    
     "id": "did:example:1c276e12ec21ebfeb1f712ebc6f",
-    
     "UserOf": {
       "id": "did:example:ec21ebfebc276e121f712ebc6f1",
       "name": [{
