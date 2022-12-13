@@ -30,7 +30,10 @@
     - [did:indy](guides/dids/methods/did-indy.md)
   - [DID Controller Keypair](guides/dids/did-controller-keypair.md)
 
+- OpenID Connect
+  - [Presentation](guides/oidc/oidc4vp.md)
 - [Presentations](guides/presentations.md)
+- [Presentation Definitions](guides/presentation-definitions.md)
 
 - Vault
   - [Setting up Access](guides/vault/setting-up-access.md)
