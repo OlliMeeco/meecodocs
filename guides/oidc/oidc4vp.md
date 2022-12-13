@@ -1,8 +1,34 @@
 # OpenID Connect for Verifiable Presentation
 
-List of endpoints that assist holder wallet and verifier to participate in the [OpenID for Verifiable Presentations](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html) protocol. Built on top of OAuth 2.0, it allows a client (wallet) to present claims in the form of [W3C Verifiable Credentials](https://www.w3.org/TR/vc-data-model/).
+List of endpoints that assist holder wallet and verifier to participate in the [OpenID for Verifiable Presentations](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html) protocol. Built on top of OAuth 2.0, it allows a client (wallet) to present claims in the form of [W3C Verifiable Credentials](https://www.w3.org/TR/vc-data-model/). Currently, credentials and presentations in JWT format (vc-jwt, vp-jwt) are supported.
 
-This implementation currently supports credentials and presentations in JWT format (vc-jwt, vp-jwt).
+The endpoints provided are to support the following high-level verification flow.
+
+```mermaid
+sequenceDiagram
+  autonumber
+
+  participant H as End User
+  participant W as Wallet/SIOP
+  participant V as Verifier/RP
+
+  V->>V: Create Request object
+  V->>V: Generates and displays<br>QR Code with `request_uri`
+  H-->>W: Opens app
+  W-->>V: Scans QR Code
+  W->>W: Obtains `request_uri`<br>from QR Code
+  W->>V: Retrieve Request object<br>(signed JWT)
+  W->>W: Verify Request
+  W->>W: Identify VCs required<br>in the Request object
+  W->>W: Generates a VP
+  W->>W: Create Response object
+  W->>V: Post Response to /redirect_uri
+  V->>V: Verify Response
+  V-->>W: Acknowledgement
+```
+
+The flow centers around the creation and exchange of a Request and a Response object, by the verifier and holder (wallet) respectively. The endpoints are categorised under these two headings.
+
 ## Prerequisites
 
 - [DID](dids/did-methods.md)
@@ -12,7 +38,9 @@ This implementation currently supports credentials and presentations in JWT form
 
 Used by organisations (verifiers) and users (holders) in a verification flow using the OpenID Connect protocol.
 
-## Create Presentation Requests
+## Request
+
+### Create Presentation Requests
 
 Creation of a presentation request.
 
@@ -25,14 +53,24 @@ POST /oidc/presentations/requests
 **Request**
 
 * Organisation (header, optional)
+* Name – title string
+* Description – explains the purpose for which the request is created
+* Verifier
+  * [DID](../dids/did-methods.md)
+  * Name
+* Expiration Date – timestamp the request token expires
+* Redirect Base URI
+* [Presentation Definition](../presentation-definitions.md)
 
 **Responses**
 
 The presentation request object that includes an unsigned JWT. The client calling this endpoint (e.g. verifier system) is responsible for adding the signature.
 
-## Update Presentation Request
+### Update Presentation Request
 
 Update an existing presentation request by ID.
+
+One of the options is to use the platform to host the (signed) request (see [here](#read-presentation-request-jwt)). The request parameters itself can't be updated, only the signed request JWT.
 
 **Endpoint**
 
@@ -44,12 +82,13 @@ PUT /oidc/presentations/requests/{id}
 
 * Request ID
 * Organisation (header, optional)
+* Signed request JWT
 
 **Responses**
 
 The updated presentation request object.
 
-## Read Presentation Request JWT
+### Read Presentation Request JWT
 
 Public endpoint that returns the (signed) presentation request JWT.
 
@@ -67,7 +106,7 @@ GET /oidc/presentations/requests/{id}/jwt
 
 Signed presentation request JWT token.
 
-## Verify Presentation Request
+### Verify Presentation Request
 
 Verification of the SIOP token. The steps performed during this verification are:
 
@@ -90,7 +129,9 @@ POST /oidc/presentations/requests/verify
 
 The result of the verification, either true or false.
 
-## Create Presentation Response
+## Response
+
+### Create Presentation Response
 
 Generate id_token for request submission based on the Wallet information and the verifiable presentation token
 
@@ -108,7 +149,7 @@ POST /oidc/presentations/token
 
 The presentation response object that includes two unsigned JWT, `id_token` and `vp_token`. The client calling this endpoint (e.g. holder wallet) is responsible for adding the signatures for each token.
 
-## Verify Presentation Response
+### Verify Presentation Response
 
 Verify the presentation response to a given request. The steps performed are:
 
