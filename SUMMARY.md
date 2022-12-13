@@ -31,7 +31,7 @@
   - [DID Controller Keypair](guides/dids/did-controller-keypair.md)
 
 - OpenID Connect
-  - [Presentation](guides/oidc/oidc4vp.md)
+  - [For Verifiable Presentation](guides/oidc/oidc4vp.md)
 - [Presentations](guides/presentations.md)
 - [Presentation Definitions](guides/presentation-definitions.md)
 
