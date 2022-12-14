@@ -40,6 +40,8 @@ Used by organisations (verifiers) and users (holders) in a verification flow usi
 
 ## Request
 
+List of endpoints to help create and verify the [Request](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-request) part of the verification flow.
+
 ### Create Presentation Requests
 
 Creation of a presentation request.
@@ -130,6 +132,8 @@ POST /oidc/presentations/requests/verify
 The result of the verification, either true or false.
 
 ## Response
+
+List of endpoints to help create and verify the [Response](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-response) part of the verification flow.
 
 ### Create Presentation Response
 
