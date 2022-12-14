@@ -16,7 +16,7 @@
 
 ## Guides
 
-- [Credential Schema](guides/credential-schemas.md)
+- [Credential Schemas](guides/credential-schemas.md)
 - [Credential Types](guides/credential-types.md)
 - Credentials
 
