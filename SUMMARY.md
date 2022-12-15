@@ -19,6 +19,7 @@
 - [Credential Schemas](guides/credential-schemas.md)
 - [Credential Types](guides/credential-types.md)
 - Credentials
+  - [Issue Credentials](guides/credentials/issue-credentials.md)
 
 - DIDs
   - [DID Resolver](guides/dids/did-resolution.md)
